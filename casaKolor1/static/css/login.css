@@ -1,0 +1,173 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+:root {
+    --gradient-start: #00a1ff;
+    --gradient-end: #4834d4;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor principal con gradiente */
+.login-container, .register-container {
+    min-height: 100vh;
+    padding: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* Contenedor del formulario con efecto cristal */
+.form-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 3rem;
+    width: 90%;
+    max-width: 380px;
+    box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+/* Título */
+.form-container h2 {
+    color: black;
+    text-align: center;
+    margin: 0 0 2rem 0;
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+/* Formulario */
+form {
+    width: 100%;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+/* Ocultar textos de ayuda y mensajes por defecto */
+.helptext, .input-group small, .input-group .help-block {
+    display: none !important;
+}
+
+/* Contenedor de cada campo */
+.input-group p {
+    margin: 0 0 1rem 0;
+    position: relative;
+}
+
+/* Labels */
+.input-group label {
+    display: block;
+    color: black;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Campos de entrada */
+.input-group input, .input-group p input {
+    width: 100%;
+    padding: 12px 15px;
+    background: #ffffff; /* Fondo blanco puro */
+    border: 1px solid rgba(0, 0, 0, 0.2); /* Borde gris suave */
+    border-radius: 5px;
+    color: #000000; /* Texto en color negro */
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Efecto al enfocar el input */
+.input-group input:focus, .input-group p input:focus {
+    outline: none;
+    border-color: #000000; /* Borde negro al enfocar */
+    background: #ffffff; /* Mantener el fondo blanco al enfocar */
+}
+
+/* Placeholder en gris oscuro */
+.input-group input::placeholder, .input-group p input::placeholder {
+    color: #666666;
+}
+
+/* Botón de envío */
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    color: black;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 1rem 0;
+}
+
+.btn-primary:hover {
+    background: rgba(234, 35, 35, 0.778);
+}
+
+/* Enlaces */
+.form-container > p, .login-link, .register-link {
+    color: black;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.form-container a {
+    color: rgb(12, 12, 12);
+    text-decoration: none;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.form-container a:hover {
+    opacity: 1;
+}
+
+/* Mensajes de error */
+.errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    background: rgba(255, 59, 59, 0.1);
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+/* Estilos específicos para campos de registro */
+#id_username,
+#id_email,
+#id_password1,
+#id_password2 {
+    margin-bottom: 0.5rem;
+}
+
+/* Media queries */
+@media (max-width: 480px) {
+    .form-container {
+        padding: 2rem;
+    }
+
+    .form-container h2 {
+        font-size: 1.5rem;
+    }
+}

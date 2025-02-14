@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="form-container">
+        <h2>Iniciar Sesión</h2>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="id_username">Nombre de usuario</label>
+                {{ form.username }}
+                <label for="id_password">Contraseña</label>
+                {{ form.password }}
+            </div>
+            <a href="{% url 'inicio' %}"></a><button type="submit" class="btn-primary">Iniciar Sesión</button>
+        </form>
+        <p>¿No tienes cuenta? <a href="{% url 'register' %}">Regístrate aquí</a></p>
+    </div>
+</div>
+{% endblock %}

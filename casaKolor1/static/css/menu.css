@@ -15,7 +15,7 @@ body {
 
 /* Menu */
 .navbar{
-    background-color: #0a84ffe0;
+    background-color: #0a84ff;
     height: 100px;
     padding: .5rem;
 }
@@ -93,6 +93,8 @@ body {
 .btn-custom:hover {
     background-color: rgba(234, 35, 35, 0.778); /* Color más intenso al hacer hover */
 }
+
+
 
 @media(min-width: 991px){
 
@@ -208,7 +210,7 @@ body {
 /* Footer */
 .footer {
     position: absolute;
-    background-color: #0a84ffe0;
+    background-color: #0a84ff;
     color: black;
     padding: 20px 0;
     /* margin-top: 50px; */

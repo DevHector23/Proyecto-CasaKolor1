@@ -64,7 +64,7 @@
                         <form class="d-flex position-relative" action="{% url 'buscar' %}" method="get">
                             <!-- Botón de la lupa -->
                             <button class="btn me-2" type="button" id="toggle-search" style="position: relative; top: -6px;">
-                                <img src="{% static 'images/lupa.png' %}" alt="Buscar" width="30">
+                                <img src="{% static 'images/buscar.gif' %}" alt="Buscar" width="30" style="mix-blend-mode: multiply;">
                             </button>
                         
                             <!-- Barra de búsqueda (oculta inicialmente) -->
@@ -84,10 +84,10 @@
             </div>
             <!-- <a href="" class="login-button"><img src="{% static 'images/carro.png'%}" alt=""></a> -->
             <a href="{% url 'login' %}" class="login-button"><img src="{% static 'images/perfil.png'%}" alt=""></a>
-            <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            <!-- <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+            </button> -->
         </div>
     </nav>
     
@@ -141,12 +141,20 @@
             </div>
     
             
-            <div class="footer-section">
+            <div class="footer-section"> 
                 <h4>Contáctanos</h4>
-                <p><i class="fas fa-map-marker-alt"></i>Cl. 9 #9-30, Garzón, Huila</p>
+                <p><i class="fas fa-map-marker-alt"></i> Cl. 9 #9-30, Garzón, Huila</p>
                 <p><i class="fas fa-envelope"></i> contacto@ejemplo.com</p>
-                <p><i class="fas fa-phone"></i> +57 3202567793 </p>
+                <p>
+                    <a href="https://wa.me/573202567793" target="_blank" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+                             alt="WhatsApp" 
+                             style="width: 28px; height: 28px; margin-right: 6px;">
+                        Chatea con nosotros
+                    </a>
+                </p>
             </div>
+            
     
             
             <div class="footer-section">

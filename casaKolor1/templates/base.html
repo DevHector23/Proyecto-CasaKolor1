@@ -83,11 +83,20 @@
                 </a>
             </div>
             <!-- <a href="" class="login-button"><img src="{% static 'images/carro.png'%}" alt=""></a> -->
-            <a href="{% url 'login' %}" class="login-button"><img src="{% static 'images/perfil.png'%}" alt=""></a>
-            <!-- <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            {% if user.is_authenticated %}
+                    <span class="me-2">Hola, {{ user.username }}</span>
+                    <a href="{% url 'logout' %}" class="login-button">
+                        <img src="{% static 'images/cerrar-sesion.gif' %}" alt="Perfil" class="img-small" style="mix-blend-mode: multiply;">
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="login-button">
+                        <img src="{% static 'images/perfil.png' %}" alt="Perfil">
+                    </a>
+                {% endif %}
+            <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button> -->
+            </button>
         </div>
     </nav>
     
@@ -195,7 +204,6 @@
     </script>
 
     <script src="{% static 'js/carrito.js' %}"></script>
-    <script src="{% static 'js/menu.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

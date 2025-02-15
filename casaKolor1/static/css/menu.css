@@ -93,6 +93,10 @@ body {
 .btn-custom:hover {
     background-color: rgba(234, 35, 35, 0.778); /* Color más intenso al hacer hover */
 }
+.img-small {
+    width: 40px;
+    height: 40px;
+}
 
 
 

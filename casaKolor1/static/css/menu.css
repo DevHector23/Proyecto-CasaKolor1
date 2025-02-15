@@ -25,14 +25,14 @@ body {
     font-size: 34px;
     transition: 0.3s color;
 }
-.color1 {
+/* .color1 {
     color: yellow;
   }
   
 .color2 {
     color: red; 
 }
-  
+   */
 .login-button{
     
     color: #fff;
@@ -93,10 +93,7 @@ body {
 .btn-custom:hover {
     background-color: rgba(234, 35, 35, 0.778); /* Color más intenso al hacer hover */
 }
-.img-small {
-    width: 40px;
-    height: 40px;
-}
+
 
 
 

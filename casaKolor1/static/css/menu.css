@@ -25,14 +25,14 @@ body {
     font-size: 34px;
     transition: 0.3s color;
 }
-/* .color1 {
+.color1 {
     color: yellow;
   }
   
 .color2 {
     color: red; 
 }
-   */
+  
 .login-button{
     
     color: #fff;
@@ -41,6 +41,12 @@ body {
     text-decoration: none;
     transition: 0.3s background-color;
 }
+/* cerrar sesion  */
+.img-small {
+    width: 40px;  /* Ajusta el tamaño según necesites */
+    height: 40px; /* Mantiene la proporción */
+}
+
 
 
 .navbar-toggler{

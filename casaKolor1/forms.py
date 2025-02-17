@@ -1,15 +1,15 @@
 # forms.py
+from .models import Sugerencia
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-from .models import Sugerencia
 
-
-class UserRegistrationForm(forms.ModelForm):
-      password = forms.CharField(widget=forms.PasswordInput)
-
-      class Meta:
+class UserRegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    
+    class Meta:
         model = User
-        fields = ['username', 'email', 'password']
+        fields = ("username", "email", "password1", "password2")
 
 
 #sugerencias

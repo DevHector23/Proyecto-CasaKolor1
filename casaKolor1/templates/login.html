@@ -9,6 +9,13 @@
 <div class="login-container">
     <div class="form-container">
         <h2>Iniciar Sesión</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
         <form method="post" novalidate>
             {% csrf_token %}
             <div class="input-group">
@@ -17,7 +24,7 @@
                 <label for="id_password">Contraseña</label>
                 {{ form.password }}
             </div>
-            <a href="{% url 'inicio' %}"></a><button type="submit" class="btn-primary">Iniciar Sesión</button>
+            <button type="submit" class="btn-primary">Iniciar Sesión</button>
         </form>
         <p>¿No tienes cuenta? <a href="{% url 'register' %}">Regístrate aquí</a></p>
     </div>

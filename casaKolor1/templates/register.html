@@ -14,10 +14,27 @@
             <div class="input-group">
                 <label for="id_username">Nombre de usuario</label>
                 {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="error">{{ form.username.errors }}</div>
+                {% endif %}
+                
                 <label for="id_email">Correo electrónico</label>
                 {{ form.email }}
-                <label for="id_password">Contraseña</label>
-                {{ form.password }}
+                {% if form.email.errors %}
+                    <div class="error">{{ form.email.errors }}</div>
+                {% endif %}
+                
+                <label for="id_password1">Contraseña</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="error">{{ form.password1.errors }}</div>
+                {% endif %}
+                
+                <label for="id_password2">Confirmar Contraseña</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="error">{{ form.password2.errors }}</div>
+                {% endif %}
             </div>
             <button type="submit" class="btn-primary">Registrarse</button>
         </form>

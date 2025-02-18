@@ -44,24 +44,44 @@ class UserRegistrationForm(UserCreationForm):
         fields = ("username", "email", "password1", "password2")
 
 # Luego, modifica la vista de registro
-from django.contrib.auth import login, authenticate
-from django.shortcuts import redirect, render
-from .forms import UserRegistrationForm
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib import messages
+# from django.contrib.auth import login, authenticate
+# from django.shortcuts import redirect, render
+# from .forms import UserRegistrationForm
+# from django.contrib.auth.forms import AuthenticationForm
+# from django.contrib import messages
 
-def register(request):
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=user.username, password=raw_password)
-            login(request, user)
-            return redirect('inicio')
-    else:
-        form = UserRegistrationForm()
-    return render(request, 'register.html', {'form': form})
+# def register(request):
+#     if request.method == 'POST':
+#         form = UserRegistrationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             raw_password = form.cleaned_data.get('password1')
+#             user = authenticate(username=user.username, password=raw_password)
+#             login(request, user)
+#             return redirect('inicio')
+#     else:
+#         form = UserRegistrationForm()
+#     return render(request, 'register.html', {'form': form})
+
+# def login_view(request):
+#     if request.method == 'POST':
+#         form = AuthenticationForm(request, data=request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data.get('username')
+#             password = form.cleaned_data.get('password')
+#             user = authenticate(username=username, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect('inicio')
+#             else:
+#                 messages.error(request, 'Usuario o contraseña incorrectos')
+#     else:
+#         form = AuthenticationForm()
+#     return render(request, 'login.html', {'form': form})
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from .forms import CustomUserCreationForm  # Importa el formulario personalizado
+from django.contrib.auth.forms import AuthenticationForm
 
 def login_view(request):
     if request.method == 'POST':
@@ -72,12 +92,25 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('inicio')
-            else:
-                messages.error(request, 'Usuario o contraseña incorrectos')
+                return redirect('inicio')  # Cambia 'inicio' por tu página principal
     else:
         form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+
+    register_form = CustomUserCreationForm()  # Usar el nuevo formulario con email
+    return render(request, 'login.html', {
+        'form': form,
+        'register_form': register_form
+    })
+
+def register_view(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('inicio')  # Cambia 'inicio' por tu página principal
+    return redirect('login')
+
 
 
 def logout_view(request):

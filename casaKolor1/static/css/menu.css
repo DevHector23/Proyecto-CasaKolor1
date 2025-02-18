@@ -19,20 +19,18 @@ body {
     height: 100px;
     padding: .5rem;
 }
+.navbar-nav{
+    margin-left: -100px; /* Ajusta según necesites */
+}
 .navbar-brand{
     font-weight: 508;
     color: white;
     font-size: 34px;
     transition: 0.3s color;
 }
-.color1 {
-    color: yellow;
-  }
-  
-.color2 {
-    color: red; 
-}
-  
+.navbar-brand img{
+    margin-left: -50px;
+} 
 .login-button{
     
     color: #fff;

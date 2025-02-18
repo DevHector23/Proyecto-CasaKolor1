@@ -1,11 +1,20 @@
 # forms.py
 from .models import Sugerencia
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django import forms
 from django.contrib.auth.models import User
 
+# class UserRegistrationForm(UserCreationForm):
+#     email = forms.EmailField(required=True)
+    
+#     class Meta:
+#         model = User
+#         fields = ("username", "email", "password1", "password2")
 class UserRegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder': 'Correo electrónico'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nombre de usuario'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Repetir contraseña'}))
     
     class Meta:
         model = User
@@ -30,9 +39,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(required=True, help_text="Obligatorio. Introduce un correo válido.")
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder': 'Correo electrónico'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nombre de usuario'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Repetir contraseña'}))
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nombre de usuario'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}))

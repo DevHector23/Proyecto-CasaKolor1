@@ -39,8 +39,8 @@
             
             <span class="auth-divider-text">o usa tu cuenta</span>
             <div class="auth-input-group">
-                {{ form.username }}
-                {{ form.password }}
+                <input type="text" name="username" placeholder="Nombre de usuario" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
             </div>
             {% if form.errors %}
                 <div class="auth-error-container">

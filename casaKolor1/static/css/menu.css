@@ -5,9 +5,14 @@
     text-decoration: none;
     list-style: none;
 }
+:root {
+    --gradient-start: #0a84ff;  /* Color del menú */
+    --gradient-end: #66b3ff;    /* Un tono más oscuro para el degradado */
+}
 body {
-    background-color: white;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
     font-family: 'Arial', sans-serif;
+    height: 100vh;
     margin: 0;
     padding-top: 100px;
 }
@@ -38,6 +43,19 @@ body {
     border-radius: 100px;
     text-decoration: none;
     transition: 0.3s background-color;
+}
+/* oculta inicial mente menu hamburguesa */
+.search-box {
+    position: absolute;
+    top: 5%;
+    left: 50px; /* Ajusta la posición al lado del icono */
+    transform: translateY(-50%);
+    width: 250px;
+    height: 30px;
+    font-size: 14px;
+    display: none; /* Oculto por defecto */
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
 }
 /* cerrar sesion  */
 .img-small {

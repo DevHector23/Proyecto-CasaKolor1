@@ -3,9 +3,9 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 {% endblock %}
+
 {% block content %}
-
-
+<body>
 <section class="hero">
     <div class="hero-content">
         <h1>Transforma tus espacios con color</h1>
@@ -17,6 +17,7 @@
 </section>
 
 <section class="features">
+    <div class="fondo">
     <div class="features-container">
         <h2>¿Por qué elegirnos?</h2>
         <div class="features-grid">
@@ -37,9 +38,11 @@
             </div>
         </div>
     </div>
+    </div>
 </section>
 
 <section class="products">
+    <div class="fondo1">
     <div class="products-container">
         <h2>Productos Destacados</h2>
         <div class="products-grid">
@@ -72,5 +75,7 @@
             </a>
         </div>
     </div>
+</div>
 </section>
+</body>
 {% endblock %}

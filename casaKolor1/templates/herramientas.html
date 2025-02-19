@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}  {# Cargar humanize para formatear números #}
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 {% endblock %}
 
 {% block content %}
+<body>
+    
+
 <h2 class="text-center mb-4" style="background-color: #0a84ffe0; height: 70px; width: 100%; color: black; padding: 10px;">Herramientas</h2>
 <div class="container mt-5">
     <div class="row">
@@ -18,7 +22,7 @@
                     {% endif %}
                     <div class="card-body text-center"> 
                         <p class="card-text">{{ producto.descripcion }}</p>
-                        <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
+                        <p class="card-text"><strong>Precio: ${{ producto.precio|intcomma }}</strong></p> {# Aplicar formato con separador de miles #}
                         <button href="{% url 'carrito' %}" class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
                     </div>
                 </div>
@@ -26,4 +30,5 @@
         {% endfor %}
     </div>
 </div>
+</body>
 {% endblock %}

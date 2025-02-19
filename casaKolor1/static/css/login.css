@@ -206,7 +206,7 @@
 .auth-input-group input:focus::placeholder {
     opacity: 0.5;
 }
-form {
+.logi{
     background-color: #FFFFFF;
     display: flex;
     align-items: center;

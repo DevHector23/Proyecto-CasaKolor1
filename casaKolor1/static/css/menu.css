@@ -10,7 +10,7 @@
     --gradient-end: #66b3ff;    /* Un tono más oscuro para el degradado */
 }
 body {
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+   background-color: var(--gradient-end);
     font-family: 'Arial', sans-serif;
     height: 100vh;
     margin: 0;
@@ -20,7 +20,8 @@ body {
 
 /* Menu */
 .navbar{
-    background-color: #0a84ff;
+    /* background-color: #0a84ff; */
+    background-color: #66b3ff;
     height: 100px;
     padding: .5rem;
 }
@@ -233,11 +234,16 @@ body {
 /* Footer */
 .footer {
     position: absolute;
-    background-color: #0a84ff;
+    background-color: #66b3ff;
     color: black;
     padding: 20px 0;
     /* margin-top: 50px; */
     width: 100%;
+
+
+   
+  border-top: 3px solid white; /* Borde superior */
+  border-bottom: 3px solid white;
 }
 
 .footer .container {

@@ -9,7 +9,7 @@
 {% block content %}
 <div class="auth-master-wrapper" id="container">
     <div class="auth-form-section auth-signup-section">
-        <form method="post" action="{% url 'register' %}" novalidate>
+        <form class="logi" method="post" action="{% url 'register' %}" novalidate>
             {% csrf_token %}
             <h1 class="auth-title">Crear Cuenta</h1>
             <span class="auth-divider-text">o usa tu email para registrarte</span>

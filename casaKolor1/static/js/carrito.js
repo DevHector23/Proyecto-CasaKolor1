@@ -51,17 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.innerHTML = `
                     <td>${item.nombre}</td>
                     <td>${item.descripcion}</td>
-                    <td>$${item.precio}</td>
+                    <td>$${item.precio.toLocaleString('es')}</td>
                     <td>
                         <input type="number" min="1" value="${item.cantidad}" class="form-control quantity-input" data-id="${item.id}">
                     </td>
-                    <td>$${subtotal.toFixed(2)}</td>
+                    <td>$${Math.floor(subtotal).toLocaleString('es')}</td>
                     <td><button class="btn btn-danger remove-item" data-id="${item.id}">Eliminar</button></td>
                 `;
                 cartItemsContainer.appendChild(row);
             });
  
-            cartTotalElement.textContent = total.toFixed(2);
+            cartTotalElement.textContent = Math.floor(total).toLocaleString('es');
         }
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
@@ -132,5 +132,4 @@ document.addEventListener('DOMContentLoaded', () => {
  
     renderCart();
     updateCartCount();
- });
- 
+});

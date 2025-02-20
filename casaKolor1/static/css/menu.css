@@ -24,6 +24,8 @@ body {
     background-color: #66b3ff;
     height: 100px;
     padding: .5rem;
+      
+  border-bottom: 3px solid white;
 }
 .navbar-nav{
     margin-left: -100px; /* Ajusta según necesites */

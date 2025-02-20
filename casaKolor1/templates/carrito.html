@@ -2,15 +2,70 @@
 {% load static %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+
+<style>
+    .cart-container {
+        max-width: 700px;
+        margin: 20px auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-header {
+        background-color: #0a84ffe0;
+        color: black;
+        text-align: center;
+        padding: 15px;
+        font-size: 22px;
+        font-weight: bold;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .cart-table {
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .cart-table th {
+        background-color: #f0f0f0;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .cart-table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .cart-table img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .cart-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .btn-custom {
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-<h2 class="text-center mb-4" style="background-color: #0a84ffe0; height: 70px; width: 100%; color: black; padding: 10px;">Carrito de Compras</h2>
+<div class="cart-container">
+    <div class="cart-header">Carrito de Compras</div>
 
-<div class="container2 mt-5">
-    <table class="table table-bordered text-center">
-        <thead style="background-color: #f0f0f0;">
+    <table class="table table-bordered cart-table">
+        <thead>
             <tr>
                 <th>Producto</th>
                 <th>Descripción</th>
@@ -23,15 +78,12 @@
         <tbody id="cart-items"></tbody>
     </table>
 
-    <div class="text-end">
-        <button id="clear-cart-btn" class="btn btn-danger">Vaciar Carrito</button>
+    <div class="cart-footer">
+        <button id="clear-cart-btn" class="btn btn-danger btn-custom">Vaciar Carrito</button>
         <h4>Total: $<span id="cart-total">0</span></h4>
-        <button class="btn btn-success" id="checkout-btn">Finalizar Compra</button>
+        <button class="btn btn-success btn-custom" id="checkout-btn">Finalizar Compra</button>
     </div>
-    
-
 </div>
 
 <script src="{% static 'js/carrito.js' %}"></script>
 {% endblock %}
-

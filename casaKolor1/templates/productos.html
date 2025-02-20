@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load humanize %}  {# Cargar el filtro humanize para formatear números #}
+
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
@@ -20,7 +20,7 @@
                 {% endif %}
                 <div class="card-body text-center">
                     <p class="card-text">{{ producto.descripcion }}</p>
-                    <p class="card-text"><strong>Precio: ${{ producto.precio|intcomma }}</strong></p> {# Aplicar formato con separador de miles #}
+                    <p class="card-text"><strong>Precio: ${{ producto.precio}}</strong></p> {# Aplicar formato con separador de miles #}
                     <button class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
                 </div>
             </div>

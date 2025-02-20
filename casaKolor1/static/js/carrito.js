@@ -4,39 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartItemsContainer = document.getElementById('cart-items');
     const cartTotalElement = document.getElementById('cart-total');
 
-    const notificationContainer = document.createElement('div');
-    notificationContainer.id = 'notification-container';
-    notificationContainer.style.position = 'fixed';
-    notificationContainer.style.top = '35px';
-    notificationContainer.style.right = '125px';
-    notificationContainer.style.zIndex = '9999';
-    document.body.appendChild(notificationContainer);
-
-    function showNotification(message, type = 'success') {
-        const notification = document.createElement('div');
-        notification.textContent = message;
-        notification.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
-        notification.style.color = '#fff';
-        notification.style.padding = '10px 20px';
-        notification.style.marginBottom = '10px';
-        notification.style.borderRadius = '5px';
-        notification.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.2)';
-        notification.style.opacity = '1';
-        notification.style.transition = 'opacity 0.5s ease';
-
-        notificationContainer.appendChild(notification);
-
-        setTimeout(() => {
-            notification.style.opacity = '0';
-            setTimeout(() => notification.remove(), 500);
-        }, 3000);
-    }
-
     function updateCartCount() {
         const totalItems = cart.reduce((sum, item) => sum + item.cantidad, 0);
-        cartCountElement.textContent = totalItems;
-        cartCountElement.style.display = totalItems > 0 ? 'inline' : 'none';
+        if (cartCountElement) {
+            cartCountElement.textContent = totalItems;
+            cartCountElement.style.display = totalItems > 0 ? 'inline' : 'none';
+        }
     }
+    
 
     function renderCart() {
         if (cartItemsContainer) {
@@ -57,9 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     </td>
                     <td>$${Math.floor(subtotal).toLocaleString('es')}</td>
                     <td>
-                <button class="btn  btn-sm remove-item" data-id="${item.id}" aria-label="Eliminar">
-                    <img src="${trashIconUrl}" alt="Eliminar" width="26">
-                </button>
+                        <button class="btn btn-sm remove-item" data-id="${item.id}" aria-label="Eliminar">
+                            <img src="/static/images/basura.png" alt="Eliminar" width="26">
+                        </button>
                     </td>
                 `;
                 cartItemsContainer.appendChild(row);
@@ -87,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 cart.push({ id, nombre, descripcion, precio, imagen, cantidad: 1 });
             }
 
-            showNotification('Producto añadido al carrito');
             renderCart();
         }
 
@@ -98,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (index !== -1) {
                 cart.splice(index, 1);
-                showNotification('Producto eliminado del carrito', 'error');
                 renderCart();
             }
         }
@@ -106,17 +79,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.id === 'clear-cart-btn') {
             cart.length = 0;
             localStorage.removeItem('cart');
-            showNotification('Todos los productos han sido eliminados del carrito', 'error');
             renderCart();
         }
 
         if (event.target.id === 'checkout-btn') {
             if (cart.length === 0) {
-                showNotification('El carrito está vacío.', 'error');
                 return;
             }
 
-            showNotification('Compra realizada con éxito.');
             localStorage.removeItem('cart');
             window.location.href = '/';
         }

@@ -47,6 +47,35 @@ body {
     text-decoration: none;
     transition: 0.3s background-color;
 }
+#cart-icon {
+    position: relative;
+    display: inline-block;
+}
+
+#cart-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #ff3b30;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 50%;
+    min-width: 22px;
+    text-align: center;
+    display: none;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    font-family: 'Arial', sans-serif;
+    transition: transform 0.2s ease-in-out;
+}
+
+#cart-count.show {
+    display: inline-block;
+    transform: scale(1.1);
+}
+
+
 /* oculta inicial mente menu hamburguesa */
 .search-box {
     position: absolute;

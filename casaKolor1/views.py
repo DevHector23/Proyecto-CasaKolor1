@@ -106,10 +106,12 @@ def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('inicio')  # Cambia 'inicio' por tu página principal
-    return redirect('login')
+            form.save()  # Guarda el usuario, pero NO inicia sesión automáticamente
+            return redirect('login')  # Redirige al login en lugar de iniciar sesión
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, 'register.html', {'form': form})  # Renderiza la página de registro
 
 
 

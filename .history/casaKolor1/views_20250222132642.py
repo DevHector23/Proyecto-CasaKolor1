@@ -82,15 +82,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from .forms import CustomUserCreationForm  # Importa el formulario personalizado
 from django.contrib.auth.forms import AuthenticationForm
-from django.views.decorators.csrf import csrf_protect
-
-@csrf_protect
-def mi_vista(request):
-    if request.method == "POST":
-        # Procesar datos
-        pass
-    return render(request, "mi_template.html")
-
 
 def login_view(request):
     if request.method == 'POST':

@@ -36,6 +36,7 @@ def carrito(request):
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import redirect, render
+from django.contrib.auth.hashers import make_password
 
 # Primero, define el formulario de registro
 class UserRegistrationForm(UserCreationForm):

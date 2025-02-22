@@ -313,7 +313,21 @@
         transform: translateY(-3px);
         box-shadow: 0 6px 16px rgba(56, 176, 0, 0.35);
     }
-    
+#btnFinalizarCompra {
+    width: auto; /* Ajusta el ancho al contenido */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de letra */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #007bff; /* Color azul de Bootstrap */
+    border: none; /* Quitar borde */
+    cursor: pointer; /* Cambiar cursor al pasar */
+    transition: background 0.3s ease;
+}
+
+#btnFinalizarCompra:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+}
+
     /* Estilos para el total */
     .total-container {
         display: flex;
@@ -426,6 +440,7 @@
         color: var(--dark-text);
         margin-bottom: 25px;
     }
+
 </style>
 {% endblock %}
 
@@ -459,7 +474,7 @@
                 <span id="cart-total">0</span>
             </div>
         </div>
-        <button class="btn btn-success btn-custom" id="checkout-btn">
+        <button type="button" class="btn btn-primary" id="btnFinalizarCompra">
             Finalizar Compra
         </button>
     </div>

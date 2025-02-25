@@ -82,15 +82,3 @@ class SugerenciaForm(forms.ModelForm):
 
         send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, [destinatario])
 
-from .models import Pedido, DetallePedido
-
-class PedidoForm(forms.ModelForm):
-    class Meta:
-        model = Pedido
-        fields = ['nombre', 'correo', 'telefono', 'comprobante']
-        widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'id': 'nombre'}),
-            'correo': forms.EmailInput(attrs={'class': 'form-control', 'id': 'correo'}),
-            'telefono': forms.TextInput(attrs={'class': 'form-control', 'id': 'telefono'}),
-            'comprobante': forms.FileInput(attrs={'class': 'form-control', 'id': 'factura'}),
-        }

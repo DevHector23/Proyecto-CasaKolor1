@@ -48,7 +48,6 @@ urlpatterns = [
     #login
     path('sugerencias/', enviar_sugerencia, name='sugerencias'),
     path('sugerencia_exitosa/', lambda request: render(request, 'sugerencia_exitosa.html'), name='sugerencia_exitosa'),
-    path('finalizar-compra/', views.finalizar_compra, name='finalizar_compra'),
 
 
 

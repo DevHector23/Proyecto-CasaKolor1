@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Recuperar el carrito desde localStorage al cargar la página
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartCountElement = document.getElementById('cart-count');
     const cartItemsContainer = document.getElementById('cart-items');
@@ -6,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalCartItems = document.getElementById('modal-cart-items');
     const modalCartTotal = document.getElementById('modal-cart-total');
 
+    // Restaurar el contador del carrito al cargar la página
     function restoreCartCount() {
         const savedCount = localStorage.getItem('cartCount');
         if (savedCount && cartCountElement) {
@@ -14,15 +16,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Función para actualizar el contador del carrito
     function updateCartCount() {
         const totalItems = cart.reduce((sum, item) => sum + item.cantidad, 0);
-        localStorage.setItem('cartCount', totalItems); 
+        localStorage.setItem('cartCount', totalItems); // Guardar el contador en localStorage
         if (cartCountElement) {
             cartCountElement.textContent = totalItems;
             cartCountElement.style.display = totalItems > 0 ? 'inline' : 'none';
         }
     }
 
+    // Función para renderizar el carrito en la página
     function renderCart() {
         if (cartItemsContainer) {
             cartItemsContainer.innerHTML = '';
@@ -52,11 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             cartTotalElement.textContent = Math.floor(total).toLocaleString('es');
         }
-        localStorage.setItem('cart', JSON.stringify(cart)); 
-        updateCartCount(); 
-        renderModalCart(); 
+        localStorage.setItem('cart', JSON.stringify(cart)); // Guardar el carrito en localStorage
+        updateCartCount(); // Actualizar el contador del carrito
+        renderModalCart(); // ✅ Asegurar que la modal también se actualice
     }
 
+    // Función para renderizar los productos en la modal
     function renderModalCart() {
         if (modalCartItems && modalCartTotal) {
             modalCartItems.innerHTML = '';
@@ -79,15 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    restoreCartCount(); 
+    restoreCartCount(); // Restaurar el contador al cargar la página
 
+    // Evento para agregar productos al carrito
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('add-to-cart')) {
             const card = event.target.closest('.card');
             const id = event.target.dataset.id;
             const nombre = card.querySelector('.card-title').textContent;
             const descripcion = card.querySelector('.card-text').textContent;
-            const precio = parseFloat(card.querySelector('.card-text strong').textContent.replace('Precio: $', '').replace(/\./g, '').replace(/,/g, '.'));
+            const precio = parseFloat(card.querySelector('.card-text strong').textContent.replace('Precio: $', ''));
             const imagen = card.querySelector('img').src;
 
             const existingItem = cart.find(item => item.id === id);
@@ -97,10 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 cart.push({ id, nombre, descripcion, precio, imagen, cantidad: 1 });
             }
 
-            localStorage.setItem('cart', JSON.stringify(cart));
-            renderCart(); 
+            renderCart(); // Actualizar la vista del carrito
         }
 
+        // Evento para eliminar productos del carrito
         if (event.target.closest('.remove-item')) {
             const button = event.target.closest('.remove-item');
             const id = button.dataset.id;
@@ -108,22 +114,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (index !== -1) {
                 cart.splice(index, 1);
-                renderCart(); 
+                renderCart(); // Actualizar la vista del carrito
             }
         }
 
+        // Evento para vaciar el carrito
         if (event.target.id === 'clear-cart-btn') {
             cart.length = 0;
             localStorage.removeItem('cart');
-            localStorage.setItem('cartCount', 0); 
-            renderCart();
+            localStorage.setItem('cartCount', 0); // Resetear el contador en localStorage
+            renderCart(); // Actualizar la vista del carrito
         }
 
+        // Evento para abrir la modal de finalizar compra
         if (event.target.id === 'btnFinalizarCompra') {
-            renderModalCart(); 
+            renderModalCart(); // ✅ Se asegura que la modal se actualice al abrirla
         }
     });
 
+    // Evento para cambiar la cantidad de un producto en el carrito
     document.addEventListener('change', function (event) {
         if (event.target.classList.contains('quantity-input')) {
             const id = event.target.dataset.id;
@@ -132,75 +141,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (item && newQuantity > 0) {
                 item.cantidad = newQuantity;
-                renderCart();
+                renderCart(); // Actualizar la vista del carrito
             }
         }
     });
 
+    // Evento para confirmar la compra
     document.getElementById('confirmarCompra').addEventListener('click', function () {
         const nombre = document.getElementById('nombre').value;
         const correo = document.getElementById('correo').value;
         const telefono = document.getElementById('telefono').value;
-        const facturaInput = document.getElementById('factura');
+        const factura = document.getElementById('factura').files[0];
 
+        // Validar que los campos estén completos
         if (!nombre || !correo || !telefono) {
             alert('Por favor, complete todos los campos: nombre, correo y teléfono.');
             return;
         }
 
-        if (!facturaInput || !facturaInput.files || facturaInput.files.length === 0) {
+        // Validar que se haya subido una factura
+        if (!factura) {
             alert('Por favor, suba una foto de la factura.');
             return;
         }
 
-        const total = cart.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+        // Crear un objeto con los datos del cliente y los productos
+        const datosCliente = {
+            nombre,
+            correo,
+            telefono,
+            productos: cart,
+            total: Math.floor(cart.reduce((sum, item) => sum + item.precio * item.cantidad, 0)).toLocaleString('es')
+        };
 
-        const formData = new FormData();
-        formData.append('nombre', nombre);
-        formData.append('correo', correo);
-        formData.append('telefono', telefono);
-        formData.append('total', total);
-        formData.append('items', JSON.stringify(cart));
-        formData.append('comprobante', facturaInput.files[0]);
+        console.log('Datos del cliente:', datosCliente);
+        alert('Compra confirmada. Gracias por su compra, ' + nombre + '!');
 
-        const csrfTokenElement = document.querySelector('[name=csrfmiddlewaretoken]');
-        if (csrfTokenElement) {
-            formData.append('csrfmiddlewaretoken', csrfTokenElement.value);
-        }
-
-        fetch('/finalizar-compra/', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                cart.length = 0;
-                localStorage.removeItem('cart');
-                localStorage.setItem('cartCount', 0);
-                
-                alert('¡Compra realizada con éxito!');
-                
-                const modal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
-                modal.hide();
-                renderCart();
-            } else {
-                let errorMessage = 'Error al procesar el pedido: ';
-                if (data.errors) {
-                    Object.keys(data.errors).forEach(key => {
-                        errorMessage += `\n${key}: ${data.errors[key]}`;
-                    });
-                } else {
-                    errorMessage += data.message || 'Error desconocido';
-                }
-                alert(errorMessage);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al procesar la compra. Por favor, inténtelo de nuevo.');
-        });
+        // Limpiar el carrito y cerrar la modal
+        cart.length = 0;
+        localStorage.removeItem('cart');
+        localStorage.setItem('cartCount', 0); // Resetear el contador en localStorage
+        renderCart();
+        bootstrap.Modal.getInstance(document.getElementById('checkoutModal')).hide();
     });
 
+    // Renderizar el carrito y actualizar el contador al cargar la página
     renderCart();
 });

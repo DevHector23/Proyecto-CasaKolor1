@@ -41,27 +41,3 @@ class Sugerencia(models.Model):
 
 
 #factura
-class Pedido(models.Model):
-    nombre = models.CharField(max_length=100)
-    correo = models.EmailField()
-    telefono = models.CharField(max_length=20)
-    total = models.DecimalField(max_digits=10, decimal_places=0)
-    comprobante = models.ImageField(upload_to='comprobantes/', null=True, blank=True)
-    fecha_compra = models.DateTimeField(auto_now_add=True)
-    estado = models.CharField(max_length=20, default='pendiente', 
-                             choices=[('pendiente', 'Pendiente'), 
-                                     ('completado', 'Completado'), 
-                                     ('cancelado', 'Cancelado')])
-
-    def __str__(self):
-        return f"Pedido de {self.nombre} - {self.fecha_compra}"
-
-class DetallePedido(models.Model):
-    pedido = models.ForeignKey(Pedido, related_name='detalles', on_delete=models.CASCADE)
-    producto = models.ForeignKey(productos, on_delete=models.CASCADE)
-    cantidad = models.PositiveIntegerField(default=1)
-    precio_unitario = models.DecimalField(max_digits=10, decimal_places=0)
-    subtotal = models.DecimalField(max_digits=10, decimal_places=0)
-
-    def __str__(self):
-        return f"{self.cantidad} x {self.producto.nombre}"

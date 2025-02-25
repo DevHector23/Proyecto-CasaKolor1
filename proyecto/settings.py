@@ -33,8 +33,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_interface',
-    'colorfield',
+    'jazzmin',
+    # 'admin_interface',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +44,46 @@ INSTALLED_APPS = [
     'casaKolor1',
     'django.contrib.humanize',
 ]
+JAZZMIN_SETTINGS = {
+    # Cambiar título y encabezado
+    "site_title": "Casa Kolor Admin",  
+    "site_header": "Casa Kolor",
+    "welcome_sign": "Bienvenido al Panel de Administración de Casa Kolor",
+    "copyright": "© 2025 Casa Kolor",  
+
+    # Agregar logo personalizado (debe estar en /static/images/)
+    "site_logo": "images/casakolor1.png",  # Asegúrate de que el logo esté en /static/images/
+    "site_logo_classes": "img-circle",  # Opcional: Puedes cambiar la forma del logo
+
+    # Cambiar favicon
+    "site_icon": "images/favicon.ico",  # Asegúrate de tener un favicon en /static/images/
+
+    # Colores personalizados
+    "primary_color": "#ff6600",  # Cambia este color por el de tu marca
+    "secondary_color": "#0055a5",
+    "dark_mode_toggle": True,  # Habilita modo oscuro
+
+    # Orden de las aplicaciones en el menú
+    "order_with_respect_to": ["auth", "casaKolor1"],  
+
+    # Personalizar iconos en el menú
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "casaKolor1.Producto": "fas fa-paint-brush",  # Cambia según el modelo
+    },
+
+    # Expandir menú por defecto
+    "navigation_expanded": True,
+}
+JAZZMIN_UI_TWEAKS = {
+    "theme": "darkly",  # O prueba con "cyborg" si quieres más oscuro
+    "navbar": "navbar-dark bg-dark",  # Cambia la barra superior a color oscuro
+    "body_small_text": True,  
+    "brand_colour": "white",  # Color del texto en la barra superior
+}
+
 
 
 

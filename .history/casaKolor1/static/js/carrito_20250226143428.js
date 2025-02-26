@@ -179,24 +179,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem('cart');
                 localStorage.setItem('cartCount', 0);
                 
-                // Reemplazando el alert por un mensaje que no requiere interacción
-                // y cierre automático del modal
                 const modal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
                 modal.hide();
                 
-                // Crear una notificación temporal (opcional)
-                const notificacion = document.createElement('div');
-                notificacion.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-3';
-                notificacion.style.zIndex = '9999';
-                notificacion.textContent = '¡Compra realizada con éxito!';
-                document.body.appendChild(notificacion);
-                
-                // Eliminar la notificación después de 3 segundos
-                setTimeout(() => {
-                    notificacion.remove();
-                }, 3000);
-                
-                renderCart();
+                modal._element.addEventListener('hidden.bs.modal', function () {
+                    alert('¡Compra realizada con éxito!');
+                    renderCart();
+                }, { once: true });
+
             } else {
                 let errorMessage = 'Error al procesar el pedido: ';
                 if (data.errors) {

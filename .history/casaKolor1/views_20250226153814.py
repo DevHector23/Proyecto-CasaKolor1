@@ -194,7 +194,7 @@ def finalizar_compra(request):
                     pedido=pedido,
                     producto=producto,
                     cantidad=cantidad,
-                    precio_unitario=precio,
+                    precio_unitario=precio
                     subtotal=subtotal
                 )
                 

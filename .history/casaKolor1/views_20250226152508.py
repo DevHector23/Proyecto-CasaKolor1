@@ -148,9 +148,6 @@ from django.http import JsonResponse
 from .models import Pedido, DetallePedido
 from .forms import PedidoForm
 import json
-from django.utils import timezone
-import uuid
-from django.db import transaction
 from django.core.cache import cache
 
 def finalizar_compra(request):

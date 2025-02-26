@@ -153,30 +153,42 @@ import uuid
 from django.db import transaction
 from django.core.cache import cache
 
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+import os
+
 def finalizar_compra(request):
     if request.method == 'POST':
-        # Extraer el token de la transacción
         transaction_token = request.POST.get('transaction_token')
-        
-        # Clave única para esta transacción
         cache_key = f'order_token_{transaction_token}'
         
-        # Verificar si esta transacción ya fue procesada
         if cache.get(cache_key):
-            # Si ya fue procesada, no hacer nada más
             return JsonResponse({'success': True, 'message': 'Pedido ya procesado'})
-        
-        # Marcar esta transacción como en proceso por 30 segundos
-        # (suficiente para que termine el procesamiento)
+
         cache.set(cache_key, True, 30)
         
         form = PedidoForm(request.POST, request.FILES)
         if form.is_valid():
-            # Crear el pedido
+            comprobante = request.FILES.get('comprobante')
+
+            # Verificar si el archivo ya existe
+            if comprobante:
+                file_path = os.path.join('comprobantes/', comprobante.name)
+                if default_storage.exists(file_path):
+                    cache.delete(cache_key)
+                    return JsonResponse({'success': False, 'message': 'Error: Factura con el mismo nombre ya guardada. Cambie el nombre del archivo e intente de nuevo.'})
+
+            # Guardar el pedido
             pedido = form.save(commit=False)
             pedido.total = request.POST.get('total', 0)
             pedido.save()
             
+            # Guardar el archivo manualmente para evitar duplicados
+            if comprobante:
+                file_path = default_storage.save(file_path, ContentFile(comprobante.read()))
+                pedido.comprobante.name = file_path
+                pedido.save()
+
             # Procesar los productos del carrito
             items = json.loads(request.POST.get('items', '[]'))
             detalles_correo = []
@@ -188,8 +200,6 @@ def finalizar_compra(request):
                 subtotal = item.get('subtotal', 0)
                 
                 producto = productos.objects.get(id=producto_id)
-                
-                # Crear detalle del pedido
                 DetallePedido.objects.create(
                     pedido=pedido,
                     producto=producto,
@@ -198,9 +208,8 @@ def finalizar_compra(request):
                     subtotal=subtotal
                 )
                 
-                # Agregar información para el correo
                 detalles_correo.append(f"Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.")
-            
+
             # Enviar correo de confirmación
             asunto = "Confirmación de Pedido - Casa Kolor"
             mensaje = f"""
@@ -220,19 +229,15 @@ def finalizar_compra(request):
             """
             
             destinatario = pedido.correo
-            
-            # Guardar la transacción como procesada por 30 minutos
             cache.set(cache_key, True, 60 * 30)
             
             send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, [destinatario])
             
             return JsonResponse({'success': True, 'message': 'Pedido creado correctamente y confirmación enviada por correo'})
         else:
-            # Liberar la marca en caso de error
             cache.delete(cache_key)
             return JsonResponse({'success': False, 'errors': form.errors})
-    
-    return JsonResponse({'success': False, 'message': 'Método no permitido'})
+
 # def finalizar_compra(request):
 #     if request.method == 'POST':
 #         form = PedidoForm(request.POST, request.FILES)

@@ -23,6 +23,7 @@ class productos(models.Model):
    fecha_creacion = models.DateTimeField(auto_now_add=True)
    categoria = models.CharField(max_length=20, choices=CATEGORIAS, default='herramientas')
    
+
    def __str__(self):
        return f"{self.nombre} - {self.get_presentacion_display()}"
 

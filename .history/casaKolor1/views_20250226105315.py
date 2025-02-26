@@ -147,35 +147,34 @@ def enviar_sugerencia(request):
 from django.http import JsonResponse
 from .models import Pedido, DetallePedido
 from .forms import PedidoForm
-import json
-from django.utils import timezone
-import uuid
-from django.db import transaction
-from django.core.cache import cache
+import json,time
 
 def finalizar_compra(request):
     if request.method == 'POST':
-        # Extraer el token de la transacción
-        transaction_token = request.POST.get('transaction_token')
+        # Añadir verificación para evitar duplicados
+        orden_id = request.session.get('ultima_orden_id', None)
         
-        # Clave única para esta transacción
-        cache_key = f'order_token_{transaction_token}'
-        
-        # Verificar si esta transacción ya fue procesada
-        if cache.get(cache_key):
-            # Si ya fue procesada, no hacer nada más
-            return JsonResponse({'success': True, 'message': 'Pedido ya procesado'})
-        
-        # Marcar esta transacción como en proceso por 30 segundos
-        # (suficiente para que termine el procesamiento)
-        cache.set(cache_key, True, 30)
-        
+        # Si hay una orden reciente en la sesión, verificamos que no sea una duplicación
+        if orden_id:
+            # Comprobar si esta solicitud es una duplicación reciente
+            try:
+                # Verificar si ya existe un pedido reciente con los mismos datos
+                pedido_existente = Pedido.objects.get(pk=orden_id)
+                # Si encontramos el pedido y es muy reciente (menos de 10 segundos)
+                if (timezone.now() - pedido_existente.fecha_creacion).total_seconds() < 10:
+                    return JsonResponse({'success': True, 'message': 'Pedido procesado correctamente'})
+            except Pedido.DoesNotExist:
+                pass  # Si no existe, continuamos normalmente
+                
         form = PedidoForm(request.POST, request.FILES)
         if form.is_valid():
             # Crear el pedido
             pedido = form.save(commit=False)
             pedido.total = request.POST.get('total', 0)
             pedido.save()
+            
+            # Guardar el ID del pedido en la sesión para evitar duplicados
+            request.session['ultima_orden_id'] = pedido.id
             
             # Procesar los productos del carrito
             items = json.loads(request.POST.get('items', '[]'))
@@ -221,78 +220,13 @@ def finalizar_compra(request):
             
             destinatario = pedido.correo
             
-            # Guardar la transacción como procesada por 30 minutos
-            cache.set(cache_key, True, 60 * 30)
-            
             send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, [destinatario])
             
             return JsonResponse({'success': True, 'message': 'Pedido creado correctamente y confirmación enviada por correo'})
         else:
-            # Liberar la marca en caso de error
-            cache.delete(cache_key)
             return JsonResponse({'success': False, 'errors': form.errors})
     
     return JsonResponse({'success': False, 'message': 'Método no permitido'})
-# def finalizar_compra(request):
-#     if request.method == 'POST':
-#         form = PedidoForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             # Crear el pedido
-#             pedido = form.save(commit=False)
-#             pedido.total = request.POST.get('total', 0)
-#             pedido.save()
-            
-#             # Procesar los productos del carrito
-#             items = json.loads(request.POST.get('items', '[]'))
-#             detalles_correo = []
-            
-#             for item in items:
-#                 producto_id = item.get('id')
-#                 cantidad = item.get('cantidad', 1)
-#                 precio = item.get('precio', 0)
-#                 subtotal = item.get('subtotal', 0)
-                
-#                 producto = productos.objects.get(id=producto_id)
-                
-#                 # Crear detalle del pedido
-#                 DetallePedido.objects.create(
-#                     pedido=pedido,
-#                     producto=producto,
-#                     cantidad=cantidad,
-#                     precio_unitario=precio,
-#                     subtotal=subtotal
-#                 )
-                
-#                 # Agregar información para el correo
-#                 detalles_correo.append(f"Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.")
-            
-#             # Enviar correo de confirmación
-#             asunto = "Confirmación de Pedido - Casa Kolor"
-#             mensaje = f"""
-#             Hola {pedido.nombre},
-            
-#             ¡Gracias por tu compra en Casa Kolor!
-            
-#             Detalles de tu pedido:
-#             {''.join([f'\n- {detalle}' for detalle in detalles_correo])}
-            
-#             Total: ${pedido.total}
-            
-#             Tu pedido será procesado a la brevedad.
-            
-#             Saludos,
-#             El equipo de Casa Kolor
-#             """
-            
-#             destinatario = pedido.correo
-            
-#             send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, [destinatario])
-            
-#             return JsonResponse({'success': True, 'message': 'Pedido creado correctamente y confirmación enviada por correo'})
-#         else:
-#             return JsonResponse({'success': False, 'errors': form.errors})
-    
-#     return JsonResponse({'success': False, 'message': 'Método no permitido'})
 
 from django.contrib import messages
 from django.contrib.auth.models import User

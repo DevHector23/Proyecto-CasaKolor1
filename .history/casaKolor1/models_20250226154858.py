@@ -22,7 +22,8 @@ class productos(models.Model):
    presentacion = models.CharField(max_length=20, choices=PRESENTACIONES, default='galon')
    fecha_creacion = models.DateTimeField(auto_now_add=True)
    categoria = models.CharField(max_length=20, choices=CATEGORIAS, default='herramientas')
-   
+   transaction_id = models.CharField(max_length=100, null=True, blank=True, unique=True)
+
    def __str__(self):
        return f"{self.nombre} - {self.get_presentacion_display()}"
 
@@ -48,11 +49,11 @@ class Pedido(models.Model):
     total = models.DecimalField(max_digits=10, decimal_places=0)
     comprobante = models.ImageField(upload_to='comprobantes/', null=True, blank=True)
     fecha_compra = models.DateTimeField(auto_now_add=True)
-    transaction_id = models.CharField(max_length=100, null=True, blank=True, unique=True)
     estado = models.CharField(max_length=20, default='pendiente', 
                              choices=[('pendiente', 'Pendiente'), 
                                      ('completado', 'Completado'), 
                                      ('cancelado', 'Cancelado')])
+    transaction_id = models.CharField(max_length=100, null=True, blank=True, unique=True)
 
     def __str__(self):
         return f"Pedido de {self.nombre} - {self.fecha_compra}"
@@ -66,3 +67,8 @@ class DetallePedido(models.Model):
 
     def __str__(self):
         return f"{self.cantidad} x {self.producto.nombre}"
+    
+
+    # Campos existentes...
+    transaction_id = models.CharField(max_length=100, null=True, blank=True, unique=True)
+    # Resto del modelo...

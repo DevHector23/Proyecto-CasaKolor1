@@ -22,7 +22,11 @@ class productos(models.Model):
    presentacion = models.CharField(max_length=20, choices=PRESENTACIONES, default='galon')
    fecha_creacion = models.DateTimeField(auto_now_add=True)
    categoria = models.CharField(max_length=20, choices=CATEGORIAS, default='herramientas')
-   
+   class Pedido(models.Model):
+    # Campos existentes...
+    transaction_id = models.CharField(max_length=100, null=True, blank=True, unique=True)
+    # Resto del modelo...
+
    def __str__(self):
        return f"{self.nombre} - {self.get_presentacion_display()}"
 

@@ -23,9 +23,6 @@ class productos(models.Model):
    fecha_creacion = models.DateTimeField(auto_now_add=True)
    categoria = models.CharField(max_length=20, choices=CATEGORIAS, default='herramientas')
    
-   def __str__(self):
-       return f"{self.nombre} - {self.get_presentacion_display()}"
-
 #sugerencias
 
 
@@ -48,7 +45,6 @@ class Pedido(models.Model):
     total = models.DecimalField(max_digits=10, decimal_places=0)
     comprobante = models.ImageField(upload_to='comprobantes/', null=True, blank=True)
     fecha_compra = models.DateTimeField(auto_now_add=True)
-    transaction_id = models.CharField(max_length=100, null=True, blank=True, unique=True)
     estado = models.CharField(max_length=20, default='pendiente', 
                              choices=[('pendiente', 'Pendiente'), 
                                      ('completado', 'Completado'), 

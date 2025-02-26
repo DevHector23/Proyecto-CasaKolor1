@@ -144,51 +144,49 @@ def enviar_sugerencia(request):
     return render(request, 'sugerencias.html', {'form': form})
 
 
+from django.core.mail import send_mail
 from django.http import JsonResponse
-from .models import Pedido, DetallePedido
-from .forms import PedidoForm
+from django.conf import settings
 import json
-from django.utils import timezone
-import uuid
-from django.db import transaction
+from django.utils import uuid
 from django.core.cache import cache
+from .models import Pedido, DetallePedido, productos
+from .forms import PedidoForm
 
 def finalizar_compra(request):
     if request.method == 'POST':
-        # Extraer el token de la transacción
-        transaction_token = request.POST.get('transaction_token')
+        # Generar un token único para esta compra basado en usuario y timestamp
+        transaction_token = request.POST.get('transaction_token') or str(uuid.uuid4())
         
-        # Clave única para esta transacción
-        cache_key = f'order_token_{transaction_token}'
-        
+        # Clave única para esta transacción (basada en el usuario y un timestamp)
+        cache_key = f'order_token_{request.user.id}_{transaction_token}'
+
         # Verificar si esta transacción ya fue procesada
         if cache.get(cache_key):
-            # Si ya fue procesada, no hacer nada más
-            return JsonResponse({'success': True, 'message': 'Pedido ya procesado'})
-        
-        # Marcar esta transacción como en proceso por 30 segundos
-        # (suficiente para que termine el procesamiento)
-        cache.set(cache_key, True, 30)
-        
+            return JsonResponse({'success': True, 'message': 'Pedido ya procesado, evita recargar la página'})
+
+        # Marcar la transacción como procesada durante 5 minutos
+        cache.set(cache_key, True, 60 * 5)
+
         form = PedidoForm(request.POST, request.FILES)
         if form.is_valid():
             # Crear el pedido
             pedido = form.save(commit=False)
             pedido.total = request.POST.get('total', 0)
             pedido.save()
-            
+
             # Procesar los productos del carrito
             items = json.loads(request.POST.get('items', '[]'))
             detalles_correo = []
-            
+
             for item in items:
                 producto_id = item.get('id')
                 cantidad = item.get('cantidad', 1)
                 precio = item.get('precio', 0)
                 subtotal = item.get('subtotal', 0)
-                
+
                 producto = productos.objects.get(id=producto_id)
-                
+
                 # Crear detalle del pedido
                 DetallePedido.objects.create(
                     pedido=pedido,
@@ -197,42 +195,45 @@ def finalizar_compra(request):
                     precio_unitario=precio,
                     subtotal=subtotal
                 )
-                
+
                 # Agregar información para el correo
                 detalles_correo.append(f"Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.")
-            
-            # Enviar correo de confirmación
-            asunto = "Confirmación de Pedido - Casa Kolor"
-            mensaje = f"""
-            Hola {pedido.nombre},
-            
-            ¡Gracias por tu compra en Casa Kolor!
-            
-            Detalles de tu pedido:
-            {''.join([f'\n- {detalle}' for detalle in detalles_correo])}
-            
-            Total: ${pedido.total}
-            
-            Tu pedido será procesado a la brevedad.
-            
-            Saludos,
-            El equipo de Casa Kolor
-            """
-            
-            destinatario = pedido.correo
-            
-            # Guardar la transacción como procesada por 30 minutos
-            cache.set(cache_key, True, 60 * 30)
-            
-            send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, [destinatario])
-            
+
+            # Verificar si el correo ya fue enviado antes
+            correo_key = f'email_sent_{pedido.id}'
+            if not cache.get(correo_key):
+                asunto = "Confirmación de Pedido - Casa Kolor"
+                mensaje = f"""
+                Hola {pedido.nombre},
+
+                ¡Gracias por tu compra en Casa Kolor!
+
+                Detalles de tu pedido:
+                {''.join([f'\\n- {detalle}' for detalle in detalles_correo])}
+
+                Total: ${pedido.total}
+
+                Tu pedido será procesado a la brevedad.
+
+                Saludos,
+                El equipo de Casa Kolor
+                """
+
+                destinatario = pedido.correo
+                send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, [destinatario])
+
+                # Guardar que el correo fue enviado para este pedido
+                cache.set(correo_key, True, 60 * 30)  # 30 minutos
+
             return JsonResponse({'success': True, 'message': 'Pedido creado correctamente y confirmación enviada por correo'})
+
         else:
             # Liberar la marca en caso de error
             cache.delete(cache_key)
             return JsonResponse({'success': False, 'errors': form.errors})
-    
+
     return JsonResponse({'success': False, 'message': 'Método no permitido'})
+
 # def finalizar_compra(request):
 #     if request.method == 'POST':
 #         form = PedidoForm(request.POST, request.FILES)

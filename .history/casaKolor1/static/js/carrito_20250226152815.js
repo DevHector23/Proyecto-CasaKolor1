@@ -6,17 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalCartItems = document.getElementById('modal-cart-items');
     const modalCartTotal = document.getElementById('modal-cart-total');
 
-    function restoreCartCount() {
-        const savedCount = localStorage.getItem('cartCount');
-        if (savedCount && cartCountElement) {
-            cartCountElement.textContent = savedCount;
-            cartCountElement.style.display = savedCount > 0 ? 'inline' : 'none';
-        }
-    }
-
     function updateCartCount() {
         const totalItems = cart.reduce((sum, item) => sum + item.cantidad, 0);
-        localStorage.setItem('cartCount', totalItems); 
+        localStorage.setItem('cartCount', totalItems);
         if (cartCountElement) {
             cartCountElement.textContent = totalItems;
             cartCountElement.style.display = totalItems > 0 ? 'inline' : 'none';
@@ -79,64 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    restoreCartCount(); 
-
-    document.addEventListener('click', function (event) {
-        if (event.target.classList.contains('add-to-cart')) {
-            const card = event.target.closest('.card');
-            const id = event.target.dataset.id;
-            const nombre = card.querySelector('.card-title').textContent;
-            const descripcion = card.querySelector('.card-text').textContent;
-            const precio = parseFloat(card.querySelector('.card-text strong').textContent.replace('Precio: $', '').replace(/\./g, '').replace(/,/g, '.'));
-            const imagen = card.querySelector('img').src;
-
-            const existingItem = cart.find(item => item.id === id);
-            if (existingItem) {
-                existingItem.cantidad++;
-            } else {
-                cart.push({ id, nombre, descripcion, precio, imagen, cantidad: 1 });
-            }
-
-            localStorage.setItem('cart', JSON.stringify(cart));
-            renderCart(); 
-        }
-
-        if (event.target.closest('.remove-item')) {
-            const button = event.target.closest('.remove-item');
-            const id = button.dataset.id;
-            const index = cart.findIndex(item => item.id === id);
-
-            if (index !== -1) {
-                cart.splice(index, 1);
-                renderCart(); 
-            }
-        }
-
-        if (event.target.id === 'clear-cart-btn') {
-            cart.length = 0;
-            localStorage.removeItem('cart');
-            localStorage.setItem('cartCount', 0); 
-            renderCart();
-        }
-
-        if (event.target.id === 'btnFinalizarCompra') {
-            renderModalCart(); 
-        }
-    });
-
-    document.addEventListener('change', function (event) {
-        if (event.target.classList.contains('quantity-input')) {
-            const id = event.target.dataset.id;
-            const newQuantity = parseInt(event.target.value);
-            const item = cart.find(item => item.id === id);
-
-            if (item && newQuantity > 0) {
-                item.cantidad = newQuantity;
-                renderCart();
-            }
-        }
-    });
-
     document.getElementById('confirmarCompra').addEventListener('click', function () {
         const nombre = document.getElementById('nombre').value;
         const correo = document.getElementById('correo').value;
@@ -175,27 +109,28 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                // Limpiar carrito correctamente
                 cart.length = 0;
                 localStorage.removeItem('cart');
                 localStorage.setItem('cartCount', 0);
                 
-                // Reemplazando el alert por un mensaje que no requiere interacción
-                // y cierre automático del modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
-                modal.hide();
-                
-                // Crear una notificación temporal (opcional)
+                // Cerrar el modal de compra
+                const modalElement = document.getElementById('checkoutModal');
+                const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                modalInstance.hide();
+
+                // Crear un mensaje de éxito sin alert
                 const notificacion = document.createElement('div');
                 notificacion.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-3';
                 notificacion.style.zIndex = '9999';
                 notificacion.textContent = '¡Compra realizada con éxito!';
                 document.body.appendChild(notificacion);
-                
+
                 // Eliminar la notificación después de 3 segundos
                 setTimeout(() => {
                     notificacion.remove();
                 }, 3000);
-                
+
                 renderCart();
             } else {
                 let errorMessage = 'Error al procesar el pedido: ';

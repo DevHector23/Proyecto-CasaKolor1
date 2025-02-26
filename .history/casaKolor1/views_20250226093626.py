@@ -128,6 +128,7 @@ def buscar(request):
 #sugerencia
 
 from django.core.mail import send_mail
+from django.conf import settings
 from .forms import SugerenciaForm
 
 def enviar_sugerencia(request):
@@ -210,6 +211,7 @@ def finalizar_compra(request):
     
     return JsonResponse({'success': False, 'message': 'Método no permitido'})
 
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.mail import send_mail

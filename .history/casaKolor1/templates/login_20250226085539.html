@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-master-wrapper" id="container">
+    <div class="auth-form-section auth-signup-section">
+        <form class="logi" method="post" action="{% url 'register' %}" novalidate>
+            {% csrf_token %}
+            <h1 class="auth-title">Crear Cuenta</h1>
+            <span class="auth-divider-text">o usa tu email para registrarte</span>
+            <div class="auth-input-group">
+                {{ register_form.username }}
+                {{ register_form.email }}
+                {{ register_form.password1 }}
+                {{ register_form.password2 }}
+            </div>
+            {% if register_form.errors %}
+                <div class="auth-error-container">
+                    {% for field, errors in register_form.errors.items %}
+                        {% for error in errors %}
+                            <p class="auth-error-text">{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <button type="submit" class="auth-submit-btn">Registrarse</button>
+        </form>
+    </div>
+    
+    <div class="auth-form-section auth-signin-section">
+        <form class="logi" method="post" action="{% url 'login' %}" novalidate>
+            {% csrf_token %}
+            <h1 class="auth-title">Iniciar Sesión</h1>
+            
+            <span class="auth-divider-text">o usa tu cuenta</span>
+            <div class="auth-input-group">
+                <input type="text" name="username" placeholder="Nombre de usuario" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+            </div>
+            {% if form.errors %}
+                <div class="auth-error-container">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <p class="auth-error-text">{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <a href="{% url 'restablecer' %}" class="auth-forgot-link">¿Olvidaste tu contraseña?</a>
+            <button type="submit" class="auth-submit-btn">Iniciar Sesión</button>
+        </form>
+    </div>
+    
+    <div class="auth-overlay-section">
+        <div class="auth-overlay-content">
+            <div class="auth-panel auth-panel-left">
+                <h1 class="auth-title">¡Bienvenido!</h1>
+                <p class="auth-description">Para mantenerte conectado con nosotros, inicia sesión con tu información personal</p>
+                <button class="auth-switch-btn" id="signIn">Iniciar Sesión</button>
+            </div>
+            <div class="auth-panel auth-panel-right">
+                <h1 class="auth-title">¡Hola, Amigo!</h1>
+                <p class="auth-description">Ingresa tus datos personales y comienza tu viaje con nosotros</p>
+                <button class="auth-switch-btn" id="signUp">Registrarse</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

@@ -55,8 +55,7 @@ urlpatterns = [
     path('restablecer/', views.restablecer, name='restablecer'),
     path('cambiar-contraseña/<str:uidb64>/<str:token>/', views.cambiar_contraseña, name='cambiar_contraseña'),
     path('confirmacion/', views.confirmacion, name='confirmacion'),
-
-    #mensaje de alerta
+    path('login/', login_view, name='login'),
     path('clear-login-success/', clear_login_success, name='clear_login_success'),
 
 

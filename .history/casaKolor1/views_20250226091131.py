@@ -35,21 +35,27 @@ def carrito(request):
 
 #registro de usuario
 from django.contrib.auth.forms import UserCreationForm
-# Primero, define el formulario de registro
+from django.contrib.auth import login, authenticate
+from django.shortcuts import redirect, render
 
+# Primero, define el formulario de registro
 class UserRegistrationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         fields = ("username", "email", "password1", "password2")
 
 
-
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
 from .forms import CustomUserCreationForm  # Importa el formulario personalizado
-from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import JsonResponse
-
+from django.views.decorators.csrf import csrf_protect
 
 @csrf_protect
+# def mi_vista(request):
+#     if request.method == "POST":
+#         # Procesar datos
+#         pass
+#     return render(request, "mi_template.html")
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -59,17 +65,25 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                request.session['login_success'] = True  # Marcar inicio de sesión exitoso
-                return redirect('inicio')  # Redirigir a la página principal
+                messages.success(request, "¡Has iniciado sesión correctamente!")
+                request.session['show_login_message'] = True  # Marcar que debe mostrarse el mensaje
+                return redirect('inicio')  # Redirige a la página principal
+        else:
+            messages.error(request, "Nombre de usuario o contraseña incorrectos.")
     else:
         form = AuthenticationForm()
+    
+    register_form = CustomUserCreationForm()
+    return render(request, 'login.html', {
+        'form': form,
+        'register_form': register_form
+    })
 
-    return render(request, 'login.html', {'form': form})
-
-def clear_login_success(request):
-    """ Eliminar la variable de sesión después de mostrar el mensaje """
-    request.session.pop('login_success', None)
-    return JsonResponse({'success': True})
+def logout_view(request):
+    logout(request)
+    request.session.pop('show_login_message', None)  # Evitar mostrar mensaje después del logout
+    messages.success(request, "Has cerrado sesión correctamente.")
+    return redirect('inicio')
 
 def register_view(request):
     if request.method == 'POST':
@@ -108,7 +122,6 @@ def mision(request):
     return render(request, 'mision.html', context)
 
 
-
 #buscar
 from django.db.models import Q
 
@@ -128,6 +141,8 @@ def buscar(request):
 #sugerencia
 
 from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+from django.conf import settings
 from .forms import SugerenciaForm
 
 def enviar_sugerencia(request):
@@ -210,6 +225,7 @@ def finalizar_compra(request):
     
     return JsonResponse({'success': False, 'message': 'Método no permitido'})
 
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.mail import send_mail

@@ -81,13 +81,18 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         if ("{{ request.session.login_success }}") {
-            alert("¡Has iniciado sesión correctamente!");  // Mostrar mensaje
-            fetch("{% url 'clear_login_success' %}", { 
-                method: "POST", 
-                headers: { "X-CSRFToken": "{{ csrf_token }}" } 
-            });
+            alert("¡Has iniciado sesión correctamente!");  
+        } else if ("{{ request.session.logout_success }}") {
+            alert("¡Has cerrado sesión correctamente!");
         }
+
+        // Eliminar las variables de sesión después de mostrar los mensajes
+        fetch("{% url 'clear_session_messages' %}", { 
+            method: "POST", 
+            headers: { "X-CSRFToken": "{{ csrf_token }}" } 
+        });
     });
 </script>
+
 
 {% endblock %}

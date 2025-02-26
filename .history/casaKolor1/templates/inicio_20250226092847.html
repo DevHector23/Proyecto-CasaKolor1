@@ -78,16 +78,37 @@
 </div>
 </section>
 </body>
+<div id="toast-container" class="toast-container"></div>
+
 <script>
+    function showToast(message, type = "success") {
+        const toastContainer = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        toast.className = `toast toast-${type}`;
+        toast.innerText = message;
+
+        toastContainer.appendChild(toast);
+
+        // Eliminar el toast después de 4 segundos
+        setTimeout(() => {
+            toast.remove();
+        }, 4000);
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
         if ("{{ request.session.login_success }}") {
-            alert("¡Has iniciado sesión correctamente!");  // Mostrar mensaje
-            fetch("{% url 'clear_login_success' %}", { 
-                method: "POST", 
-                headers: { "X-CSRFToken": "{{ csrf_token }}" } 
-            });
+            showToast("¡Has iniciado sesión correctamente!", "success");  
+        } else if ("{{ request.session.logout_success }}") {
+            showToast("¡Has cerrado sesión correctamente!", "info");
         }
+
+        // Eliminar las variables de sesión después de mostrar los mensajes
+        fetch("{% url 'clear_session_messages' %}", { 
+            method: "POST", 
+            headers: { "X-CSRFToken": "{{ csrf_token }}" } 
+        });
     });
 </script>
+
 
 {% endblock %}

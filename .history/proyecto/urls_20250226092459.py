@@ -51,13 +51,12 @@ urlpatterns = [
     path('sugerencias/', enviar_sugerencia, name='sugerencias'),
     path('sugerencia_exitosa/', lambda request: render(request, 'sugerencia_exitosa.html'), name='sugerencia_exitosa'),
     path('finalizar-compra/', views.finalizar_compra, name='finalizar_compra'),
-    #recuperar contraseña
+
     path('restablecer/', views.restablecer, name='restablecer'),
     path('cambiar-contraseña/<str:uidb64>/<str:token>/', views.cambiar_contraseña, name='cambiar_contraseña'),
     path('confirmacion/', views.confirmacion, name='confirmacion'),
-
-    #mensaje de alerta
-    path('clear-login-success/', clear_login_success, name='clear_login_success'),
+    path('login/', login_view, name='login'),
+    path('clear-session-messages/', clear_session_messages, name='clear_session_messages'),
 
 
 

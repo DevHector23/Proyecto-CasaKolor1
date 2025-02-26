@@ -57,6 +57,7 @@ urlpatterns = [
     path('confirmacion/', views.confirmacion, name='confirmacion'),
 
     #mensaje de alerta
+    path('login/', login_view, name='login'),
     path('clear-login-success/', clear_login_success, name='clear_login_success'),
 
 

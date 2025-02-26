@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="con">
+        <h2>Restablecer contraseña</h2>
+        <p>Ingrese su correo electronico para enviarle un enlace de recuperar contraseña</p>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form action="{% url 'restablecer' %}" method="post"></form>
+    </div>
+</body>
+</html>

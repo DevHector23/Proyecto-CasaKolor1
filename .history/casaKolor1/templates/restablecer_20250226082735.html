@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-master-wrapper">
+    <div class="auth-form-section">
+        <form method="post" class="logi">
+            {% csrf_token %}
+            <h1 class="auth-title">Recuperar Contraseña</h1>
+            <span class="auth-divider-text">Ingresa tu correo electrónico registrado</span>
+            
+            <div class="auth-input-group">
+                <input type="email" name="email" placeholder="Correo electrónico" required>
+            </div>
+            
+            {% if messages %}
+                <div class="auth-error-container">
+                    {% for message in messages %}
+                        <p class="{% if message.tags == 'success' %}auth-success-text{% else %}auth-error-text{% endif %}">
+                            {{ message }}
+                        </p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <button type="submit" class="auth-submit-btn">Enviar enlace</button>
+            <a href="{% url 'login' %}" class="auth-forgot-link">Volver al inicio de sesión</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -7,17 +7,19 @@
 {% endblock %}
 
 {% block content %}
-<div class="auth-master-wrapper" id="container">
+<div class="auth-master-wrapper" id="container" {% if mode == 'register' %}class="right-panel-active"{% endif %}>
     <div class="auth-form-section auth-signup-section">
         <form class="logi" method="post" action="{% url 'register' %}" novalidate>
             {% csrf_token %}
             <h1 class="auth-title">Crear Cuenta</h1>
             <span class="auth-divider-text">o usa tu email para registrarte</span>
             <div class="auth-input-group">
-                {{ register_form.username }}
-                {{ register_form.email }}
-                {{ register_form.password1 }}
-                {{ register_form.password2 }}
+                {% if register_form %}
+                    {{ register_form.username }}
+                    {{ register_form.email }}
+                    {{ register_form.password1 }}
+                    {{ register_form.password2 }}
+                {% endif %}
             </div>
             {% if register_form.errors %}
                 <div class="auth-error-container">
@@ -33,6 +35,7 @@
     </div>
     
     <div class="auth-form-section auth-signin-section">
+        <!-- Asegurarse que el token CSRF esté correctamente implementado -->
         <form class="logi" method="post" action="{% url 'login' %}" novalidate>
             {% csrf_token %}
             <h1 class="auth-title">Iniciar Sesión</h1>
@@ -71,5 +74,49 @@
         </div>
     </div>
 </div>
+
+<!-- Solución para el problema de CSRF - Asegurarse que las cookies funcionen -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Comprobar si las cookies están habilitadas
+    function areCookiesEnabled() {
+        try {
+            document.cookie = "testcookie=1";
+            var cookieEnabled = document.cookie.indexOf("testcookie") !== -1;
+            document.cookie = "testcookie=1; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+            return cookieEnabled;
+        } catch (e) {
+            return false;
+        }
+    }
+    
+    // Mostrar advertencia si las cookies están deshabilitadas
+    if (!areCookiesEnabled()) {
+        const warningDiv = document.createElement('div');
+        warningDiv.style.backgroundColor = '#ffdddd';
+        warningDiv.style.padding = '10px';
+        warningDiv.style.margin = '10px 0';
+        warningDiv.style.borderRadius = '5px';
+        warningDiv.textContent = 'Las cookies parecen estar deshabilitadas. Por favor, habilítalas para poder iniciar sesión correctamente.';
+        document.body.insertBefore(warningDiv, document.body.firstChild);
+    }
+    
+    // Refrescar el token CSRF antes de enviar el formulario
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            // Si hay problemas con CSRF, puedes probar a recargar la página
+            // antes de enviar el formulario
+            const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]');
+            if (!csrfToken || csrfToken.value.length < 10) {
+                e.preventDefault();
+                location.reload();
+                return false;
+            }
+        });
+    });
+});
+</script>
+
 <script src="{% static 'js/login.js' %}"></script>
 {% endblock %}

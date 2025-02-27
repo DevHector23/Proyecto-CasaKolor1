@@ -172,3 +172,11 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'hector3208609853@gmail.com'  # Tu correo
 EMAIL_HOST_PASSWORD = 'chpo lvdo nzkf xdqx'  # Contraseña o App Password si usas Gmail
+
+# Configuración de cookies
+CSRF_COOKIE_SECURE = False  # Cambiar a True solo si usas HTTPS
+CSRF_COOKIE_HTTPONLY = False  # Permitir acceso vía JavaScript
+SESSION_COOKIE_SECURE = False  # Cambiar a True solo si usas HTTPS
+
+# Configuración para depuración (solo en desarrollo)
+DEBUG = True  # Asegúrate que DEBUG esté en True durante desarrollo

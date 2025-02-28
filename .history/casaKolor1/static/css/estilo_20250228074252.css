@@ -2,7 +2,7 @@
   /* Paleta de colores para ferretería/pinturas */
   --color-azul-principal: #1B5B95;    /* Azul profesional y confiable */
   --color-azul-claro: #4A9BE8;        /* Para elementos destacados */
-  --color-gris-azulado: black;      /* Para textos y navegación */
+  --color-gris-azulado: #607D8B;      /* Para textos y navegación */
   --color-naranja-acento: #FF8A30;    /* Color complementario para CTAs */
   --color-gris-claro: #F2F4F6;        /* Para fondos secundarios */
   --color-blanco: #FFFFFF;            /* Para fondos principales */
@@ -62,12 +62,11 @@
   margin: 0 auto;
 }
 
-.features h1 {
+.features h2 {
   text-align: center;
-  margin: 50px;
+  
   margin-bottom: 3rem;
   color: var(--color-azul-principal);
-  color: black;
 }
 .fondo{
   background-color: #66b3ff;
@@ -114,10 +113,10 @@
   margin: 0 auto;
 }
 
-.products h1 {
+.products h2 {
   text-align: center;
   margin-bottom: 3rem;
-  color: black;
+  color: var(--color-azul-principal);
 }
 
 .products-grid {

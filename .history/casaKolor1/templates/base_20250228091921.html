@@ -179,29 +179,29 @@
                 </a>
             </div>
             {% if user.is_authenticated %}
-        <div class="user-profile-container">    
-            <a href="#" class="login-button" id="profile-button">
-                <img src="{% static 'images/perfil.png' %}" alt="Perfil">
-            </a>
-        <!-- Dropdown de perfil -->
-        <div class="profile-dropdown">
-            <div class="profile-header">
-                <div class="profile-avatar">
-                        {{ user.username.0|upper }}
-                    </div>
-                    <div class="profile-info">
-                        <div class="profile-name">{{ user.username }}</div>
-                        <div class="profile-email">{{ user.email }}</div>
-                    </div>
-                </div>
-                <a href="{% url 'perfil' %}" class="profile-link">
-                    Ver perfil
-                </a>
-                <a href="{% url 'logout' %}" class="profile-logout">
-                    <img src="{% static 'images/cerrar-sesion.gif' %}" alt="Cerrar sesión" width="20">
-                    Cerrar sesión
-                </a>
-                </div>
+        <div class="user-profile-container">        
+    <a href="#" class="login-button" id="profile-button">
+        <img src="{% static 'images/perfil.png' %}" alt="Perfil">
+    </a>
+    <!-- Dropdown de perfil -->
+    <div class="profile-dropdown">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                {{ user.username.0|upper }}
+            </div>
+            <div class="profile-info">
+                <div class="profile-name">{{ user.username }}</div>
+                <div class="profile-email">{{ user.email }}</div>
+            </div>
+        </div>
+        <a href="{% url 'perfil' %}" class="profile-link">
+            Ver perfil
+        </a>
+        <a href="{% url 'logout' %}" class="profile-logout">
+            <img src="{% static 'images/cerrar-sesion.gif' %}" alt="Cerrar sesión" width="20">
+            Cerrar sesión
+        </a>
+    </div>
         </div>
         {% else %}
         <a href="{% url 'login' %}" class="login-button">
@@ -209,11 +209,11 @@
         </a>
         {% endif %}
 
-                <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                    <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            </div>
+                </div>
     </nav>
     
     {% block content %}

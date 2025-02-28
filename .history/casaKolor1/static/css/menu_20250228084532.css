@@ -9,13 +9,28 @@
     --gradient-start: #0a84ff;  /* Color del menú */
     --gradient-end: #66b3ff;    /* Un tono más oscuro para el degradado */
 }
-body {
+/* body {
    background-color: var(--gradient-end);
     font-family: 'Arial', sans-serif;
     height: 100vh;
     margin: 0;
-    padding-top: 100px;
+    padding-top: 100px; */
 }
+/* body {
+    margin: 0;
+    padding: 0;
+    background: url('/static/images/fondo2.jgp') no-repeat center center fixed;
+    background-size: cover;
+} */
+body {
+    margin: 0;
+    padding: 0;
+    background: url('/static/images/fondo2.jgp') no-repeat center center fixed;
+    background-size: cover;
+}
+
+
+
 /* Menu */
 .navbar{
     /* background-color: #0a84ff; */

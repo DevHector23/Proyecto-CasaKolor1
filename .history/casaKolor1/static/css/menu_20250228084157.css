@@ -16,6 +16,15 @@ body {
     margin: 0;
     padding-top: 100px;
 }
+body {
+    margin: 0;
+    padding: 0;
+    background: url('/static/images/') no-repeat center center fixed;
+    background-size: cover;
+}
+
+
+
 /* Menu */
 .navbar{
     /* background-color: #0a84ff; */

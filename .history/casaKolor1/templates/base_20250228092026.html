@@ -186,22 +186,22 @@
         <!-- Dropdown de perfil -->
         <div class="profile-dropdown">
             <div class="profile-header">
-                <div class="profile-avatar">
-                        {{ user.username.0|upper }}
-                    </div>
-                    <div class="profile-info">
-                        <div class="profile-name">{{ user.username }}</div>
-                        <div class="profile-email">{{ user.email }}</div>
-                    </div>
+             <div class="profile-avatar">
+                    {{ user.username.0|upper }}
                 </div>
-                <a href="{% url 'perfil' %}" class="profile-link">
-                    Ver perfil
-                </a>
-                <a href="{% url 'logout' %}" class="profile-logout">
-                    <img src="{% static 'images/cerrar-sesion.gif' %}" alt="Cerrar sesión" width="20">
-                    Cerrar sesión
-                </a>
+                <div class="profile-info">
+                    <div class="profile-name">{{ user.username }}</div>
+                    <div class="profile-email">{{ user.email }}</div>
                 </div>
+            </div>
+            <a href="{% url 'perfil' %}" class="profile-link">
+                Ver perfil
+            </a>
+            <a href="{% url 'logout' %}" class="profile-logout">
+                <img src="{% static 'images/cerrar-sesion.gif' %}" alt="Cerrar sesión" width="20">
+                Cerrar sesión
+            </a>
+            </div>
         </div>
         {% else %}
         <a href="{% url 'login' %}" class="login-button">

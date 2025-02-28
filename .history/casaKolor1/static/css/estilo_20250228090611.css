@@ -14,8 +14,7 @@
 }
 /* inicio */
 .hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.649), rgba(0,0,0,0.5)), url('/static/images/fondo9.jpg') center/cover ;
-  
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/static/images/fondo9.jpg') center/cover;
   height: 87vh;
   display: flex;
   align-items: center;
@@ -23,7 +22,6 @@
   color: var(--color-blanco);
   text-align: center;
   padding: 0 1rem;
-  
 }
 
 .hero-content {
@@ -68,7 +66,7 @@
   text-align: center;
   margin: 50px;
   margin-bottom: 3rem;
-  font-size: 50px;
+  fon
   color: black;
 }
 .fondo{
@@ -120,7 +118,6 @@
   text-align: center;
   margin-bottom: 3rem;
   color: black;
-  font-size: 50px;
 }
 
 .products-grid {

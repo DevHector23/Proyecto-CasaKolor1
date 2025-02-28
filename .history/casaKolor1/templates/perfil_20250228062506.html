@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{}
+<link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                {{ user.username.0|upper }}
+            </div>
+            <h2>{{ user.username }}</h2>
+            <p class="email">{{ user.email }}</p>
+        </div>
+        <div class="profile-body">
+            <h3>Información de Usuario</h3>
+            <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Fecha de registro:</strong> {{ user.date_joined|date:"d M Y" }}</p>
+        </div>
+        <div class="profile-footer">
+            <a href="{% url 'editar_perfil' %}" class="btn">Editar Perfil</a>
+            <a href="{% url 'logout' %}" class="btn logout">Cerrar Sesión</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

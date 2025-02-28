@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+<style>
+/* perfil */
+/* Contenedor principal */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    gap: 50px;
+}
+
+/* Imagen de la empresa */
+.company-image img {
+    width: 400px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Tarjeta del perfil */
+.profile-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    
+    max-width: 450px;
+    width: 100%;
+}
+
+/* Encabezado del perfil */
+.profile-header {
+    margin-bottom: 20px;
+}
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    background: #007bff;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    display: flex;
+    
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Información del usuario */
+.profile-body h3 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 20px;
+    border-bottom: 2px solid #007bff;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.profile-body p {
+    font-size: 16px;
+    margin: 8px 0;
+    color: #555;
+}
+
+/* Botones */
+.profile-footer {
+    margin-top: 25px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 18px;
+    margin: 8px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s ease;
+    font-size: 16px;
+}
+
+/* Diseño adaptable */
+@media (max-width: 900px) {
+    .profile-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .company-image img {
+        width: 90%;
+    }
+}
+.profile-header{
+    display: flex;
+    justify-content: S;
+    align-items: start;
+}
+
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="profile-container">
+    <!-- Imagen de la empresa -->
+    <div class="company-image">
+        <img src="{% static 'images/empresa.jpg' %}" alt="Empresa">
+    </div>
+
+    <!-- Tarjeta de perfil -->
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                {{ user.username.0|upper }}
+            </div>
+            <h2>{{ user.username }}</h2>
+        </div>
+        <div class="profile-body">
+            <h3>Información de Usuario</h3>
+            <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Fecha de registro:</strong> {{ user.date_joined|date:"d M Y" }}</p>
+        </div>
+        <div class="profile-footer">
+            <a href="{% url 'logout' %}" class="btn logout">Cerrar Sesión</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -203,8 +203,8 @@ def finalizar_compra(request):
             pedido.total = request.POST.get('total', 0)
             
             # Guardar la imagen de la factura si fue proporcionada
-            if 'comprobante' in request.FILES:
-                pedido.comprobante = request.FILES['comprobante']
+            if 'factura' in request.FILES:
+                pedido.factura = request.FILES['factura']
                 
             pedido.save()
             
@@ -305,15 +305,15 @@ def finalizar_compra(request):
                 asunto,
                 text_content,
                 settings.EMAIL_HOST_USER,
-                [destinatario, 'ivanparrahernandez14@gmail.com']  # Cliente y correo de la empresa
+                [destinatario, 'hector3208609853@gmail.com']  # Cliente y correo de la empresa
             )
             
             # Adjuntar versión HTML
             email.attach_alternative(html_content, "text/html")
             
             # Si hay factura, adjuntarla al correo
-            if hasattr(pedido, 'comprobante') and pedido.comprobante:
-                email.attach_file(pedido.comprobante.path)
+            if hasattr(pedido, 'comproban') and pedido.factura:
+                email.attach_file(pedido.factura.path)
             
             # Enviar el correo
             email.send()

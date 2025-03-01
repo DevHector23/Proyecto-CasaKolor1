@@ -193,7 +193,6 @@ def finalizar_compra(request):
             return JsonResponse({'success': True, 'message': 'Pedido ya procesado'})
         
         # Marcar esta transacción como en proceso por 30 segundos
-        # (suficiente para que termine el procesamiento)
         cache.set(cache_key, True, 30)
         
         form = PedidoForm(request.POST, request.FILES)
@@ -202,7 +201,7 @@ def finalizar_compra(request):
             pedido = form.save(commit=False)
             pedido.total = request.POST.get('total', 0)
             
-            # Guardar la imagen de la factura si fue proporcionada
+            # Guardar la imagen de la comprobante si fue proporcionada
             if 'comprobante' in request.FILES:
                 pedido.comprobante = request.FILES['comprobante']
                 
@@ -211,6 +210,7 @@ def finalizar_compra(request):
             # Procesar los productos del carrito
             items = json.loads(request.POST.get('items', '[]'))
             detalles_correo = []
+            detalles_html = []
             
             for item in items:
                 producto_id = item.get('id')
@@ -229,8 +229,44 @@ def finalizar_compra(request):
                     subtotal=subtotal
                 )
                 
-                # Agregar información para el correo
-                detalles_correo.append(f"Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.")
+                # Determinar la presentación para pinturas
+                presentacion = ""
+                if producto.categoria.lower() == 'pinturas':
+                    # Buscar información sobre la presentación en el nombre o descripción
+                    nombre_lower = producto.nombre.lower()
+                    desc_lower = producto.descripcion.lower()
+                    
+                    if 'galón' in nombre_lower or 'galon' in nombre_lower or 'galón' in desc_lower or 'galon' in desc_lower:
+                        presentacion = "Galón"
+                    elif 'cuarto' in nombre_lower or 'cuarto' in desc_lower:
+                        presentacion = "Cuarto de galón"
+                    elif 'litro' in nombre_lower or 'litro' in desc_lower:
+                        presentacion = "Litro"
+                    # Puedes añadir más condiciones según tus productos
+                    else:
+                        presentacion = "Unidad"
+                
+                # Agregar información para el correo (versión texto)
+                detalle_texto = f"Producto: {producto.nombre}, "
+                if presentacion:
+                    detalle_texto += f"Presentación: {presentacion}, "
+                detalle_texto += f"Cantidad: {cantidad}, Precio: ${precio}."
+                detalle_texto += f"\nDescripción: {producto.descripcion}"
+                
+                detalles_correo.append(detalle_texto)
+                
+                # Versión HTML para el correo
+                detalle_html = f"""
+                <li>
+                    <strong>{producto.nombre}</strong><br>
+                    {f"<span>Presentación: {presentacion}</span><br>" if presentacion else ""}
+                    <span>Cantidad: {cantidad}</span><br>
+                    <span>Precio unitario: ${precio}</span><br>
+                    <span>Subtotal: ${subtotal}</span><br>
+                    <p><em>Descripción: {producto.descripcion}</em></p>
+                </li>
+                """
+                detalles_html.append(detalle_html)
             
             # Preparar el correo
             asunto = "Confirmación de Pedido - Casa Kolor"
@@ -240,7 +276,7 @@ def finalizar_compra(request):
             ¡Gracias por tu compra en Casa Kolor!
             
             Detalles de tu pedido:
-            {''.join([f'\n- {detalle}' for detalle in detalles_correo])}
+            {''.join([f'\n- {detalle}\n' for detalle in detalles_correo])}
             
             Total: ${pedido.total}
             
@@ -267,6 +303,8 @@ def finalizar_compra(request):
                     .header {{ background-color: #f8f9fa; padding: 10px; text-align: center; }}
                     .content {{ padding: 20px 0; }}
                     .footer {{ font-size: 12px; color: #6c757d; text-align: center; }}
+                    .product-list {{ padding-left: 20px; }}
+                    .product-list li {{ margin-bottom: 15px; }}
                 </style>
             </head>
             <body>
@@ -278,8 +316,8 @@ def finalizar_compra(request):
                         <p>Hola {pedido.nombre},</p>
                         <p>¡Gracias por tu compra en Casa Kolor!</p>
                         <h3>Detalles de tu pedido:</h3>
-                        <ul>
-                            {''.join([f'<li>{detalle}</li>' for detalle in detalles_correo])}
+                        <ul class="product-list">
+                            {''.join(detalles_html)}
                         </ul>
                         <p><strong>Total:</strong> ${pedido.total}</p>
                         
@@ -305,13 +343,13 @@ def finalizar_compra(request):
                 asunto,
                 text_content,
                 settings.EMAIL_HOST_USER,
-                [destinatario, 'ivanparrahernandez14@gmail.com']  # Cliente y correo de la empresa
+                [destinatario, 'ivanparrahernandez']  # Cliente y correo de la empresa
             )
             
             # Adjuntar versión HTML
             email.attach_alternative(html_content, "text/html")
             
-            # Si hay factura, adjuntarla al correo
+            # Si hay comprobante, adjuntarla al correo
             if hasattr(pedido, 'comprobante') and pedido.comprobante:
                 email.attach_file(pedido.comprobante.path)
             

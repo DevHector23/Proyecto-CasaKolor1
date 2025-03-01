@@ -305,7 +305,7 @@ def finalizar_compra(request):
                 asunto,
                 text_content,
                 settings.EMAIL_HOST_USER,
-                [destinatario, 'ivanparrahernandez14@gmail.com']  # Cliente y correo de la empresa
+                [destinatario, 'hector3208609853@gmail.com']  # Cliente y correo de la empresa
             )
             
             # Adjuntar versión HTML

@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+<style>
+    .presentation-select {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 5px;
+    }
+    .price-display {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4" style="background-color: #0a84ff57; height: 90px; width: 100%; color: black; padding: 20px; font-size: 50px;">Nuestros Productos</h2>
+
+<div class="container mt-5">
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+            <div class="card">
+                <h5 class="card-title text-center mt-3">{{ producto.nombre }}</h5>
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% endif %}
+                <div class="card-body text-center">
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    
+                    {% if producto.categoria == 'pinturas' and producto.precios_presentacion.all %}
+                    <div class="presentation-container" data-product-id="{{ producto.id }}">
+                        <select class="presentation-select" onchange="updatePrice(this, {{ producto.id }})">
+                            {% for precio_pres in producto.precios_presentacion.all %}
+                                <option value="{{ precio_pres.presentacion }}" data-price="{{ precio_pres.precio }}">
+                                    {{ precio_pres.get_presentacion_display }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <p class="price-display" id="price-{{ producto.id }}">
+                            Precio: ${{ producto.precios_presentacion.first.precio }}
+                        </p>
+                    </div>
+                    {% else %}
+                    <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
+                    {% endif %}
+                    
+                    <button class="btn btn-primary add-to-cart" 
+                           data-id="{{ producto.id }}" 
+                           {% if producto.categoria == 'pinturas' and producto.precios_presentacion.all %}
+                           data-has-presentations="true"
+                           {% endif %}>
+                        Añadir al carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function updatePrice(selectElement, productId) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const price = selectedOption.getAttribute('data-price');
+        document.getElementById(`price-${productId}`).textContent = `Precio: $${price}`;
+    }
+    
+    // Modificar el comportamiento de "Añadir al carrito" para incluir la presentación seleccionada
+    document.addEventListener('DOMContentLoaded', function() {
+        const addButtons = document.querySelectorAll('.add-to-cart');
+        
+        addButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const productId = this.getAttribute('data-id');
+                const hasPresentation = this.getAttribute('data-has-presentations') === 'true';
+                
+                // Si el producto tiene presentaciones, obtener la seleccionada
+                let presentacion = null;
+                let precio = null;
+                
+                if (hasPresentation) {
+                    const container = document.querySelector(`.presentation-container[data-product-id="${productId}"]`);
+                    const select = container.querySelector('.presentation-select');
+                    presentacion = select.value;
+                    precio = select.options[select.selectedIndex].getAttribute('data-price');
+                }
+                
+                // Aquí puedes usar la presentación y el precio para añadir al carrito
+                addToCart(productId, presentacion, precio);
+            });
+        });
+    });
+    
+    // Esta función es un ejemplo y debe adaptarse a tu implementación actual del carrito
+    function addToCart(productId, presentacion, precio) {
+        // Ejemplo utilizando localStorage (adaptar según tu implementación)
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        
+        const existingItemIndex = cart.findIndex(item => 
+            item.id === productId && item.presentacion === presentacion
+        );
+        
+        if (existingItemIndex >= 0) {
+            cart[existingItemIndex].cantidad += 1;
+        } else {
+            cart.push({
+                id: productId,
+                cantidad: 1,
+                presentacion: presentacion,
+                precio: precio
+            });
+        }
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert('Producto añadido al carrito');
+    }
+</script>
+{% endblock %}

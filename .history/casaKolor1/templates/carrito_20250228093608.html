@@ -1,0 +1,112 @@
+<!-- Este es solo un fragmento de código para la página del carrito -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        cargarCarrito();
+    });
+    
+    function cargarCarrito() {
+        const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+        const cartContainer = document.getElementById('cart-items');
+        const totalElement = document.getElementById('cart-total');
+        let total = 0;
+        
+        cartContainer.innerHTML = '';
+        
+        if (cartItems.length === 0) {
+            cartContainer.innerHTML = '<tr><td colspan="5" class="text-center">El carrito está vacío</td></tr>';
+            totalElement.textContent = '0';
+            return;
+        }
+        
+        // Cargar información de productos usando AJAX
+        fetch('/api/productos-info/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                productos_ids: cartItems.map(item => item.id)
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            cartItems.forEach(item => {
+                const producto = data.productos.find(p => p.id == item.id);
+                if (!producto) return;
+                
+                const subtotal = item.precio ? (item.precio * item.cantidad) : (producto.precio * item.cantidad);
+                total += subtotal;
+                
+                // Obtener información de presentación si existe
+                let presentacionText = '';
+                if (item.presentacion && producto.presentaciones) {
+                    const presentacion = producto.presentaciones.find(p => p.presentacion === item.presentacion);
+                    if (presentacion) {
+                        presentacionText = `(${presentacion.nombre})`;
+                    }
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${producto.nombre} ${presentacionText}</td>
+                    <td>$${item.precio || producto.precio}</td>
+                    <td>
+                        <div class="input-group">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="actualizarCantidad(${item.id}, ${item.cantidad - 1}, '${item.presentacion || ''}')">-</button>
+                            <input type="number" class="form-control form-control-sm text-center" value="${item.cantidad}" onchange="actualizarCantidad(${item.id}, this.value, '${item.presentacion || ''}')" min="1">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="actualizarCantidad(${item.id}, ${item.cantidad + 1}, '${item.presentacion || ''}')">+</button>
+                        </div>
+                    </td>
+                    <td>$${subtotal}</td>
+                    <td><button class="btn btn-sm btn-danger" onclick="eliminarProducto(${item.id}, '${item.presentacion || ''}')">Eliminar</button></td>
+                `;
+                
+                cartContainer.appendChild(row);
+            });
+            
+            totalElement.textContent = total;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    
+    function actualizarCantidad(id, cantidad, presentacion) {
+        cantidad = parseInt(cantidad);
+        if (cantidad < 1) cantidad = 1;
+        
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const index = cart.findIndex(item => item.id == id && item.presentacion === presentacion);
+        
+        if (index !== -1) {
+            cart[index].cantidad = cantidad;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            cargarCarrito();
+        }
+    }
+    
+    function eliminarProducto(id, presentacion) {
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const index = cart.findIndex(item => item.id == id && item.presentacion === presentacion);
+        
+        if (index !== -1) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            cargarCarrito();
+        }
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>

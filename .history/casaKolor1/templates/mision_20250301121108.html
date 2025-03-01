@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+    /* Estilos generales */
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+/* Estilos para la sección "Sobre Nosotros" */
+.about-us {
+    padding: 60px 0;
+}
+
+.header-container {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.video-container {
+    margin-top: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el encabezado de Misión y Visión */
+.bg-primary {
+    background-color: #0275d8 !important;
+    border-radius: 8px;
+}
+
+/* Estilos para las tarjetas de Misión y Visión */
+.card {
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-title {
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #0275d8;
+}
+
+.card-text {
+    color: #555;
+    font-size: 16px;
+}
+
+/* Estilos para las secciones de Misión y Visión con imagen */
+.card-content {
+    display: flex;
+    align-items: stretch;
+}
+
+.card-image {
+    flex: 1;
+    min-height: 250px;
+    background-size: cover;
+    background-position: center;
+}
+
+.card-body-content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+    .card-content {
+        flex-direction: column;
+    }
+    
+    .card-image {
+        min-height: 200px;
+        width: 100%;
+    }
+}
+
+/* Estilos adicionales para mejorar la apariencia */
+.shadow-lg {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.display-4 {
+    font-weight: 700;
+}
+
+.lead {
+    font-size: 1.25rem;
+}
+
+.text-primary {
+    color: #0275d8 !important;
+}
+
+.py-5 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+
+.mt-5 {
+    margin-top: 3rem !important;
+}
+
+.mt-3 {
+    margin-top: 1rem !important;
+}
+</style>
+{% endblock %}
+{% block content %}
+<body> 
+    <section class="about-us">
+        <div class="container-fluid">
+            <!-- Contenedor para el h2 con 100% de ancho -->
+            <div class="header-container">
+                <h2 class="display-4" id="sobre">Sobre Nosotros</h2>
+            </div>
+    
+            <p style="text-align: justify;">Somos una empresa comprometida con ofrecer la mejor calidad y atención a nuestros clientes. Tu satisfacción es nuestra prioridad.</p>
+    
+            <div class="video-container">
+                <video width="100%" controls>
+                    <source src="{{ MEDIA_URL }}video/WhatsApp Video 2024-11-30 at 11.07.21 AM.mp4" type="video/mp4">
+                    Tu navegador no soporta el formato de video.
+                </video>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Misión y Visión Header Section -->
+    <div class="bg-primary text-white text-center py-5 mt-5" style="margin-bottom: 30px;">
+        <div class="container">
+            <h1 class="display-4" id="mision">Nuestra Misión y Visión</h1>
+            <p class="lead">Conoce nuestros valores y objetivos para un futuro prometedor.</p>
+        </div>
+    </div>
+  
+    <!-- Misión Section -->
+    <section id="mision" class="py-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card shadow-lg">
+                        <div class="card-content">
+                            <div class="card-image" style="background-image: url('/static/images/fondo9.jpg');"></div>
+                            <div class="card-body-content">
+                                <div class="card-body text-center">
+                                    <h2 class="card-title text-primary">Misión</h2>
+                                    <p class="card-text mt-3" style="text-align: justify;">
+                                        Nuestra misión es ofrecer a la clientela variedad de marcas reconocidas de excelente calidad, ofreciendo todos los productos relacionados para completar el uso de pinturas, terminaciones y acabados en los cuales son utilizados.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visión Section -->
+    <section id="vision" class="py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card shadow-lg">
+                        <div class="card-content">
+                            <div class="card-body-content">
+                                <div class="card-body text-center">
+                                    <h2 class="card-title text-primary">Visión</h2>
+                                    <p class="card-text mt-3" style="text-align: justify;">
+                                        -Dirigirse al cliente con respeto y adecuada actitud.
+                                    </p>
+                                    <p class="card-text mt-3" style="text-align: justify;">
+                                        -Lealtad al momento de entregar las cantidades requeridas sin alterar fechas de vencimento en los productos.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-image" style="background-image: url('/static/images/fondo9.jpg');"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

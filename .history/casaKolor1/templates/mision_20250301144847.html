@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+/* Estilo para el contenedor principal */
+.header-container1{
+    width: 100%;
+    margin: 0;
+}
+#sobre {
+  scroll-margin-top: 100px; /* Ajusta el valor según la altura de tu menú */
+}
+#mision{
+    scroll-margin-top: 100px; /* Ajusta el valor según la altura de tu menú */
+}
+
+.contenedor-mision-vision {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Contenedor de imagen */
+.imagen-seccion {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.imagen-seccion img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de texto */
+.texto-seccion {
+    flex: 1;
+    min-width: 300px;
+}
+
+.texto-seccion h2 {
+    color: #007bff;
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.texto-seccion p {
+    color: #333;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+/* Para dispositivos móviles */
+@media (max-width: 768px) {
+    .contenedor-mision-vision {
+        padding: 20px;
+        margin: 20px;
+    }
+    
+    .imagen-seccion, .texto-seccion {
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Ajustes generales de la página */
+body {
+    background-color: #f5f5f5;
+}
+
+/* Espacio vertical reducido entre secciones */
+.seccion-mision, .seccion-vision {
+    margin-bottom: 30px;
+}
+</style>
+{% endblock %}
+{% block content %}
+<body> 
+    <section class="about-us" id="sobre" style="">
+        <div class="container-fluid">
+            <!-- Contenedor para el h2 con 100% de ancho -->
+            <div class="header-container1">
+                <h2 class="display-4"  class="text-center mb-4" style=" height: 90px; width: 100%; color: black; padding: 20px; font-size: 50px;">Sobre Nosotros</h2>
+            </div>
+    
+            <p style="text-align: justify;">Somos una empresa comprometida con ofrecer la mejor calidad y atención a nuestros clientes. Tu satisfacción es nuestra prioridad.</p>
+    
+            <div class="video-container">
+                <video width="100%" controls>
+                    <source src="{{ MEDIA_URL }}video/WhatsApp Video 2024-11-30 at 11.07.21 AM.mp4" type="video/mp4">
+                    Tu navegador no soporta el formato de video.
+                </video>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Misión y Visión Header Section - Reducido -->
+    <div class="text-white text-center py-4 mt-4" id="mision" style="height: 150px; margin-bottom: 20px; background-color: #0a84ff57 ">
+        <div class="container-reducido">
+            <div class="header-container1">
+                <h2 class="display-4"  class="text-center mb-4" style="height: 90px; width: 100%; color: black; padding: 20px; font-size: 50px;">Sobre Nosotros</h2>
+            </div>
+            <p class="lead" style="font-size: 1.1rem; color: black;">Conoce nuestros valores y objetivos para un futuro prometedor.</p>
+        </div>
+    </div>
+  
+    <div class="container-fluid">
+        <!-- Sección Misión -->
+        <div class="contenedor-mision-vision">
+            <div class="imagen-seccion">
+                <img src="{% static 'images/Calidad.png' %}" alt="Nuestra Misión">
+            </div>
+            <div class="texto-seccion">
+                <h2>Misión</h2>
+                <p>Nuestra misión es ofrecer a la clientela variedad de marcas reconocidas de excelente calidad, ofreciendo todos los productos relacionados para completar el uso de pinturas, terminaciones y acabados en los cuales son utilizados.</p>
+            </div>
+        </div>
+    
+        <!-- Sección Visión -->
+        <div class="contenedor-mision-vision">
+            <div class="texto-seccion">
+                <h2>Visión</h2>
+                <p>-Dirigirse al cliente con respeto y adecuada actitud.</p>
+                <p>-Lealtad al momento de entregar las cantidades requeridas sin alterar fechas de vencimento en los productos.</p>
+            </div>
+            <div class="imagen-seccion">
+                <img src="{% static 'images/Calidad.png' %}" alt="Nuestra Visión">
+            </div>
+        </div>
+    </div>
+    {% endblock %}

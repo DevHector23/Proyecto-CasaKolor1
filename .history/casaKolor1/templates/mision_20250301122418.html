@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+    /* Estilos generales */
+/* Estilos generales mantienen igual */
+
+
+/* Resto de estilos igual... */
+
+/* Modificar el ancho de los contenedores */
+.container-reducido {
+    max-width: 900px; /* Reducir el ancho máximo del contenedor */
+    margin: 0 auto;
+}
+
+/* Reducir el tamaño de las tarjetas */
+.card-reducida {
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    margin-bottom: 20px; /* Reducir el margen inferior */
+    overflow: hidden;
+}
+
+.card-content {
+    display: flex;
+    align-items: stretch;
+    max-height: 300px; /* Establecer una altura máxima */
+}
+
+.card-image {
+    flex: 0.8; /* Reducir proporcionalmente el espacio para la imagen */
+    min-height: 200px; /* Reducir la altura mínima */
+    background-size: cover;
+    background-position: center;
+}
+
+.card-body-content {
+    flex: 1.2; /* Dar un poco más de espacio al contenido */
+    padding: 15px; /* Reducir el padding */
+}
+
+.card-body-reducido {
+    padding: 15px; /* Reducir el padding del cuerpo de la tarjeta */
+}
+
+/* Reducir los tamaños de texto */
+.card-title-reducido {
+    font-weight: 700;
+    margin-bottom: 10px; /* Reducir margen inferior */
+    color: #0275d8;
+    font-size: 1.5rem; /* Reducir tamaño de fuente */
+}
+
+.card-text-reducido {
+    color: #555;
+    font-size: 14px; /* Reducir tamaño de fuente */
+    margin-top: 0.5rem !important; /* Reducir margen superior */
+}
+
+/* Reducir el padding vertical de las secciones */
+.py-4 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+}
+
+.mt-4 {
+    margin-top: 2rem !important;
+}
+
+/* Media query para dispositivos móviles - mantener igual */
+@media (max-width: 768px) {
+    .card-content {
+        flex-direction: column;
+        max-height: none; /* Eliminar altura máxima en móviles */
+    }
+    
+    .card-image {
+        min-height: 150px; /* Reducir aún más en móviles */
+        width: 100%;
+    }
+}
+/* Estilo para el contenedor principal */
+.contenedor-mision-vision {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Contenedor de imagen */
+.imagen-seccion {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.imagen-seccion img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de texto */
+.texto-seccion {
+    flex: 1;
+    min-width: 300px;
+}
+
+.texto-seccion h2 {
+    color: #007bff;
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.texto-seccion p {
+    color: #333;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+/* Para dispositivos móviles */
+@media (max-width: 768px) {
+    .contenedor-mision-vision {
+        padding: 20px;
+        margin: 20px;
+    }
+    
+    .imagen-seccion, .texto-seccion {
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Ajustes generales de la página */
+body {
+    background-color: #f5f5f5;
+}
+
+/* Espacio vertical reducido entre secciones */
+.seccion-mision, .seccion-vision {
+    margin-bottom: 30px;
+}
+</style>
+{% endblock %}
+{% block content %}
+<body> 
+    <section class="about-us">
+        <div class="container-fluid">
+            <!-- Contenedor para el h2 con 100% de ancho -->
+            <div class="header-container">
+                <h2 class="display-4" id="sobre">Sobre Nosotros</h2>
+            </div>
+    
+            <p style="text-align: justify;">Somos una empresa comprometida con ofrecer la mejor calidad y atención a nuestros clientes. Tu satisfacción es nuestra prioridad.</p>
+    
+            <div class="video-container">
+                <video width="100%" controls>
+                    <source src="{{ MEDIA_URL }}video/WhatsApp Video 2024-11-30 at 11.07.21 AM.mp4" type="video/mp4">
+                    Tu navegador no soporta el formato de video.
+                </video>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Misión y Visión Header Section - Reducido -->
+    <div class="bg-primary text-white text-center py-4 mt-4" style="margin-bottom: 20px;">
+        <div class="container-reducido">
+            <h1 class="display-5" id="mision">Nuestra Misión y Visión</h1>
+            <p class="lead" style="font-size: 1.1rem;">Conoce nuestros valores y objetivos para un futuro prometedor.</p>
+        </div>
+    </div>
+  
+    <div class="container-fluid">
+        <!-- Sección Misión -->
+        <div class="contenedor-mision-vision">
+            <div class="imagen-seccion">
+                <img src="{{ MEDIA_URL }}images/mision.jpg" alt="Nuestra Misión">
+            </div>
+            <div class="texto-seccion">
+                <h2>Misión</h2>
+                <p>Nuestra misión es ofrecer a la clientela variedad de marcas reconocidas de excelente calidad, ofreciendo todos los productos relacionados para completar el uso de pinturas, terminaciones y acabados en los cuales son utilizados.</p>
+            </div>
+        </div>
+    
+        <!-- Sección Visión -->
+        <div class="contenedor-mision-vision">
+            <div class="texto-seccion">
+                <h2>Visión</h2>
+                <p>-Dirigirse al cliente con respeto y adecuada actitud.</p>
+                <p>-Lealtad al momento de entregar las cantidades requeridas sin alterar fechas de vencimento en los productos.</p>
+            </div>
+            <div class="imagen-seccion">
+                <img src="{{ MEDIA_URL }}images/vision.jpg" alt="Nuestra Visión">
+            </div>
+        </div>
+    </div>
+    {% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+
+<style>
+
+
+</style>
+
+{% block content %}
+<body> 
+    <section class="about-us">
+        <div class="container-fluid">
+            <!-- Contenedor para el h2 con 100% de ancho -->
+            <div class="header-container">
+                <h2 class="display-4" id="sobre">Sobre Nosotros</h2>
+            </div>
+    
+            <p style="text-align: justify;">Somos una empresa comprometida con ofrecer la mejor calidad y atención a nuestros clientes. Tu satisfacción es nuestra prioridad.</p>
+    
+            <div class="video-container">
+                <video width="100%" controls>
+                    <source src="{{ MEDIA_URL }}video/WhatsApp Video 2024-11-30 at 11.07.21 AM.mp4" type="video/mp4">
+                    Tu navegador no soporta el formato de video.
+                </video>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+
+   
+  <!-- Misión Section -->
+  <section id="mision" class="py-5 ">
+    <div class="bg-primary text-white text-center py-5 mt-5" style="margin-bottom: 30px;">
+        <div class="container">
+            <h1 class="display-4"  id="mision">Nuestra Misión y Visión</h1>
+            <p class="lead">Conoce nuestros valores y objetivos para un futuro prometedor.</p>
+        </div>
+    </div>
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-6 mx-auto">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                      <div class="card-img-side">
+                        <img src="#" alt="Imagen Misión">
+                      </div>
+                      <div class="card-text-content">
+                        <h2 class="card-title text-primary">Misión</h2>
+                        <p class="card-text mt-3" style="text-align: justify;">
+                              Nuestra misión es ofrecer a la clientela variedad de marcas reconocidas de excelente calidad, ofreciendo todos los productos relacionados para completar el uso de pinturas, terminaciones y acabados en los cuales son utilizados.
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Visión Section -->
+  <section id="vision" class="py-5 mt-5">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-6 mx-auto">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                      <div class="card-img-side">
+                        <img src="{% static 'images/fondo1.jpeg' %}" alt="Imagen Misión">
+                      </div>
+                      <div class="card-text-content">
+                        <h2 class="card-title text-primary">Misión</h2>
+                        <p class="card-text mt-3" style="text-align: justify;">
+                              -Dirigirse al cliente con respeto y adecuada actitud.
+                          
+                          </p>
+                          <p class="card-text mt-3" style="text-align: justify;">
+                              -Lealtad al momento de entregar las cantidades requeridas sin alterar fechas de vencimento en los productos.
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  {% endblock %}

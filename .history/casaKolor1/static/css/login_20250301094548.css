@@ -269,7 +269,7 @@ input {
         padding: 10px;
     }
     .auth-submit-btn{
-        margin: 20px;
+        margin: 40px;
     }
     /* Orden de aparición en la columna */
     .auth-signin-section {
@@ -280,5 +280,19 @@ input {
     }
     .auth-overlay-section {
       order: 3; /* Tercero: el overlay (opcional) */
+    }
+  
+    /*
+      Si tu CSS original oculta signIn o signUp al activar .right-panel-active,
+      puedes anularlo aquí para que NO se oculte en móvil.
+      Por ejemplo, si antes decía:
+        .auth-master-wrapper.right-panel-active .auth-signin-section {
+          display: none;
+        }
+      Lo puedes sobreescribir con:
+    */
+    .auth-master-wrapper.right-panel-active .auth-signin-section,
+    .auth-master-wrapper.right-panel-active .auth-signup-section {
+      display: block !important; /* Que se vean ambos en móvil */
     }
   }

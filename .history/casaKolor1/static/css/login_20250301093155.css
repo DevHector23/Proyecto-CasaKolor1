@@ -242,43 +242,56 @@ input {
     }
 }
 @media (max-width: 768px) {
-    /* Contenedor principal en columna */
+    /* Ajusta el contenedor principal para apilar en columna */
     .auth-master-wrapper {
+      width: 90%;
+      margin: 20px auto;
+      min-height: auto;
       display: flex;
       flex-direction: column;
-      width: 90%;
-      margin: 80px auto;
-      min-height: auto;
-      overflow: visible; /* Evita recortes si antes había overflow hidden */
+      /* Si usabas overflow hidden, desactívalo para que no recorte nada */
+      overflow: visible;
     }
-    .auth-title{
-        margin-top: 40px;
-    }
-    /* Quita posicionamientos absolutos y transformaciones */
-    .auth-signin-section,
-    .auth-overlay-section,
-    .auth-signup-section {
-      position: static !important; /* Para que se apilen */
-      width: 100% !important;      /* Ocupa todo el ancho */
+  
+    /* Anulamos las posiciones absolutas y transformaciones
+       para que cada bloque se muestre de forma natural en columna */
+    .auth-form-section,
+    .auth-overlay-section {
+      position: static !important;
+      width: 100% !important;
+      height: auto !important;
       transform: none !important;
-      animation: none !important;
       opacity: 1 !important;
-      display: block !important;   /* Asegura que se muestren */
+      z-index: auto !important;
+      animation: none !important;
+      display: block; /* Todos los bloques se muestran en bloque */
     }
-    .auth-form-section{
-        padding: 10px;
-    }
-    .auth-submit-btn{
-        margin: 20px;
-    }
-    /* Orden de aparición en la columna */
+  
+    /* Orden de aparición en columna:
+       1) Iniciar Sesión
+       2) Overlay (Hola, Amigo / Bienvenido)
+       3) Registrarse
+    */
     .auth-signin-section {
-      order: 1; /* Primero: Iniciar Sesión */
-    }
-    .auth-signup-section {
-      order: 2; /* Segundo: Registrarse */
+      order: 1;
     }
     .auth-overlay-section {
-      order: 3; /* Tercero: el overlay (opcional) */
+      order: 2;
+      /* Opcional: darle padding o margen para que luzca bien */
+      padding: 20px;
+    }
+    .auth-signup-section {
+      order: 3;
+      display: none; /* Oculto por defecto en móvil */
+    }
+  
+    /* Cuando se activa la clase .right-panel-active,
+       ocultamos Iniciar Sesión y mostramos Registrarse */
+    .auth-master-wrapper.right-panel-active .auth-signin-section {
+      display: none;
+    }
+    .auth-master-wrapper.right-panel-active .auth-signup-section {
+      display: block;
     }
   }
+  

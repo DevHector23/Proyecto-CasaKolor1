@@ -247,13 +247,11 @@ input {
       display: flex;
       flex-direction: column;
       width: 90%;
-      margin: 80px auto;
+      margin: 20px auto;
       min-height: auto;
       overflow: visible; /* Evita recortes si antes había overflow hidden */
     }
-    .auth-title{
-        margin-top: 40px;
-    }
+  
     /* Quita posicionamientos absolutos y transformaciones */
     .auth-signin-section,
     .auth-overlay-section,
@@ -265,12 +263,7 @@ input {
       opacity: 1 !important;
       display: block !important;   /* Asegura que se muestren */
     }
-    .auth-form-section{
-        padding: 10px;
-    }
-    .auth-submit-btn{
-        margin: 20px;
-    }
+  
     /* Orden de aparición en la columna */
     .auth-signin-section {
       order: 1; /* Primero: Iniciar Sesión */
@@ -281,4 +274,19 @@ input {
     .auth-overlay-section {
       order: 3; /* Tercero: el overlay (opcional) */
     }
+  
+    /*
+      Si tu CSS original oculta signIn o signUp al activar .right-panel-active,
+      puedes anularlo aquí para que NO se oculte en móvil.
+      Por ejemplo, si antes decía:
+        .auth-master-wrapper.right-panel-active .auth-signin-section {
+          display: none;
+        }
+      Lo puedes sobreescribir con:
+    */
+    .auth-master-wrapper.right-panel-active .auth-signin-section,
+    .auth-master-wrapper.right-panel-active .auth-signup-section {
+      display: block !important; /* Que se vean ambos en móvil */
+    }
   }
+  

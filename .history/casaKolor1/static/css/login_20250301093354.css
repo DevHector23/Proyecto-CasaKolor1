@@ -242,43 +242,55 @@ input {
     }
 }
 @media (max-width: 768px) {
-    /* Contenedor principal en columna */
+    /* Convertir el contenedor en columna */
     .auth-master-wrapper {
+      width: 90%;
+      margin: 20px auto;
+      min-height: auto;
       display: flex;
       flex-direction: column;
-      width: 90%;
-      margin: 80px auto;
-      min-height: auto;
-      overflow: visible; /* Evita recortes si antes había overflow hidden */
+      overflow: visible;
     }
-    .auth-title{
-        margin-top: 40px;
-    }
-    /* Quita posicionamientos absolutos y transformaciones */
+  
+    /* Elimina posicionamientos absolutos y transformaciones */
     .auth-signin-section,
     .auth-overlay-section,
     .auth-signup-section {
-      position: static !important; /* Para que se apilen */
-      width: 100% !important;      /* Ocupa todo el ancho */
+      position: static !important;
+      width: 100% !important;
       transform: none !important;
-      animation: none !important;
       opacity: 1 !important;
-      display: block !important;   /* Asegura que se muestren */
+      transition: all 0.6s ease;
     }
-    .auth-form-section{
-        padding: 10px;
-    }
-    .auth-submit-btn{
-        margin: 20px;
-    }
-    /* Orden de aparición en la columna */
+  
+    /* Orden de aparición: primero Iniciar Sesión, luego Overlay y al final Registrarse */
     .auth-signin-section {
-      order: 1; /* Primero: Iniciar Sesión */
-    }
-    .auth-signup-section {
-      order: 2; /* Segundo: Registrarse */
+      order: 1;
     }
     .auth-overlay-section {
-      order: 3; /* Tercero: el overlay (opcional) */
+      order: 2;
+      padding: 10px 0;
+      text-align: center;
+    }
+    .auth-signup-section {
+      order: 3;
+      /* Por defecto, colapsamos la sección de registro */
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+  
+    /* Al activar la clase, expandimos el formulario de registro */
+    .auth-master-wrapper.right-panel-active .auth-signup-section {
+      max-height: 1000px; /* Valor alto para asegurar que se expanda totalmente */
+      opacity: 1;
+    }
+  
+    /* Opcional: puedes ajustar los botones para que se adapten mejor al ancho móvil */
+    .auth-submit-btn,
+    .auth-switch-btn {
+      width: auto;
+      margin: 10px auto;
     }
   }
+  

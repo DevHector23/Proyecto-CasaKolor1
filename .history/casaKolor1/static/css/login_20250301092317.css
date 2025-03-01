@@ -242,43 +242,54 @@ input {
     }
 }
 @media (max-width: 768px) {
-    /* Contenedor principal en columna */
     .auth-master-wrapper {
-      display: flex;
-      flex-direction: column;
-      width: 90%;
-      margin: 80px auto;
-      min-height: auto;
-      overflow: visible; /* Evita recortes si antes había overflow hidden */
+        width: 90%;
+        margin: 20px auto;
+        min-height: auto; /* Permite que la altura se adapte al contenido */
     }
-    .auth-title{
-        margin-top: 40px;
+    /* Colapsamos las secciones para que se muestren en bloque */
+    .auth-form-section,
+    .auth-overlay-section {
+        width: 100%;
+        position: relative;
+        transform: none !important;
+        opacity: 1 !important;
+        z-index: 1 !important;
     }
-    /* Quita posicionamientos absolutos y transformaciones */
+    /* Ocultamos el overlay para simplificar la vista */
+    .auth-overlay-section {
+        display: none;
+    }
+    /* Aseguramos que ambas secciones se ubiquen de forma natural */
     .auth-signin-section,
-    .auth-overlay-section,
     .auth-signup-section {
-      position: static !important; /* Para que se apilen */
-      width: 100% !important;      /* Ocupa todo el ancho */
-      transform: none !important;
-      animation: none !important;
-      opacity: 1 !important;
-      display: block !important;   /* Asegura que se muestren */
+        width: 100%;
+        left: 0;
+        position: relative;
+        transform: none;
     }
-    .auth-form-section{
+    /* Ajustes en los botones y textos si es necesario */
+    .auth-title {
+        font-size: 1.5rem;
+    }
+    .auth-description,
+    .auth-divider-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* Media query adicional para pantallas aún más pequeñas (ej. móviles de 480px) */
+@media (max-width: 480px) {
+    .auth-master-wrapper {
+        margin: 10px auto;
         padding: 10px;
     }
-    .auth-submit-btn{
-        margin: 20px;
+    .auth-submit-btn, .auth-switch-btn {
+        padding: 10px 30px;
+        font-size: 0.9rem;
     }
-    /* Orden de aparición en la columna */
-    .auth-signin-section {
-      order: 1; /* Primero: Iniciar Sesión */
+    .auth-input-group input {
+        padding: 10px 12px;
+        font-size: 0.9rem;
     }
-    .auth-signup-section {
-      order: 2; /* Segundo: Registrarse */
-    }
-    .auth-overlay-section {
-      order: 3; /* Tercero: el overlay (opcional) */
-    }
-  }
+}

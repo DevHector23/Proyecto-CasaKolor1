@@ -242,43 +242,60 @@ input {
     }
 }
 @media (max-width: 768px) {
-    /* Contenedor principal en columna */
+    /* Ajusta el contenedor principal para apilar en columna */
     .auth-master-wrapper {
-      display: flex;
-      flex-direction: column;
-      width: 90%;
-      margin: 80px auto;
-      min-height: auto;
-      overflow: visible; /* Evita recortes si antes había overflow hidden */
+        width: 90%;
+        margin: 20px auto;
+        min-height: auto;
+        display: flex;
+        flex-direction: column; 
+        /* Para evitar recortes si tenías overflow hidden: */
+        overflow: visible;
     }
-    .auth-title{
-        margin-top: 40px;
+
+    /* Anulamos posiciones y transformaciones que forzaban el layout en dos paneles */
+    .auth-form-section,
+    .auth-overlay-section {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        transform: none !important;
+        opacity: 1 !important;
+        z-index: auto !important;
+        animation: none !important; /* Evita parpadeos al cambiar de estado */
+        display: block;
     }
-    /* Quita posicionamientos absolutos y transformaciones */
-    .auth-signin-section,
-    .auth-overlay-section,
-    .auth-signup-section {
-      position: static !important; /* Para que se apilen */
-      width: 100% !important;      /* Ocupa todo el ancho */
-      transform: none !important;
-      animation: none !important;
-      opacity: 1 !important;
-      display: block !important;   /* Asegura que se muestren */
-    }
-    .auth-form-section{
-        padding: 10px;
-    }
-    .auth-submit-btn{
-        margin: 20px;
-    }
-    /* Orden de aparición en la columna */
+
+    /*
+      Ordena cada "bloque" en vertical:
+      1) Sign In
+      2) Overlay
+      3) Sign Up
+    */
     .auth-signin-section {
-      order: 1; /* Primero: Iniciar Sesión */
-    }
-    .auth-signup-section {
-      order: 2; /* Segundo: Registrarse */
+        order: 1;
     }
     .auth-overlay-section {
-      order: 3; /* Tercero: el overlay (opcional) */
+        order: 2;
+        /* Opcional: un padding para que se vea bien el contenido vertical */
+        padding: 20px 0;
     }
-  }
+    .auth-signup-section {
+        order: 3;
+    }
+
+    /*
+      Mantén el toggle funcional:
+      Por defecto, SignUp se oculta y SignIn se ve.
+      Cuando .right-panel-active se agrega, se oculta SignIn y se muestra SignUp.
+    */
+    .auth-signup-section {
+        display: none; /* Oculto por defecto en móvil */
+    }
+    .auth-master-wrapper.right-panel-active .auth-signin-section {
+        display: none; /* Se oculta SignIn */
+    }
+    .auth-master-wrapper.right-panel-active .auth-signup-section {
+        display: block; /* Se muestra SignUp */
+    }
+}

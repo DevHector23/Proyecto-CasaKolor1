@@ -241,44 +241,80 @@ input {
         margin: 20px auto;
     }
 }
+/* Media query para pantallas de hasta 768px */
 @media (max-width: 768px) {
-    /* Contenedor principal en columna */
+    /* Ajusta el contenedor principal para que no mantenga la vista de 2 columnas */
     .auth-master-wrapper {
-      display: flex;
-      flex-direction: column;
-      width: 90%;
-      margin: 80px auto;
-      min-height: auto;
-      overflow: visible; /* Evita recortes si antes había overflow hidden */
+        width: 90%;
+        margin: 20px auto;
+        min-height: auto; 
+        /* Puedes usar display flex en columna, o simplemente permitir flujo natural */
+        display: block;
     }
-    .auth-title{
-        margin-top: 40px;
+
+    /* Elimina las transformaciones y posicionamientos absolutos que forzaban el layout en dos paneles */
+    .auth-form-section,
+    .auth-overlay-section {
+        position: static !important;
+        transform: none !important;
+        opacity: 1 !important;
+        width: 100% !important;
     }
-    /* Quita posicionamientos absolutos y transformaciones */
+
+    /* Si no quieres mostrar el overlay en móviles, lo ocultas por completo */
+    .auth-overlay-section {
+        display: none;
+    }
+
+    /* Asegura que tanto la sección de login como la de registro se muestren en bloque, 
+       uno debajo del otro */
     .auth-signin-section,
-    .auth-overlay-section,
     .auth-signup-section {
-      position: static !important; /* Para que se apilen */
-      width: 100% !important;      /* Ocupa todo el ancho */
-      transform: none !important;
-      animation: none !important;
-      opacity: 1 !important;
-      display: block !important;   /* Asegura que se muestren */
+        left: 0 !important;
+        width: 100% !important;
+        z-index: 1 !important;
+        margin: 0 auto;
     }
-    .auth-form-section{
+
+    /* Anula la clase .right-panel-active en móvil (para evitar que se 'desplace' el segundo panel).
+       Puedes simplemente hacer que no aplique nada. */
+    .auth-master-wrapper.right-panel-active .auth-signin-section,
+    .auth-master-wrapper.right-panel-active .auth-signup-section {
+        transform: none !important;
+    }
+
+    /* Ajustes de tipografía y botones en móvil */
+    .auth-title {
+        font-size: 1.4rem;
+    }
+    .auth-description,
+    .auth-divider-text {
+        font-size: 0.9rem;
+    }
+    .auth-submit-btn, 
+    .auth-switch-btn {
+        padding: 10px 30px;
+        font-size: 0.9rem;
+    }
+    .auth-input-group input {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Si quieres más ajustes para pantallas aún más pequeñas (ej: max-width: 480px) */
+@media (max-width: 480px) {
+    .auth-master-wrapper {
+        margin: 10px auto;
         padding: 10px;
     }
-    .auth-submit-btn{
-        margin: 20px;
+    .auth-submit-btn, 
+    .auth-switch-btn {
+        padding: 8px 20px;
+        font-size: 0.85rem;
     }
-    /* Orden de aparición en la columna */
-    .auth-signin-section {
-      order: 1; /* Primero: Iniciar Sesión */
+    .auth-input-group input {
+        padding: 8px 10px;
+        font-size: 0.85rem;
     }
-    .auth-signup-section {
-      order: 2; /* Segundo: Registrarse */
-    }
-    .auth-overlay-section {
-      order: 3; /* Tercero: el overlay (opcional) */
-    }
-  }
+}

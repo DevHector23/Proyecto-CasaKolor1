@@ -725,6 +725,10 @@ h2 .text-center{
   margin-top: 25px;
   justify-content: center;
 }
+
+
+
+
 /* Responsividad para el perfil: en pantallas pequeñas, la imagen arriba y datos debajo */
 @media (max-width: 900px) {
   /* Cambiamos la dirección del flex en el contenedor que agrupa la imagen y la tarjeta */

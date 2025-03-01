@@ -725,26 +725,18 @@ h2 .text-center{
   margin-top: 25px;
   justify-content: center;
 }
-/* Responsividad para el perfil: en pantallas pequeñas, la imagen arriba y datos debajo */
+
+
+
+/* Diseño adaptable */
 @media (max-width: 900px) {
-  /* Cambiamos la dirección del flex en el contenedor que agrupa la imagen y la tarjeta */
-  .con {
-    flex-direction: column; /* Apila los elementos verticalmente */
-    align-items: center;    /* Centra los elementos horizontalmente */
-    gap: 20px;              /* Espacio entre la imagen y la tarjeta */
+  .profile-container {
+      flex-direction: column;
+      text-align: center;
+      gap: 30px;
   }
 
-  /* Ajusta el tamaño de la imagen para que se adapte al contenedor */
   .company-image img {
-    width: 90%;
-    max-width: 400px;       /* Limita el ancho máximo para que no se expanda demasiado */
-    margin: 0 auto;
-  }
-
-  /* Opcional: centra y ajusta la tarjeta de perfil */
-  .profile-card {
-    width: 90%;
-    max-width: 450px;
-    margin: 0 auto;
+      width: 90%;
   }
 }

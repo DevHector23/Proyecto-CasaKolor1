@@ -629,122 +629,98 @@ h2 .text-center{
 
 
 
-/* perfil */
-/* Contenedor principal */
+/* Contenedor principal: centro y márgenes */
 .profile-container {
-  position: relative; /* Para posicionar los pseudo-elementos */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
-  overflow: hidden; /* Evita que se muestre el pseudo-elemento fuera del contenedor */
-  color: white;
+  padding: 2rem;
+  /* Si quieres un fondo, puedes agregarlo aquí */
+  /* background-color: #f4f4f4; */
 }
 
-/* Pseudo-elemento para la imagen de fondo desenfocada */
-.profile-container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('/static/images/fondo9.jpg') center/cover no-repeat;
-  filter: blur(4px); /* Ajusta el nivel de desenfoque según necesites */
-  z-index: -2;
-}
-
+/* Contenedor interno que agrupa la imagen y la tarjeta */
 .con {
   display: flex;
-  justify-content: center;
+  flex-direction: row; /* Por defecto, imagen y tarjeta en fila */
+  gap: 2rem;          /* Espacio entre la imagen y la tarjeta */
   align-items: center;
-  height: auto;
-  width: auto;
-  padding: 20px;
-  gap: 50px;
-  border-radius: 10px;
-  box-shadow: 0 10px 10px 10px rgba(0, 0, 0, 0.2);
-  background-color: rgba(255, 255, 255, 0.333);
+  max-width: 1000px;  /* Ancho máximo para no estirar demasiado en pantallas grandes */
 }
 
 /* Imagen de la empresa */
 .company-image img {
-  width: 400px;
-  height: auto;
-  border-radius: 10px;
-
-  
+  max-width: 200px; /* Ajusta el ancho máximo de la imagen */
+  height: auto;     /* Mantén la proporción */
+  display: block;
 }
 
-/* Tarjeta del perfil */
+/* Tarjeta de perfil */
 .profile-card {
-  padding: 30px;
-  border-radius: 12px;
- color: black;
-  max-width: 450px;
-  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  width: 300px; /* Ajusta según tu preferencia */
+  max-width: 100%;
 }
 
-/* Encabezado del perfil */
 .profile-header {
-  margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 .profile-avatar {
-  width: 90px;
-  height: 90px;
-  background: #007bff;
-  color: white;
-  font-size: 2.5rem;
+  width: 60px;
+  height: 60px;
+  background-color: #0a84ff;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1.5rem;
   font-weight: bold;
   display: flex;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Información del usuario */
-.profile-body h3 {
-  margin-bottom: 15px;
-  /* color: #333; */
-  color: black;
-  font-size: 20px;
-  border-bottom: 2px solid #007bff;
-  display: inline-block;
-  padding-bottom: 5px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 0.5rem;
 }
 
 .profile-body p {
-  font-size: 16px;
-  margin: 8px 0;
-  color: black;
+  margin: 0.5rem 0;
 }
 
-/* Botones */
 .profile-footer {
-  display: flex;
-  margin-top: 25px;
-  justify-content: center;
+  text-align: center;
+  margin-top: 1rem;
 }
-/* Responsividad para el perfil: en pantallas pequeñas, la imagen arriba y datos debajo */
-@media (max-width: 900px) {
-  /* Cambiamos la dirección del flex en el contenedor que agrupa la imagen y la tarjeta */
+
+.btn.logout {
+  background-color: #ff4b2b;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn.logout:hover {
+  background-color: #e74324;
+}
+
+/* -- Responsividad -- */
+@media (max-width: 768px) {
+  /* En pantallas pequeñas, la imagen arriba y la tarjeta abajo */
   .con {
-    flex-direction: column; /* Apila los elementos verticalmente */
-    align-items: center;    /* Centra los elementos horizontalmente */
-    gap: 20px;              /* Espacio entre la imagen y la tarjeta */
+    flex-direction: column; /* Cambiamos a columna */
+    align-items: center;    /* Centra los elementos en columna */
   }
-
-  /* Ajusta el tamaño de la imagen para que se adapte al contenedor */
-  .company-image img {
-    width: 90%;
-    max-width: 400px;       /* Limita el ancho máximo para que no se expanda demasiado */
-    margin: 0 auto;
-  }
-
-  /* Opcional: centra y ajusta la tarjeta de perfil */
+  .company-image, 
   .profile-card {
-    width: 90%;
-    max-width: 450px;
-    margin: 0 auto;
+    width: 100%;        /* Ocupan todo el ancho disponible */
+    max-width: 400px;   /* Ajusta para no estirar demasiado en móvil */
+    margin-bottom: 1rem;
+  }
+  .company-image img {
+    max-width: 100%;    /* La imagen se adapta al contenedor */
   }
 }

@@ -154,8 +154,16 @@
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2" href="{% url 'sugerencias' %}">Sugerencias</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="{% url 'mision' %}">Nosotros</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle mx-lg-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Productos
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'mision' %}#mision">mision</a></li>
+                                <li><a class="dropdown-item" href="{% url 'mision' %}#mision">Pinturas</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'mision' %}#mision">Ver todos</a></li>
+                            </ul>
                         </li>
                         <form class="d-flex position-relative" action="{% url 'buscar' %}" method="get">
                             <!-- Botón de la lupa -->
@@ -226,7 +234,9 @@
             
           
             <div class="footer-section">
-                <h4>Redes Sociales</h4>
+                <h4><a href="{% url 'mision' %}#sobre">Sobre nosotros</a></h4>
+                <a href="{% url 'mision' %}#mision" class="footer-link">Misión y Visión</a> <!-- Enlace a Misión y Visión -->
+                <!-- From Uiverse.io by david-mohseni --> 
                 <ul class="wrapper">
                     <li class="icon facebook">
                       <a href="https://web.facebook.com/casakolor1/?_rdc=11&_rdr#" target="_blank">

@@ -154,9 +154,9 @@
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2" href="{% url 'sugerencias' %}">Sugerencias</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="{% url 'mision' %}">Nosotros</a>
-                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="">Paleta Colores</a>
+                        </li> -->
                         <form class="d-flex position-relative" action="{% url 'buscar' %}" method="get">
                             <!-- Botón de la lupa -->
                             <button class="btn me-2" type="button" id="toggle-search" style="position: relative; top: -6px;">
@@ -209,9 +209,10 @@
         </a>
         {% endif %}
 
-                <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                    <img src="{% static 'images/menu-.png' %}" alt="Menu" style="width:30px; height:auto;">
-                </button>
+                <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                    aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <img src="{% static 'images/tu_nueva_imagen.png' %}" alt="Menu" style="width:30px; height:auto;">
+    </button>
             </div>
     </nav>
     
@@ -226,7 +227,9 @@
             
           
             <div class="footer-section">
-                <h4>Redes Sociales</h4>
+                <h4><a href="{% url 'mision' %}#sobre">Sobre nosotros</a></h4>
+                <a href="{% url 'mision' %}#mision" class="footer-link">Misión y Visión</a> <!-- Enlace a Misión y Visión -->
+                <!-- From Uiverse.io by david-mohseni --> 
                 <ul class="wrapper">
                     <li class="icon facebook">
                       <a href="https://web.facebook.com/casakolor1/?_rdc=11&_rdr#" target="_blank">

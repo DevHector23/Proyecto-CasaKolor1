@@ -37,6 +37,12 @@ body {
 .navbar-brand img{
     margin-left: -50px;
 } 
+.navbar-toggler-icon {
+    background-image: url("{% static 'images/menu-.png' %}") !important;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 10;
+}
 
 .login-button{
     

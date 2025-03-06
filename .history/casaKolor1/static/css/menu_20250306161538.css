@@ -22,7 +22,8 @@ body {
     background-color: #66b3ff;
     height: 100px;
     padding: .5rem;
-    border-bottom: 3px solid white;
+      
+  border-bottom: 3px solid white;
 }
 .navbar-nav{
     margin-left: -100px; /* Ajusta según necesites */
@@ -36,32 +37,7 @@ body {
 .navbar-brand img{
     margin-left: -50px;
 } 
-/* Asegura que el contenedor del offcanvas centre su contenido */
-.offcanvas-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centra horizontalmente */
-    justify-content: center; /* Opcional: centra verticalmente si hay espacio */
-  }
-  
-  /* Hace que la lista de navegación ocupe el 100% del ancho y centre el texto */
-  .offcanvas-body .navbar-nav {
-    text-align: center;
-    padding: 0;
-    margin: 0;
-  }
-  
-  /* Cada item de la lista ocupa el 100% para que el enlace se centre */
-  .offcanvas-body .navbar-nav li {
-    width: 100%;
-    margin: 0;
-  }
-  
-  .offcanvas-body .navbar-nav li a {
-    display: block;
-    width: 100%;
-  }
-  
+
 .login-button{
     
     color: #fff;
@@ -115,6 +91,12 @@ body {
     transition: opacity 0.3s ease-in-out;
     opacity: 0;
 }
+/* cerrar sesion  */
+.img-small {
+    width: 40px;  /* Ajusta el tamaño según necesites */
+    height: 40px; /* Mantiene la proporción */
+}
+
 
 
 .navbar-toggler{
@@ -157,13 +139,41 @@ body {
     display: flex;
     align-items: center;
 }
+.btn-custom {
+    background-color: white;
+    color: black;
+    border-radius: 1px solid;
+    transition: background-color 0.3s ease; /* Efecto suave al pasar el mouse */
+}
 
-@media(max-width: 423px){
-    .navbar{
-        height: 200px;  
+.btn-custom:hover {
+    background-color: rgba(234, 35, 35, 0.778); /* Color más intenso al hacer hover */
+}
+/* Animación para que el navbar aparezca desde arriba */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
+/* Aplica la animación al navbar */
+.navbar {
+    animation: slideDown 0.8s ease-in-out;
+}
+/* Efecto fade-in para que la página aparezca suavemente */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
 @media(min-width: 991px){
 
@@ -377,15 +387,5 @@ body {
     
     .footer-link {
         font-size: 12px; /* Reducir tamaño de enlace */
-    }
-}
-@media (max-width: 768px) {
-    .search-box {
-        position: relative;
-        top: 0;
-        left: 0;
-        transform: none;
-        width: 100%;  
-        margin-top: 10px;
     }
 }

@@ -243,7 +243,7 @@ def finalizar_compra(request):
             ¡Gracias por tu compra en Casa Kolor!
             
             Detalles de tu pedido:
-            {''.join([f'{chr(10)}- {detalle}' for detalle in detalles_correo])}
+            {''.join([f'\n- {detalle}' for detalle in detalles_correo])}
             
             Total: ${pedido.total}
             

@@ -1,0 +1,119 @@
+/* perfil */
+/* Contenedor principal */
+.profile-container {
+    position: relative; /* Para posicionar los pseudo-elementos */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    overflow: hidden; /* Evita que se muestre el pseudo-elemento fuera del contenedor */
+    color: white;
+  }
+  
+  /* Pseudo-elemento para la imagen de fondo desenfocada */
+  .profile-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/static/images/fondo9.jpg') center/cover no-repeat;
+    filter: blur(4px); /* Ajusta el nivel de desenfoque según necesites */
+    z-index: -2;
+  }
+  
+  .con {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: auto;
+    padding: 20px;
+    gap: 50px;
+    border-radius: 10px;
+    box-shadow: 0 10px 10px 10px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.333);
+  }
+  
+  /* Imagen de la empresa */
+  .company-image img {
+    width: 400px;
+    height: auto;
+    border-radius: 10px;
+  
+    
+  }
+  
+  /* Tarjeta del perfil */
+  .profile-card {
+    padding: 30px;
+    border-radius: 12px;
+   color: black;
+    max-width: 450px;
+    width: 100%;
+  }
+  
+  /* Encabezado del perfil */
+  .profile-header {
+    margin-bottom: 20px;
+  }
+  
+  .profile-avatar {
+    width: 90px;
+    height: 90px;
+    background: #007bff;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    display: flex;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Información del usuario */
+  .profile-body h3 {
+    margin-bottom: 15px;
+    /* color: #333; */
+    color: black;
+    font-size: 20px;
+    border-bottom: 2px solid #007bff;
+    display: inline-block;
+    padding-bottom: 5px;
+  }
+  
+  .profile-body p {
+    font-size: 16px;
+    margin: 8px 0;
+    color: black;
+  }
+  
+  /* Botones */
+  .profile-footer {
+    display: flex;
+    margin-top: 25px;
+    justify-content: center;
+  }
+  /* Responsividad para el perfil: en pantallas pequeñas, la imagen arriba y datos debajo */
+  @media (max-width: 900px) {
+    /* Cambiamos la dirección del flex en el contenedor que agrupa la imagen y la tarjeta */
+    .con {
+      flex-direction: column; /* Apila los elementos verticalmente */
+      align-items: center;    /* Centra los elementos horizontalmente */
+      gap: 20px;              /* Espacio entre la imagen y la tarjeta */
+    }
+  
+    /* Ajusta el tamaño de la imagen para que se adapte al contenedor */
+    .company-image img {
+      width: 90%;
+      max-width: 400px;       /* Limita el ancho máximo para que no se expanda demasiado */
+      margin: 0 auto;
+    }
+  
+    /* Opcional: centra y ajusta la tarjeta de perfil */
+    .profile-card {
+      width: 90%;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+  }

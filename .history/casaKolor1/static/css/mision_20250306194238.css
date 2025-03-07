@@ -1,0 +1,110 @@
+/* Estilos base para la sección "Sobre Nosotros" */
+.about-us {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+}
+
+.header-container1 h2 {
+    font-size: 2.5rem;
+    color: black;
+    padding: 20px;
+}
+
+.about-us p {
+    font-size: 1.2rem;
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: justify;
+}
+
+.video-container {
+    max-width: 100%;
+    margin: 20px auto;
+}
+
+.video-container video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para la sección "Misión y Visión" */
+#mision {
+    padding: 20px;
+}
+
+#mision h2 {
+    font-size: 2.5rem;
+    color: black;
+    padding: 20px;
+}
+
+#mision p {
+    font-size: 1.1rem;
+    color: black;
+}
+
+.contenedor-mision-vision {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.imagen-seccion {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    margin: 10px;
+}
+
+.imagen-seccion img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.texto-seccion {
+    flex: 1;
+    min-width: 300px;
+    margin: 10px;
+}
+
+.texto-seccion h2 {
+    color: #007bff;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.texto-seccion p {
+    color: #333;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .contenedor-mision-vision {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .imagen-seccion, .texto-seccion {
+        max-width: 100%;
+    }
+
+    .about-us h2, #mision h2 {
+        font-size: 2rem;
+    }
+
+    .about-us p, #mision p {
+        font-size: 1rem;
+    }
+}

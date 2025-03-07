@@ -1,0 +1,84 @@
+.header-container1{
+    width: 100%;
+    margin: 0;
+}
+#sobre {
+  scroll-margin-top: 100px; /* Ajusta el valor según la altura de tu menú */
+}
+#mision{
+    scroll-margin-top: 100px; /* Ajusta el valor según la altura de tu menú */
+}
+.container-fluid1 {
+  padding: 0;
+  margin: 0;
+}
+
+.header-container1 {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.contenedor-mision-vision {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Contenedor de imagen */
+.imagen-seccion {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.imagen-seccion img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de texto */
+.texto-seccion {
+    flex: 1;
+    min-width: 300px;
+}
+
+.texto-seccion h2 {
+    color: #007bff;
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.texto-seccion p {
+    color: #333;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+/* Para dispositivos móviles */
+@media (max-width: 768px) {
+    .contenedor-mision-vision {
+        padding: 20px;
+        margin: 20px;
+    }
+    
+    .imagen-seccion, .texto-seccion {
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+/* Espacio vertical reducido entre secciones */
+.seccion-mision, .seccion-vision {
+    margin-bottom: 30px;
+}

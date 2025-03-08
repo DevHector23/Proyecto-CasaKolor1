@@ -134,7 +134,6 @@ body {
     display: none;
     transition: opacity 0.3s ease-in-out;
     opacity: 0;
-    margin-top: 20px;
 }
 
 /* Estilos para el dropdown del perfil */

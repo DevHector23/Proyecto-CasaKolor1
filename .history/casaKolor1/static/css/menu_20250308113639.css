@@ -69,17 +69,11 @@ body {
 }
 
 .offcanvas-body .navbar-nav li {
-    width: 100px;
+    width: 150px;
     margin: 0;
     padding: 10px 0; /* Aumenta el área táctil en móviles */
 }
 
-.offcanvas-body .navbar-nav li a {
-    display: block;
-    width: 100%;
-    font-size: 16px; /* Tamaño de fuente legible en móviles */
-    padding: 8px 0; /* Más área táctil */
-}
 
 /* Botón de login/perfil */
 .login-button {
@@ -130,11 +124,12 @@ body {
     top: 5%;
     left: 50px;
     transform: translateY(-50%);
+    width: 250px;
+    height: 30px;
     font-size: 14px;
     display: none;
     transition: opacity 0.3s ease-in-out;
     opacity: 0;
-    margin-top: 20px;
 }
 
 /* Estilos para el dropdown del perfil */
@@ -349,6 +344,24 @@ body {
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+/* Fija el problema de scrolling y rendering en Safari iOS */
+@supports (-webkit-overflow-scrolling: touch) {
+    /* CSS específico para iOS */
+    .navbar {
+        -webkit-transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+    }
+    
+    body {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Evita que el zoom ocurra en campos de formulario en iOS */
+    input, select, textarea {
+        font-size: 16px;
     }
 }
 /* Redes sociales */

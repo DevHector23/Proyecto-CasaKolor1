@@ -351,121 +351,50 @@ body {
         opacity: 1;
     }
 }
-/* Redes sociales */
-.wrapper {
-    display: inline-flex;
-    list-style: none;
-    height: 120px;
-    width: 100%;
-    padding-top: 20px;
-    font-family: "Poppins", sans-serif;
-    justify-content: center;
-}
-.wrapper .icon {
-    position: relative;
-    background: #fff;
-    border-radius: 50%;
-    margin: 10px;
-    width: 50px;
-    height: 50px;
-    font-size: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-.wrapper .tooltip {
-    position: absolute;
-    top: 0;
-    font-size: 14px;
-    background: #fff;
-    color: #fff;
-    padding: 5px 8px;
-    border-radius: 5px;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-.wrapper .tooltip::before {
-    position: absolute;
-    content: "";
-    height: 8px;
-    width: 8px;
-    background: #fff;
-    bottom: -3px;
-    left: 50%;
-    transform: translate(-50%) rotate(45deg);
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-.wrapper .icon:hover .tooltip {
-    top: -45px;
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-.wrapper .icon:hover span,
-.wrapper .icon:hover .tooltip {
-    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
-}
-.wrapper .facebook:hover,
-.wrapper .facebook:hover .tooltip,
-.wrapper .facebook:hover .tooltip::before {
-    background: #1877f2;
-    color: #fff;
-}
-.wrapper .instagram:hover,
-.wrapper .instagram:hover .tooltip,
-.wrapper .instagram:hover .tooltip::before {
-    background: #e4405f;
-    color: #fff;
-}
-
-/* Footer */
+/* Estilos generales del Footer */
 .footer {
-    position: absolute;
     background-color: #66b3ff;
     color: black;
     padding: 20px 0;
     width: 100%;
-    border-top: 3px solid white; /* Borde superior */
+    border-top: 3px solid white;
     border-bottom: 3px solid white;
+    text-align: center; /* Centrar todo el contenido del footer */
 }
+
 .footer .container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 0 20px;
+    justify-content: center; /* Centrar las secciones horizontalmente */
+    align-items: center; /* Centrar las secciones verticalmente */
+    max-width: 1200px; /* Limitar el ancho máximo para evitar que se expanda demasiado */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 0 20px; /* Añadir un poco de padding lateral */
 }
+
 .footer-section {
     flex: 1;
     margin: 10px;
     min-width: 250px;
+    text-align: center; /* Centrar el texto dentro de cada sección */
 }
+
 .footer-section h4 {
-    text-decoration: none;
     font-size: 18px;
     margin-bottom: 10px;
-    text-align: center;
     color: #f39c12;
 }
-.footer-section h4 a {
-    text-decoration: none;
-    font-size: 18px;
-    margin-bottom: 10px;
-    text-align: center;
-    color: #f39c12;
-}
+
 .footer-section p {
     line-height: 1.6;
+    margin: 0 auto; /* Centrar el texto */
 }
+
 .footer-link {
     text-decoration: none;
     color: black;
 }
+
 .footer-bottom {
     text-align: center;
     padding: 10px 0;
@@ -473,6 +402,39 @@ body {
     font-size: 14px;
     margin-top: 20px;
     color: black;
+    width: 100%; /* Asegurar que ocupe todo el ancho */
+}
+
+/* Redes sociales */
+.wrapper {
+    display: flex;
+    justify-content: center; /* Centrar los íconos de redes sociales */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wrapper .icon {
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.wrapper .icon:hover {
+    transform: translateY(-5px); /* Efecto de levantar al pasar el mouse */
+}
+
+/* Mapa */
+.map-container iframe {
+    width: 100%;
+    height: 200px;
+    margin: 0 auto; /* Centrar el mapa */
 }
 
 /* Responsividad para Footer */

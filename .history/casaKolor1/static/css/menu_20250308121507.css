@@ -480,60 +480,27 @@ body {
     .footer .container {
         flex-direction: column; /* Cambiar a una columna en dispositivos móviles */
         align-items: center; /* Centrar las secciones */
-        text-align: center; /* Centrar el texto */
-        padding: 0 10px; /* Reducir el padding lateral */
     }
 
     .footer-section {
-        margin: 5px 0; /* Reducir el margen entre secciones */
-        width: 100%; /* Ocupar todo el ancho disponible */
+        margin: 20px 0; /* Aumentar el margen entre secciones */
+        text-align: center; /* Centrar el texto */
     }
 
     .footer-section h4 {
         font-size: 16px; /* Reducir el tamaño de la fuente en móviles */
-        margin-bottom: 5px; /* Reducir el margen inferior del título */
     }
 
     .footer-section p {
         font-size: 14px; /* Reducir el tamaño de la fuente en móviles */
-        margin: 0 auto; /* Centrar el texto */
-        line-height: 1.4; /* Reducir el interlineado para ahorrar espacio */
     }
 
     .footer-bottom {
         font-size: 12px; /* Reducir el tamaño de la fuente en móviles */
-        padding: 5px 0; /* Reducir el padding superior e inferior */
-        margin-top: 10px; /* Reducir el margen superior */
     }
 
     .wrapper {
         justify-content: center; /* Centrar los íconos de redes sociales */
-        padding: 0; /* Eliminar padding adicional */
-        margin: 5px 0; /* Reducir el margen de las redes sociales */
-    }
-
-    .map-container iframe {
-        width: 100%; /* Asegurar que el mapa ocupe todo el ancho */
-        height: 180px; /* Reducir la altura del mapa */
-        margin: 0 auto; /* Centrar el mapa */
-    }
-
-    /* Ajustes específicos para el texto de contacto */
-    .footer-section p i {
-        margin-right: 5px; /* Añadir un pequeño margen a los íconos */
-    }
-
-    /* Ajustes para el enlace de WhatsApp */
-    .footer-section p a {
-        display: flex; /* Usar flexbox para alinear el ícono y el texto */
-        align-items: center; /* Centrar verticalmente el ícono y el texto */
-        justify-content: center; /* Centrar horizontalmente */
-        text-decoration: none; /* Eliminar subrayado */
-        color: inherit; /* Mantener el color del texto */
-    }
-
-    .footer-section p a img {
-        margin-right: 8px; /* Añadir margen entre el ícono y el texto */
     }
 }
 
@@ -555,12 +522,23 @@ body {
     }
 
     .wrapper .icon {
-        width: 35px; /* Reducir el tamaño de los íconos en móviles pequeños */
-        height: 35px;
-        font-size: 14px; /* Reducir el tamaño de la fuente de los íconos */
+        width: 40px; /* Reducir el tamaño de los íconos en móviles pequeños */
+        height: 40px;
+        font-size: 16px; /* Reducir el tamaño de la fuente de los íconos */
     }
 
     .wrapper .tooltip {
-        font-size: 10px; /* Reducir el tamaño del tooltip en móviles pequeños */
+        font-size: 12px; /* Reducir el tamaño del tooltip en móviles pequeños */
+    }
+}
+/* NUEVOS keyframes para la animación del navbar */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }

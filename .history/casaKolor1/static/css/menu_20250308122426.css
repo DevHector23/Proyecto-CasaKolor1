@@ -485,7 +485,7 @@ body {
     }
 
     .footer-section {
-        margin: 5px 0; /* Reducir el margen entre secciones */
+        margin: 10px 0; /* Reducir el margen entre secciones */
         width: 100%; /* Ocupar todo el ancho disponible */
     }
 
@@ -509,7 +509,7 @@ body {
     .wrapper {
         justify-content: center; /* Centrar los íconos de redes sociales */
         padding: 0; /* Eliminar padding adicional */
-        margin: 5px 0; /* Reducir el margen de las redes sociales */
+        margin: 10px 0; /* Reducir el margen de las redes sociales */
     }
 
     .map-container iframe {

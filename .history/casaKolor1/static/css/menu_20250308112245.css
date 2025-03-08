@@ -35,8 +35,12 @@ body {
 
 .navbar-nav {
     display: flex;
-    justify-content: center;
-    width: 65%;
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center; /* Centra los elementos verticalmente */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    gap: 20px; /* Espacio entre elementos (ajusta según necesites) */
+    margin: 0 auto; /* Centra el contenedor en el navbar */
+    padding: 0; /* Elimina el padding innecesario */
 }
 
 .navbar-brand {

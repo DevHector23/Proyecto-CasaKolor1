@@ -35,10 +35,33 @@ body {
 
 .navbar-nav {
     display: flex;
-    justify-content: center;
-    width: 65%;
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center; /* Centra los elementos verticalmente */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    gap: 20px; /* Espacio entre elementos (ajusta según necesites) */
+    margin: 0 auto; /* Centra el contenedor en el navbar */
+    padding: 0; /* Elimina el padding innecesario */
+}
+.navbar-nav .nav-item {
+    list-style: none; /* Elimina los estilos de lista */
+    margin: 0; /* Elimina márgenes innecesarios */
+}
+.navbar-nav .nav-link:hover {
+    color: white; /* Cambia el color al pasar el mouse */
 }
 
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+    .navbar-nav {
+        flex-direction: column; /* Apila los elementos verticalmente en móviles */
+        gap: 10px; /* Reduce el espacio entre elementos */
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 14px; /* Reduce el tamaño de la fuente en móviles */
+        padding: 6px 10px; /* Reduce el padding en móviles */
+    }
+}
 .navbar-brand {
     font-weight: 508;
     color: white;

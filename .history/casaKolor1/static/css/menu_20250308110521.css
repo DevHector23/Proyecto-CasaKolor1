@@ -44,13 +44,10 @@ body {
     color: white;
     font-size: 34px;
     transition: 0.3s color;
-    padding-left: 15px; /* Añadido para espaciado en móviles */
 }
 
 .navbar-brand img {
     margin-left: -50px;
-    max-height: 80px; /* Asegura que la imagen del logo no sea demasiado grande */
-    width: auto; /* Mantiene la proporción */
 }
 
 /* Offcanvas y navegación móvil */
@@ -65,20 +62,16 @@ body {
     text-align: center;
     padding: 0;
     margin: 0;
-    width: 100%; /* Asegura que ocupe todo el ancho en móviles */
 }
 
 .offcanvas-body .navbar-nav li {
     width: 100%;
     margin: 0;
-    padding: 10px 0; /* Aumenta el área táctil en móviles */
 }
 
 .offcanvas-body .navbar-nav li a {
     display: block;
     width: 100%;
-    font-size: 16px; /* Tamaño de fuente legible en móviles */
-    padding: 8px 0; /* Más área táctil */
 }
 
 /* Botón de login/perfil */
@@ -234,7 +227,6 @@ body {
 .navbar-toggler {
     border: none;
     font-size: 1.25rem;
-    padding: 8px 12px; /* Aumenta el área táctil */
 }
 
 .navbar-toggler:focus, .btn-close:focus {
@@ -278,70 +270,74 @@ body {
     align-items: center;
 }
 
-/* Media queries mejorados con enfoque en iPhones */
-@media (max-width: 991px) {
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
     .navbar {
-        padding: 0 15px;
-    }
-    
-    .navbar-brand {
-        font-size: 28px; /* Reducir tamaño en tablets */
-    }
-}
-
-/* Media query específico para dispositivos móviles */
-@media (max-width: 767px) {
-    .navbar {
-        height: 70px; /* Altura más compacta para móviles */
-        padding: 0 10px;
+        height: 80px; /* Reducir la altura del menú en móviles */
     }
 
     body {
-        padding-top: 70px; /* Ajustar el padding-top para móviles */
+        padding-top: 80px; /* Ajustar el padding-top para móviles */
     }
-    
-    .navbar-brand {
-        font-size: 24px; /* Reducir más para móviles pequeños */
-    }
-    
-    .navbar-brand img {
-        max-height: 40px; /* Imagen más pequeña */
-        margin-left: -30px; /* Ajustar margen */
-    }
-}
 
-/* Media query específico para iPhones (incluyendo versiones pequeñas como iPhone SE) */
-@media (max-width: 375px) {
-    .navbar {
-        height: 60px; /* Más compacto para iPhones pequeños */
+    .offcanvas-body {
+        padding-top: 20px; /* Espacio adicional para el offcanvas */
     }
-    
-    body {
-        padding-top: 60px;
+
+    .navbar-nav {
+        flex-direction: column;
+        gap: 10px;
     }
-    
-    .navbar-brand {
-        font-size: 20px; /* Aún más pequeño para iPhone SE */
-        padding-left: 5px;
-    }
-    
-    .navbar-brand img {
-        max-height: 35px;
-        margin-left: -20px;
-    }
-    
+
     .navbar-toggler {
-        padding: 4px 8px;
-        font-size: 1.1rem;
+        margin-right: 10px;
     }
-    
+
+    .search-box {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .navbar-brand {
+        font-size: 28px; /* Reducir el tamaño del logo en móviles */
+    }
+
+    .navbar-brand img {
+        margin-left: -30px; /* Ajustar la posición del logo en móviles */
+    }
+
+    .login-button {
+        padding: 6px 6px; /* Reducir el padding del botón de login en móviles */
+    }
+
     .profile-dropdown {
-        min-width: 200px; /* Más estrecho para pantallas pequeñas */
-        right: -70px; /* Ajustar posición */
+        min-width: 200px; /* Reducir el ancho del dropdown en móviles */
     }
 }
 
-/* Ajuste de la animación para que sea más suave en dispositivos iOS */
+@media (max-width: 480px) {
+    .navbar-brand {
+        font-size: 24px; /* Reducir aún más el tamaño del logo en móviles pequeños */
+    }
+
+    .navbar-brand img {
+        margin-left: -20px; /* Ajustar la posición del logo en móviles pequeños */
+    }
+
+    .login-button {
+        padding: 4px 4px; /* Reducir aún más el padding del botón de login en móviles pequeños */
+    }
+
+    .profile-dropdown {
+        min-width: 180px; /* Reducir aún más el ancho del dropdown en móviles pequeños */
+    }
+}
+
+/* NUEVOS keyframes para la animación del navbar */
 @keyframes slideDown {
     from {
         transform: translateY(-100%);
@@ -350,24 +346,6 @@ body {
     to {
         transform: translateY(0);
         opacity: 1;
-    }
-}
-
-/* Fija el problema de scrolling y rendering en Safari iOS */
-@supports (-webkit-overflow-scrolling: touch) {
-    /* CSS específico para iOS */
-    .navbar {
-        -webkit-transform: translateZ(0);
-        -webkit-backface-visibility: hidden;
-    }
-    
-    body {
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    /* Evita que el zoom ocurra en campos de formulario en iOS */
-    input, select, textarea {
-        font-size: 16px;
     }
 }
 /* Redes sociales */

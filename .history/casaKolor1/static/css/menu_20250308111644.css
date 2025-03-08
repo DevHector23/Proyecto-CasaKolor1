@@ -44,12 +44,12 @@ body {
     color: white;
     font-size: 34px;
     transition: 0.3s color;
-    padding-left: 15px; /* Añadido para espaciado en móviles */
+    
 }
 
 .navbar-brand img {
     margin-left: -50px;
-    max-height: 80px; /* Asegura que la imagen del logo no sea demasiado grande */
+    max-height: 60px; /* Asegura que la imagen del logo no sea demasiado grande */
     width: auto; /* Mantiene la proporción */
 }
 

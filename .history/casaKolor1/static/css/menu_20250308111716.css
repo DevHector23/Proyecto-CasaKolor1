@@ -48,7 +48,7 @@ body {
 }
 
 .navbar-brand img {
-    margin-left: -50px;
+    margin-left: -10px;
     max-height: 80px; /* Asegura que la imagen del logo no sea demasiado grande */
     width: auto; /* Mantiene la proporción */
 }

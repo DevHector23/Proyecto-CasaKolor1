@@ -17,28 +17,32 @@ body {
     font-family: 'Arial', sans-serif;
     height: 100vh;
     margin: 0;
-    padding-top: 100px; /* Ajusta este valor según la altura del menú */
+    padding-top: 80px; /* Ajusta este valor según la altura del menú */
 }
 
 /* Menu */
 .navbar {
     background-color: #66b3ff;
-    height: 100px;
-    padding: 0;
+    height: 80px; /* Reducir la altura del menú */
+    padding: 0.5rem;
     border-bottom: 3px solid white;
-    animation: slideDown 0.8s ease-out;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000; /* Asegura que el menú esté por encima del contenido */
-}
-
-.navbar-nav {
     display: flex;
-    justify-content: center;
-    width: 55%;
+    align-items: center;
+    justify-content: space-between; /* Alinear elementos horizontalmente */
 }
 
+/* Contenedor para el logo, carrito y sesión */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espacio entre elementos */
+}
+
+/* Logo */
 .navbar-brand {
     font-weight: 508;
     color: white;
@@ -47,40 +51,7 @@ body {
 }
 
 .navbar-brand img {
-    margin-left: -50px;
-}
-
-/* Offcanvas y navegación móvil */
-.offcanvas-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.offcanvas-body .navbar-nav {
-    text-align: center;
-    padding: 0;
-    margin: 0;
-}
-
-.offcanvas-body .navbar-nav li {
-    width: 100%;
-    margin: 0;
-}
-
-.offcanvas-body .navbar-nav li a {
-    display: block;
-    width: 100%;
-}
-
-/* Botón de login/perfil */
-.login-button {
-    color: #fff;
-    padding: 8px 8px;
-    border-radius: 100px;
-    text-decoration: none;
-    transition: 0.3s background-color;
+    height: 60px; /* Ajustar tamaño del logo */
 }
 
 /* Icono del carrito */
@@ -112,205 +83,83 @@ body {
     transform: scale(1.1);
 }
 
-.profile-link {
+/* Botón de login/perfil */
+.login-button {
+    color: #fff;
+    padding: 8px 8px;
+    border-radius: 100px;
     text-decoration: none;
-    color: black;
+    transition: 0.3s background-color;
 }
 
-/* Caja de búsqueda oculta inicialmente */
-.search-box {
+.login-button img {
+    height: 30px; /* Ajustar tamaño del ícono de sesión */
+}
+
+/* Botón hamburguesa (fuera del navbar) */
+.menu-toggle {
     position: absolute;
-    top: 5%;
-    left: 50px;
-    transform: translateY(-50%);
-    width: 250px;
-    height: 30px;
-    font-size: 14px;
-    display: none;
-    transition: opacity 0.3s ease-in-out;
-    opacity: 0;
+    top: 20px; /* Ajustar posición vertical */
+    right: 20px; /* Ajustar posición horizontal */
+    z-index: 1001; /* Asegurar que esté por encima del menú */
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
-/* Estilos para el dropdown del perfil */
-.user-profile-container {
-    position: relative;
-    display: inline-block;
+.menu-toggle img {
+    height: 30px; /* Ajustar tamaño del ícono del menú */
 }
 
-.profile-dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: white;
-    min-width: 250px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    z-index: 1000;
-    border-radius: 8px;
-    padding: 15px;
-    top: 100%;
-    margin-top: 10px;
-}
-
-.profile-header {
+/* Offcanvas y navegación móvil */
+.offcanvas-body {
     display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-}
-
-.profile-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #f0f0f0;
-    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-right: 15px;
-    font-size: 20px;
-    color: #666;
 }
 
-.profile-info {
-    flex-grow: 1;
-}
-
-.profile-name {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.profile-email {
-    color: #777;
-    font-size: 14px;
-}
-
-.profile-details {
-    margin-bottom: 15px;
-}
-
-.profile-item {
-    padding: 8px 0;
-    border-bottom: 1px solid #f5f5f5;
-    font-size: 14px;
-}
-
-.profile-item i {
-    margin-right: 10px;
-    color: #666;
-    width: 20px;
+.offcanvas-body .navbar-nav {
     text-align: center;
+    padding: 0;
+    margin: 0;
 }
 
-.profile-logout {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: #f8f8f8;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #333;
-    transition: all 0.3s ease;
+.offcanvas-body .navbar-nav li {
+    width: 100%;
+    margin: 0;
 }
 
-.profile-logout:hover {
-    background-color: #f1f1f1;
+.offcanvas-body .navbar-nav li a {
+    display: block;
+    width: 100%;
 }
 
-.profile-logout img {
-    margin-right: 10px;
-}
-
-/* Botón hamburguesa */
-.navbar-toggler {
-    border: none;
-    font-size: 1.25rem;
-}
-
-.navbar-toggler:focus, .btn-close:focus {
-    box-shadow: none;
-    outline: none;
-}
-
-.nav-link {
-    color: black;
-    font-weight: 500;
-    position: relative;
-}
-
-.nav-link:hover {
-    color: white;
-}
-
-.dropdown-menu {
-    color: black;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(245, 3, 3, 0.959);
-}
-
-.dropdown-item:hover {
-    background-color: #f8f9fa;
-}
-
-/* Buscar en navbar */
-.navbar .offcanvas-body {
-    align-items: center;
-}
-
-.navbar .navbar-nav {
-    align-items: center;
-    gap: 15px;
-}
-
-.navbar .d-flex {
-    margin-left: 5px;
-    display: flex;
-    align-items: center;
-}
-
+/* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
     .navbar {
-        height: 80px; /* Reducir la altura del menú en móviles */
+        height: 60px; /* Reducir la altura del menú en móviles */
     }
 
     body {
-        padding-top: 80px; /* Ajustar el padding-top para móviles */
+        padding-top: 60px; /* Ajustar el padding-top para móviles */
     }
 
-    .offcanvas-body {
-        padding-top: 20px; /* Espacio adicional para el offcanvas */
+    .navbar-brand img {
+        height: 40px; /* Reducir tamaño del logo en móviles */
     }
 
-    .navbar-nav {
-        flex-direction: column;
-        gap: 10px;
+    .login-button img {
+        height: 25px; /* Reducir tamaño del ícono de sesión en móviles */
     }
 
-    .navbar-toggler {
-        margin-right: 10px;
+    .menu-toggle {
+        top: 15px; /* Ajustar posición vertical en móviles */
+        right: 15px; /* Ajustar posición horizontal en móviles */
     }
 
-    .search-box {
-        position: relative;
-        top: 0;
-        left: 0;
-        transform: none;
-        width: 100%;
-        margin-top: 10px;
-    }
-}
-
-/* NUEVOS keyframes para la animación del navbar */
-@keyframes slideDown {
-    from {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
+    .menu-toggle img {
+        height: 25px; /* Reducir tamaño del ícono del menú en móviles */
     }
 }
 /* Redes sociales */

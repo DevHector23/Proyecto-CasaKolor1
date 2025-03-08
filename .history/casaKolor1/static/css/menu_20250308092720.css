@@ -24,7 +24,7 @@ body {
 .navbar {
     background-color: #66b3ff;
     height: 100px;
-    padding: 0;
+    padding: .5rem;
     border-bottom: 3px solid white;
     animation: slideDown 0.8s ease-out;
     position: fixed;
@@ -280,7 +280,7 @@ body {
     }
 
     .offcanvas-body {
-        padding-top: 20px; /* Espacio adicional para el offcanvas */
+        padding-top: 50px; /* Espacio adicional para el offcanvas */
     }
 
     .navbar-nav {

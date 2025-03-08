@@ -24,7 +24,7 @@ body {
 .navbar {
     background-color: #66b3ff;
     height: 100px;
-    padding: 0;
+    padding: .5rem;
     border-bottom: 3px solid white;
     animation: slideDown 0.8s ease-out;
     position: fixed;
@@ -227,6 +227,10 @@ body {
 .navbar-toggler {
     border: none;
     font-size: 1.25rem;
+    position: fixed; /* Fijar el botón hamburguesa */
+    top: 20px; /* Ajustar la posición vertical */
+    right: 20px; /* Ajustar la posición horizontal */
+    z-index: 1001; /* Asegurar que esté por encima del menú */
 }
 
 .navbar-toggler:focus, .btn-close:focus {

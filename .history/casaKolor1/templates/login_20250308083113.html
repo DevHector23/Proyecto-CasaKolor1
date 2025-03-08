@@ -126,17 +126,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('DOMContentLoaded', function() {
     const loginSection = document.getElementById('login-section');
     const registerSection = document.getElementById('register-section');
-    const switchToRegister = document.getElementById('switchToRegister');
-    const switchToLogin = document.getElementById('switchToLogin');
+    const signInButton = document.getElementById('signIn');
+    const signUpButton = document.getElementById('signUp');
 
     // Mostrar registro y ocultar login
-    switchToRegister.addEventListener('click', function() {
+    signUpButton.addEventListener('click', function() {
         loginSection.style.display = 'none';
         registerSection.style.display = 'block';
     });
 
     // Mostrar login y ocultar registro
-    switchToLogin.addEventListener('click', function() {
+    signInButton.addEventListener('click', function() {
         registerSection.style.display = 'none';
         loginSection.style.display = 'block';
     });

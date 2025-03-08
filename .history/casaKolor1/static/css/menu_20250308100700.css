@@ -36,7 +36,7 @@ body {
 .navbar-nav {
     display: flex;
     justify-content: center;
-    width: 65%;
+    width: 55%;
 }
 
 .navbar-brand {
@@ -234,14 +234,35 @@ body {
     outline: none;
 }
 
+/* Estilos para los enlaces del menú */
 .nav-link {
     color: black;
     font-weight: 500;
     position: relative;
+    text-decoration: none; /* Eliminar subrayado por defecto */
+    padding-bottom: 5px; /* Espacio para la línea */
 }
 
-.nav-link:hover {
-    color: white;
+/* Pseudo-elemento para la línea */
+.nav-link:not(.dropdown-toggle)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0; /* Inicialmente sin ancho */
+    height: 2px; /* Grosor de la línea */
+    background-color: red; /* Color de la línea */
+    transition: width 0.3s ease; /* Transición suave */
+}
+
+/* Expandir la línea al pasar el mouse */
+.nav-link:not(.dropdown-toggle):hover::after {
+    width: 100%; /* La línea se expande al 100% del ancho */
+}
+
+/* Opcional: Línea permanente para la página activa */
+.nav-link.active:not(.dropdown-toggle)::after {
+    width: 100%; /* La línea permanece visible */
 }
 
 .dropdown-menu {

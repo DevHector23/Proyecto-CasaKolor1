@@ -35,8 +35,13 @@ body {
 
 .navbar-nav {
     display: flex;
-    justify-content: center;
-    width: 65%;
+    justify-content: space-around;
+    align-items: center; /* Alinear verticalmente los elementos */
+    width: 55%;
+    gap: 30px; /* Espacio uniforme entre los elementos */
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 .navbar-brand {

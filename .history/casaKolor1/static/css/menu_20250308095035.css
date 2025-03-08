@@ -35,10 +35,14 @@ body {
 
 .navbar-nav {
     display: flex;
-    justify-content: center;
-    width: 65%;
+    justify-content: center; /* Mantener centrado */
+    align-items: center;
+    width: 55%;
+    gap: 30px; /* Espacio uniforme entre los elementos */
+    padding: 0;
+    margin: 0 0 0 40px; /* Margen a la izquierda para mover el grupo */
+    list-style: none;
 }
-
 .navbar-brand {
     font-weight: 508;
     color: white;

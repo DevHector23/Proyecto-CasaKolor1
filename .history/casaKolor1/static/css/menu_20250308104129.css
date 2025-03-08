@@ -33,10 +33,31 @@ body {
     z-index: 1000; /* Asegura que el menú esté por encima del contenido */
 }
 
+/* Modificación para centrar los elementos del navbar */
 .navbar-nav {
     display: flex;
     justify-content: center;
-    width: 65%;
+    align-items: center;
+    width: 100%;
+}
+
+/* Espaciado uniforme entre elementos del navbar */
+.navbar-nav .nav-item {
+    margin: 0 5px;
+}
+
+/* Asegurar que todos los enlaces tienen el mismo estilo */
+.nav-link {
+    color: black;
+    font-weight: 500;
+    position: relative;
+    padding: 8px 12px;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: white;
 }
 
 .navbar-brand {
@@ -58,15 +79,17 @@ body {
     justify-content: center;
 }
 
+/* Centrado horizontal de los elementos en el offcanvas */
 .offcanvas-body .navbar-nav {
     text-align: center;
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 
 .offcanvas-body .navbar-nav li {
     width: 100%;
-    margin: 0;
+    margin: 10px 0;
 }
 
 .offcanvas-body .navbar-nav li a {
@@ -234,16 +257,6 @@ body {
     outline: none;
 }
 
-.nav-link {
-    color: black;
-    font-weight: 500;
-    position: relative;
-}
-
-.nav-link:hover {
-    color: white;
-}
-
 .dropdown-menu {
     color: black;
     border-radius: 8px;
@@ -259,13 +272,9 @@ body {
     align-items: center;
 }
 
-.navbar .navbar-nav {
-    align-items: center;
-    gap: 15px;
-}
-
+/* Modificaciones para que el contenedor de búsqueda no rompa el centrado */
 .navbar .d-flex {
-    margin-left: 5px;
+    margin-left: 15px;
     display: flex;
     align-items: center;
 }

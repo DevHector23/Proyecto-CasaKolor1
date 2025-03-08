@@ -6,69 +6,59 @@
     text-decoration: none;
     list-style: none;
 }
-
 :root {
     --gradient-start: #0a84ff;  /* Color del menú */
     --gradient-end: #66b3ff;    /* Un tono más oscuro para el degradado */
 }
-
 body {
     background-color: var(--gradient-end);
     font-family: 'Arial', sans-serif;
     height: 100vh;
     margin: 0;
-    padding-top: 100px; /* Ajusta este valor según la altura del menú */
+    padding-top: 100px;
 }
 
 /* Menu */
 .navbar {
+    /* Fondo, altura, padding y borde inferior */
     background-color: #66b3ff;
     height: 100px;
-    padding: 0;
+    padding: .5rem;
     border-bottom: 3px solid white;
-    animation: slideDown 0.8s ease-out;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000; /* Asegura que el menú esté por encima del contenido */
+    animation: slideDown 0.8s ease-out;  /* NUEVA ANIMACIÓN: Slide Down desde arriba */
 }
-
-.navbar-nav {
+.navbar-nav{
     display: flex;
     justify-content: center;
-    width: 65%;
+    width: 55%;
 }
-
 .navbar-brand {
     font-weight: 508;
     color: white;
     font-size: 34px;
     transition: 0.3s color;
 }
-
 .navbar-brand img {
     margin-left: -50px;
-}
+} 
 
 /* Offcanvas y navegación móvil */
+
 .offcanvas-body {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Opcional: centra verticalmente si hay espacio */
 }
-
 .offcanvas-body .navbar-nav {
     text-align: center;
     padding: 0;
     margin: 0;
 }
-
 .offcanvas-body .navbar-nav li {
     width: 100%;
     margin: 0;
 }
-
 .offcanvas-body .navbar-nav li a {
     display: block;
     width: 100%;
@@ -88,7 +78,6 @@ body {
     position: relative;
     display: inline-block;
 }
-
 #cart-count {
     position: absolute;
     top: -5px;
@@ -106,12 +95,10 @@ body {
     font-family: 'Arial', sans-serif;
     transition: transform 0.2s ease-in-out;
 }
-
 #cart-count.show {
     display: inline-block;
     transform: scale(1.1);
 }
-
 .profile-link {
     text-decoration: none;
     color: black;
@@ -121,12 +108,12 @@ body {
 .search-box {
     position: absolute;
     top: 5%;
-    left: 50px;
+    left: 50px; /* Ajusta la posición al lado del icono */
     transform: translateY(-50%);
     width: 250px;
     height: 30px;
     font-size: 14px;
-    display: none;
+    display: none; /* Oculto por defecto */
     transition: opacity 0.3s ease-in-out;
     opacity: 0;
 }
@@ -136,7 +123,7 @@ body {
     position: relative;
     display: inline-block;
 }
-
+    
 .profile-dropdown {
     display: none;
     position: absolute;
@@ -150,7 +137,7 @@ body {
     top: 100%;
     margin-top: 10px;
 }
-
+    
 .profile-header {
     display: flex;
     align-items: center;
@@ -158,7 +145,7 @@ body {
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
 }
-
+    
 .profile-avatar {
     width: 50px;
     height: 50px;
@@ -171,39 +158,39 @@ body {
     font-size: 20px;
     color: #666;
 }
-
+    
 .profile-info {
     flex-grow: 1;
 }
-
+    
 .profile-name {
     font-weight: bold;
     font-size: 16px;
     margin-bottom: 5px;
 }
-
+    
 .profile-email {
     color: #777;
     font-size: 14px;
 }
-
+    
 .profile-details {
     margin-bottom: 15px;
 }
-
+    
 .profile-item {
     padding: 8px 0;
     border-bottom: 1px solid #f5f5f5;
     font-size: 14px;
 }
-
+    
 .profile-item i {
     margin-right: 10px;
     color: #666;
     width: 20px;
     text-align: center;
 }
-
+    
 .profile-logout {
     display: flex;
     align-items: center;
@@ -214,11 +201,10 @@ body {
     color: #333;
     transition: all 0.3s ease;
 }
-
+    
 .profile-logout:hover {
     background-color: #f1f1f1;
-}
-
+}   
 .profile-logout img {
     margin-right: 10px;
 }
@@ -228,28 +214,23 @@ body {
     border: none;
     font-size: 1.25rem;
 }
-
 .navbar-toggler:focus, .btn-close:focus {
     box-shadow: none;
-    outline: none;
+    outline: none; 
 }
-
 .nav-link {
     color: black;
     font-weight: 500;
     position: relative;
 }
-
 .nav-link:hover {
     color: white;
 }
-
 .dropdown-menu {
     color: black;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(245, 3, 3, 0.959);
 }
-
 .dropdown-item:hover {
     background-color: #f8f9fa;
 }
@@ -258,61 +239,49 @@ body {
 .navbar .offcanvas-body {
     align-items: center;
 }
-
 .navbar .navbar-nav {
     align-items: center;
     gap: 15px;
 }
-
 .navbar .d-flex {
     margin-left: 5px;
     display: flex;
     align-items: center;
 }
 
-@media (max-width: 768px) {
+@media(max-width: 423px){
     .navbar {
-        height: 80px; /* Reducir la altura del menú en móviles */
+        height: 200px;  
     }
+}
 
-    body {
-        padding-top: 80px; /* Ajustar el padding-top para móviles */
+@media(min-width: 991px){
+    .nav-link::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: red;
+        visibility: hidden;
+        transition: 0.3s ease-in-out;
     }
-
-    .offcanvas-body {
-        padding-top: 20px; /* Espacio adicional para el offcanvas */
-    }
-
-    .navbar-nav {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .navbar-toggler {
-        margin-right: 10px;
-    }
-
-    .search-box {
-        position: relative;
-        top: 0;
-        left: 0;
-        transform: none;
+    .nav-link:hover::before, .nav-link.active::before {
         width: 100%;
-        margin-top: 10px;
+        visibility: visible;
+    }
+    .navbar .offcanvas-body {
+        flex-direction: column;
+    }
+    .navbar .d-flex {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 15px;
     }
 }
 
-/* NUEVOS keyframes para la animación del navbar */
-@keyframes slideDown {
-    from {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
 /* Redes sociales */
 .wrapper {
     display: inline-flex;

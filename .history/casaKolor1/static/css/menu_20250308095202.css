@@ -24,7 +24,7 @@ body {
 .navbar {
     background-color: #66b3ff;
     height: 100px;
-    padding: 0;
+    padding: rem;
     border-bottom: 3px solid white;
     animation: slideDown 0.8s ease-out;
     position: fixed;
@@ -36,7 +36,7 @@ body {
 .navbar-nav {
     display: flex;
     justify-content: center;
-    width: 65%;
+    width: 55%;
 }
 
 .navbar-brand {

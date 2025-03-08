@@ -36,7 +36,9 @@ body {
 .navbar-nav {
     display: flex;
     justify-content: center;
-    width: 65%;
+    .navbar-nav {
+    gap: 40px; /* Más espacio entre los elementos */
+}z
 }
 
 .navbar-brand {

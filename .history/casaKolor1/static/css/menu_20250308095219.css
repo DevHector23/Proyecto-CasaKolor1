@@ -36,7 +36,7 @@ body {
 .navbar-nav {
     display: flex;
     justify-content: center;
-    width: 65%;
+    width: 10%;
 }
 
 .navbar-brand {

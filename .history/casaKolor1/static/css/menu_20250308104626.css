@@ -23,7 +23,7 @@ body {
 /* Menu */
 .navbar {
     background-color: #66b3ff;
-    height: 100px;
+    height: 70px;
     padding: 0;
     border-bottom: 3px solid white;
     animation: slideDown 0.8s ease-out;

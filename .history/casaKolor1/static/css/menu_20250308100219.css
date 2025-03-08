@@ -36,7 +36,7 @@ body {
 .navbar-nav {
     display: flex;
     justify-content: center;
-    width: 65%;
+    width: 55%;
 }
 
 .navbar-brand {
@@ -234,14 +234,24 @@ body {
     outline: none;
 }
 
+/* Estilos para los enlaces del menú */
 .nav-link {
     color: black;
     font-weight: 500;
     position: relative;
+    text-decoration: none; /* Eliminar subrayado por defecto */
+    padding-bottom: 5px; /* Espacio para la línea */
+    transition: border-bottom 0.3s ease; /* Transición suave */
 }
 
+/* Línea debajo al pasar el mouse */
 .nav-link:hover {
-    color: white;
+    border-bottom: 2px solid red; /* Línea roja debajo */
+}
+
+/* Opcional: Línea permanente para la página activa */
+.nav-link.active {
+    border-bottom: 2px solid red; /* Línea roja debajo */
 }
 
 .dropdown-menu {

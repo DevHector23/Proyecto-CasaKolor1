@@ -36,7 +36,14 @@ body {
 .navbar-nav {
     display: flex;
     justify-content: center;
-    width: 65%;
+    width: 55%;
+    /* Ajuste: Mover ligeramente a la izquierda */
+    margin-left: -20px;
+}
+
+/* Ajuste: Espaciado uniforme entre elementos del menú */
+.nav-item {
+    margin: 0 15px;
 }
 
 .navbar-brand {
@@ -238,12 +245,17 @@ body {
     color: black;
     font-weight: 500;
     position: relative;
+    /* Ajuste: Eliminar los márgenes inconsistentes de .mx-lg-2 */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 8px 15px;
 }
 
 .nav-link:hover {
     color: white;
 }
 
+/* Ajuste: Asegurar que el menú desplegable de Productos está alineado */
 .dropdown-menu {
     color: black;
     border-radius: 8px;
@@ -261,13 +273,18 @@ body {
 
 .navbar .navbar-nav {
     align-items: center;
-    gap: 15px;
 }
 
+/* Ajuste: Alinear el formulario de búsqueda con el resto del menú */
 .navbar .d-flex {
-    margin-left: 5px;
+    margin-left: 15px;
     display: flex;
     align-items: center;
+}
+
+/* Ajuste: Centrar mejor el botón de búsqueda */
+#toggle-search {
+    margin-top: 6px;
 }
 
 @media (max-width: 768px) {
@@ -286,6 +303,11 @@ body {
     .navbar-nav {
         flex-direction: column;
         gap: 10px;
+        margin-left: 0; /* Revertir margin-left en móviles */
+    }
+
+    .nav-item {
+        margin: 5px 0; /* Ajustar márgenes en móviles */
     }
 
     .navbar-toggler {

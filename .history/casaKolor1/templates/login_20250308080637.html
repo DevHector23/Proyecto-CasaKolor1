@@ -7,33 +7,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="auth-master-wrapper" id="container">
-    <!-- Sección de Login -->
-    <div class="auth-form-section auth-signin-section" id="login-section">
-        <form class="logi" method="post" action="{% url 'login' %}" novalidate>
-            {% csrf_token %}
-            <h1 class="auth-title">Iniciar Sesión</h1>
-            <span class="auth-divider-text">o usa tu cuenta</span>
-            <div class="auth-input-group">
-                <input type="text" name="username" placeholder="Nombre de usuario" required>
-                <input type="password" name="password" placeholder="Contraseña" required>
-            </div>
-            {% if form.errors %}
-                <div class="auth-error-container">
-                    {% for field, errors in form.errors.items %}
-                        {% for error in errors %}
-                            <p class="auth-error-text">{{ error }}</p>
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-            <a href="{% url 'restablecer' %}" class="auth-forgot-link">¿Olvidaste tu contraseña?</a>
-            <button type="submit" class="auth-submit-btn">Iniciar Sesión</button>
-        </form>
-    </div>
-
-    <!-- Sección de Registro -->
-    <div class="auth-form-section auth-signup-section" id="register-section">
+<div class="auth-master-wrapper" id="container" {% if mode == 'register' %}class="right-panel-active"{% endif %}>
+    <div class="auth-form-section auth-signup-section">
         <form class="logi" method="post" action="{% url 'register' %}" novalidate>
             {% csrf_token %}
             <h1 class="auth-title">Crear Cuenta</h1>
@@ -58,8 +33,32 @@
             <button type="submit" class="auth-submit-btn">Registrarse</button>
         </form>
     </div>
-
-    <!-- Overlay y Botones de Cambio -->
+    
+    <div class="auth-form-section auth-signin-section">
+        <!-- Asegurarse que el token CSRF esté correctamente implementado -->
+        <form class="logi" method="post" action="{% url 'login' %}" novalidate>
+            {% csrf_token %}
+            <h1 class="auth-title">Iniciar Sesión</h1>
+            
+            <span class="auth-divider-text">o usa tu cuenta</span>
+            <div class="auth-input-group">
+                <input type="text" name="username" placeholder="Nombre de usuario" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+            </div>
+            {% if form.errors %}
+                <div class="auth-error-container">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <p class="auth-error-text">{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <a href="{% url 'restablecer' %}" class="auth-forgot-link">¿Olvidaste tu contraseña?</a>
+            <button type="submit" class="auth-submit-btn">Iniciar Sesión</button>
+        </form>
+    </div>
+    
     <div class="auth-overlay-section">
         <div class="auth-overlay-content">
             <div class="auth-panel auth-panel-left">

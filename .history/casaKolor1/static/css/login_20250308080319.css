@@ -234,6 +234,9 @@ input {
 .auth-error-text {
     margin: 2px 0;
 }
+
+/* Estilos Generales */
+
 /* Estilos para Pantallas Pequeñas (Menos de 768px) */
 @media (max-width: 768px) {
     .auth-master-wrapper {

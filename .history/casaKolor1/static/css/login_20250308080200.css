@@ -234,48 +234,51 @@ input {
 .auth-error-text {
     margin: 2px 0;
 }
-/* Estilos para Pantallas Pequeñas (Menos de 768px) */
+
 @media (max-width: 768px) {
     .auth-master-wrapper {
-        display: flex;
-        flex-direction: column;
         width: 90%;
         margin: 20px auto;
-        min-height: auto;
-        overflow: visible;
-    }
-
-    .auth-form-section {
-        position: static;
-        width: 100% !important;
-        transform: none !important;
-        opacity: 1 !important;
-        padding: 20px;
-    }
-
-    .auth-signin-section {
-        order: 1;
-    }
-
-    .auth-signup-section {
-        order: 2;
-    }
-
-    .auth-overlay-section {
-        order: 3;
-        position: static;
-        width: 100%;
-        height: auto;
-        margin-top: 20px;
-    }
-
-    .auth-panel {
-        position: static;
-        transform: none !important;
-        padding: 20px;
-    }
-
-    .auth-switch-btn {
-        margin-top: 10px;
     }
 }
+@media (max-width: 768px) {
+    /* Contenedor principal en columna */
+    .auth-master-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 90%;
+      margin: 80px auto;
+      min-height: auto;
+      overflow: visible; /* Evita recortes si antes había overflow hidden */
+    }
+    .auth-title{
+        margin-top: 40px;
+    }
+    /* Quita posicionamientos absolutos y transformaciones */
+    .auth-signin-section,
+    .auth-overlay-section,
+    .auth-signup-section {
+      position: static !important; /* Para que se apilen */
+      width: 100% !important;      /* Ocupa todo el ancho */
+      transform: none !important;
+      animation: none !important;
+      opacity: 1 !important;
+      display: block !important;   /* Asegura que se muestren */
+    }
+    .auth-form-section{
+        padding: 10px;
+    }
+    .auth-submit-btn{
+        margin: 20px;
+    }
+    /* Orden de aparición en la columna */
+    .auth-signin-section {
+      order: 1; /* Primero: Iniciar Sesión */
+    }
+    .auth-signup-section {
+      order: 2; /* Segundo: Registrarse */
+    }
+    .auth-overlay-section {
+      order: 3; /* Tercero: el overlay (opcional) */
+    }
+  }

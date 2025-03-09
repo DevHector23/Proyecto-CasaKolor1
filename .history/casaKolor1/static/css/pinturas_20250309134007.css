@@ -1,0 +1,164 @@
+/* Estandarización de contenedores de productos, herramientas y pinturas */
+/* Estilos para los productos y tarjetas */
+:root {
+  /* Paleta de colores para ferretería/pinturas */
+  --color-azul-principal: #1a365d;    /* Azul oscuro */
+  --color-azul-claro: #4299e1;        /* Azul claro */
+  --color-gris-azulado: #2c5282;      /* Azul medio */
+  --color-naranja-acento: #ff8a30;    /* Naranja para CTAs */
+  --color-gris-claro: #f2f4f6;        /* Gris claro para fondos */
+  --color-blanco: #ffffff;            /* Blanco para fondos principales */
+  --color-gris-oscuro: #343a40;       /* Gris oscuro para textos */
+}
+body{
+  background-color: (--c);
+}
+.container {
+  margin: auto;
+  padding: 10px;
+}
+
+.container img {
+  width: 200px;
+  height: 200px;
+}
+
+.card {
+  height: 465px;          /* Altura fija para todas las tarjetas */
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  transition: transform 0.3s ease;
+  background-color: var(--color-blanco); /* Fondo blanco */
+  overflow: hidden;       /* Evita desbordamiento de contenido */
+}
+
+.card-img-top {
+  height: 200px;          /* Altura fija para todas las imágenes */
+  width: 200px;           /* Ancho fijo para todas las imágenes */
+  object-fit: cover;      /* Mantiene la proporción de la imagen */
+  margin: 0 auto;         /* Centra la imagen */
+  border-radius: 8px;
+}
+
+.card-body {
+  flex: 1;                /* Hace que el cuerpo de la tarjeta ocupe el espacio restante */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+/* Asegura que el botón esté siempre en la parte inferior */
+.card-body .btn {
+  margin-top: auto;
+}
+
+/* Efecto hover en las tarjetas */
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card-title {
+  font-size: 1.1rem;
+  color: var(--color-azul-principal); /* Texto azul oscuro */
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: var(--color-gris-oscuro); /* Texto gris oscuro */
+  margin: 5px 0;
+}
+
+.btn-primary {
+  font-size: 0.9rem;
+  background: linear-gradient(135deg, var(--color-azul-principal), var(--color-azul-claro)); /* Degradado azul */
+  border: none;
+  font-weight: 600;
+  padding: 15px 30px;
+  margin-top: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  width: 100%;
+  color: var(--color-blanco); /* Texto blanco */
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--color-azul-claro), var(--color-azul-principal)); /* Degradado inverso */
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(27, 91, 149, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Responsivo para pantallas pequeñas */
+@media (max-width: 768px) {
+  .card {
+      height: 450px;        /* Ligeramente más pequeña en pantallas medianas */
+  }
+}
+
+@media (max-width: 576px) {
+  .card {
+      height: 420px;        /* Aún más pequeña en pantallas pequeñas */
+  }
+
+  .card-img-top {
+      height: 160px;
+      width: 160px;
+  }
+}
+
+@media (max-width: 700px) {
+  .container {
+      max-width: 100%;
+      padding: 5px;
+  }
+
+  .card-img-top {
+      height: 150px;
+      width: 85%;
+  }
+
+  .card-title {
+      font-size: 1rem;
+  }
+
+  .btn-primary {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .card-img-top {
+      height: 120px;
+      width: 80%;
+  }
+
+  .card-title {
+      font-size: 0.9rem;
+  }
+
+  .btn-primary {
+      font-size: 0.75rem;
+      padding: 5px 10px;
+  }
+}

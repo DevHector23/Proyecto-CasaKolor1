@@ -1,0 +1,259 @@
+:root {
+  /* Paleta de colores para ferretería/pinturas */
+  --color-azul-principal: #1a365d;    /* Azul oscuro */
+  --color-azul-claro: #4299e1;        /* Azul claro */
+  --color-gris-azulado: #2c5282;      /* Azul medio */
+  --color-naranja-acento: #ff8a30;    /* Naranja para CTAs */
+  --color-gris-claro: #f2f4f6;        /* Gris claro para fondos */
+  --color-blanco: #ffffff;            /* Blanco para fondos principales */
+  --color-gris-oscuro: #343a40;       /* Gris oscuro para textos */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos base para el carrusel */
+.hero-carousel {
+  height: 87vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  color: var(--color-blanco);
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  visibility: hidden;
+  z-index: 0;
+  transition: visibility 0.6s;
+}
+
+.carousel-slide {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.carousel-slide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.649), rgba(0, 0, 0, 0.5));
+  z-index: 0;
+}
+
+.carousel-slide.active {
+  visibility: visible;
+  z-index: 1;
+}
+
+.hero-content {
+  max-width: 800px;
+  position: relative;
+  z-index: 1;
+  padding: 0 20px;
+}
+
+.hero-carousel h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-carousel p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  background-color: var(--color-naranja-acento);
+  color: var(--color-blanco);
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #e57922;
+}
+
+/* Controles de navegación */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 2;
+  transition: background-color 0.3s;
+}
+
+.carousel-control:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.carousel-control.prev {
+  left: 20px;
+}
+
+.carousel-control.next {
+  right: 20px;
+}
+
+/* Indicadores */
+.carousel-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 2;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.indicator.active {
+  background-color: var(--color-naranja-acento);
+}
+
+/* Sección de características */
+.features {
+  background-color: var(--color-gris-claro);
+}
+
+.features-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.features h1 {
+  text-align: center;
+  margin: 50px;
+  margin-bottom: 3rem;
+  font-size: 50px;
+  color: var(--color-azul-principal);
+}
+
+.fondo {
+  background-color: #4299e138;
+  border-top: 3px solid var(--color-blanco);
+  border-bottom: 3px solid var(--color-blanco);
+  padding: 10px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  background: var(--color-blanco);
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+}
+
+.feature-card h3 {
+  margin-top: 2rem;
+  color: var(--color-azul-principal);
+}
+
+.feature-card p {
+  margin: 10px;
+  color: var(--color-gris-oscuro);
+}
+
+/* Sección de productos */
+.products {
+  padding: 5rem 1rem;
+  background-color: b;
+}
+
+.products-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.products h1 {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--color-azul-principal);
+  font-size: 50px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.product-card {
+  background: var(--color-blanco);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.product-card img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 1.5rem;
+}
+
+.product-info h3 {
+  margin-bottom: 0.5rem;
+  color: var(--color-azul-principal);
+}
+
+.product-info p {
+  color: var(--color-gris-oscuro);
+  margin-bottom: 1rem;
+}

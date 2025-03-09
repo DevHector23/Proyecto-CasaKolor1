@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+{% endblock %}
+
+{% block content %}
+<body>
+<!-- HTML del Carrusel con imágenes diferentes - corregido -->
+<section class="hero-carousel">
+    <div class="carousel-container">
+        <div class="carousel-slide" data-bg="/static/images/fondo9.jpg">
+            <div class="hero-content">
+                <h1>Transforma tus espacios con color</h1>
+                <p>Descubre nuestra amplia gama de pinturas y herramientas profesionales para dar vida a tus proyectos</p>
+                <button class="cta-button">
+                    <a href="{% url 'productos' %}" style="text-decoration: none; color: inherit;">Ver Productos</a>
+                </button>
+            </div>
+        </div>
+        <div class="carousel-slide" data-bg="/static/images/fondo6.jpg">
+            <div class="hero-content">
+                <h1>Calidad profesional para tus proyectos</h1>
+                <p>Productos de alta durabilidad y acabados perfectos para interiores y exteriores</p>
+                <button class="cta-button">
+                    <a href="{% url 'productos' %}" style="text-decoration: none; color: inherit;">Explorar</a>
+                </button>
+            </div>
+        </div>
+        <div class="carousel-slide" data-bg="/static/images/fondo10.jpg">
+            <div class="hero-content">
+                <h1>Asesoría personalizada</h1>
+                <p>Nuestros expertos te ayudarán a elegir la solución perfecta para cada superficie</p>
+                <button class="cta-button">
+                    <a href="{% url 'sugerencias' %}" style="text-decoration: none; color: inherit;">Contáctanos</a>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Controles de navegación -->
+        <button class="carousel-control prev">&#10094;</button>
+        <button class="carousel-control next">&#10095;</button>
+        
+        <!-- Indicadores -->
+        <div class="carousel-indicators">
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="fondo">
+    <div class="features-container">
+        <h1>¿Por qué elegirnos?</h1>
+        <div class="features-grid">
+            <div class="feature-card">
+                <img src="{% static 'images/calidad.png' %}" alt="Calidad">
+                <h3>Calidad Premium</h3>
+                <p>Trabajamos con las mejores marcas y materiales del mercado</p>
+            </div>
+            <div class="feature-card">
+                <img src="{% static 'images/equipo.jpg' %}" alt="Asesoría">
+                <h3>Asesoría Experta</h3>
+                <p>Nuestro equipo te guiará en la elección de los mejores productos</p>
+            </div>
+            <div class="feature-card">
+                <img src="{% static 'images/fondo1.jpeg' %}" alt="Envío">
+                <h3>Entrega Rápida</h3>
+                <p>Entrega en puntos autorizados</p>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<section class="products" style="background-color: #4299e1;">
+    <div class="fondo1">
+    <div class="products-container">
+        <h1>Productos Destacados</h1>
+        <div class="products-grid">
+            <a href="{% url 'pinturas' %}" style="text-decoration: none;">
+            <div class="product-card">
+                <img src="{% static 'images/1G Vinilo tipo 1-1.jpeg' %}" alt="Pintura Interior">
+                <div class="product-info">
+                    <h3>Pintura Interior Premium</h3>
+                    <p>Pintura lavable de alta duración para interiores</p>
+                </div>
+            </div>
+            </a>
+            <a href="{% url 'herramientas' %}" style="text-decoration: none;">
+            <div class="product-card">
+                <img src="{% static 'images/set.jpg' %}" alt="Set de Herramientas">
+                <div class="product-info">
+                    <h3>Set Profesional de Herramientas</h3>
+                    <p>Kit completo para trabajos de pintura</p>
+                </div>
+            </div>
+            </a>
+            <a href="{% url 'pinturas' %}" style="text-decoration: none;">
+            <div class="product-card">
+                <img src="{% static 'images/1G Vinilo tipo 1-1.jpeg' %}" alt="Pintura Exterior">
+                <div class="product-info">
+                    <h3>Pintura Exterior Resistente</h3>
+                    <p>Máxima protección contra factores climáticos</p>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+</div>
+</section>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if ("{{ request.session.login_success }}") {
+            alert("¡Has iniciado sesión correctamente!");  // Mostrar mensaje
+            fetch("{% url 'clear_login_success' %}", { 
+                method: "POST", 
+                headers: { "X-CSRFToken": "{{ csrf_token }}" } 
+            });
+        }
+    });
+</script>
+<script src="{% static 'js/carrusel.js' %}"></script>
+{% endblock %}

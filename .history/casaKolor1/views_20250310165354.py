@@ -72,7 +72,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 request.session['login_success'] = True
-                return redirect('productos')
+                return redirect('')
         # Si hay errores, simplemente continuamos para mostrar el formulario nuevamente
     
     # Siempre pasamos ambos formularios al template

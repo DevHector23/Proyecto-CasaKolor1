@@ -180,6 +180,3 @@ SESSION_COOKIE_SECURE = False  # Cambiar a True solo si usas HTTPS
 
 # Configuración para depuración (solo en desarrollo)
 DEBUG = True  # Asegúrate que DEBUG esté en True durante desarrollo
-
-# settings.py
-LOGIN_URL = '/login/'

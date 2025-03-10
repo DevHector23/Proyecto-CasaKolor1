@@ -28,7 +28,57 @@ def productos_view(request):
 def sugerencias(request):
     return render(request, 'sugerencias.html')
 
-from django.contrib.auth.decorators import login_required
+PS C:\Users\USUARIO\Desktop\Proyecto-CasaKolor1> python manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\USUARIO\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1041, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\USUARIO\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 992, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USUARIO\Desktop\Proyecto-CasaKolor1\entorno\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\USUARIO\Desktop\Proyecto-CasaKolor1\entorno\Lib\site-packages\django\core\management\commands\runserver.py", line 134, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USUARIO\Desktop\Proyecto-CasaKolor1\entorno\Lib\site-packages\django\core\management\base.py", line 486, in check
+    all_issues = checks.run_checks(
+        app_configs=app_configs,
+    ...<2 lines>...
+        databases=databases,
+    )
+  File "C:\Users\USUARIO\Desktop\Proyecto-CasaKolor1\entorno\Lib\site-packages\django\core\checks\registry.py", line 88, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "C:\Users\USUARIO\Desktop\Proyecto-CasaKolor1\entorno\Lib\site-packages\django\core\checks\urls.py", line 136, in check_custom_error_handlers
+    handler = resolver.resolve_error_handler(status_code)
+  File "C:\Users\USUARIO\Desktop\Proyecto-CasaKolor1\entorno\Lib\site-packages\django\urls\resolvers.py", line 732, in resolve_error_handler
+    callback = getattr(self.urlconf_module, "handler%s" % view_type, None)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USUARIO\Desktop\Proyecto-CasaKolor1\entorno\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\USUARIO\Desktop\Proyecto-CasaKolor1\entorno\Lib\site-packages\django\urls\resolvers.py", line 711, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "C:\Users\USUARIO\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\USUARIO\Desktop\Proyecto-CasaKolor1\proyecto\urls.py", line 21, in <module>
+    from casaKolor1 import views
+  File "C:\Users\USUARIO\Desktop\Proyecto-CasaKolor1\casaKolor1\views.py", line 31, in <module>
+    @login_required
+     ^^^^^^^^^^^^^^
+NameError: name 'login_required' is not defined
 @login_required
 def carrito(request):
     return render(request, 'carrito.html')
@@ -72,7 +122,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 request.session['login_success'] = True
-                return redirect('productos')
+                return redirect('inicio')
         # Si hay errores, simplemente continuamos para mostrar el formulario nuevamente
     
     # Siempre pasamos ambos formularios al template

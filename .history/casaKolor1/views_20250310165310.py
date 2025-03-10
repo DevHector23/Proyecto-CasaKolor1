@@ -28,7 +28,7 @@ def productos_view(request):
 def sugerencias(request):
     return render(request, 'sugerencias.html')
 
-from django.contrib.auth.decorators import login_required
+
 @login_required
 def carrito(request):
     return render(request, 'carrito.html')
@@ -72,7 +72,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 request.session['login_success'] = True
-                return redirect('productos')
+                return redirect('inicio')
         # Si hay errores, simplemente continuamos para mostrar el formulario nuevamente
     
     # Siempre pasamos ambos formularios al template

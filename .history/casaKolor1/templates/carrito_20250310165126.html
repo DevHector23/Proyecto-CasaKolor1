@@ -35,15 +35,9 @@
                 <span id="cart-total">0</span>
             </div>
         </div>
-        {% if user.is_authenticated %}
-            <button type="button" class="btn btn-primary" id="btnFinalizarCompra" data-bs-toggle="modal" data-bs-target="#checkoutModal">
-                Finalizar Compra
-            </button>
-        {% else %}
-            <button type="button" class="btn btn-primary" id="btnFinalizarCompra" onclick="redirectToLogin()">
-                Finalizar Compra
-            </button>
-        {% endif %}
+        <button type="button" class="btn btn-primary" id="btnFinalizarCompra" data-bs-toggle="modal" data-bs-target="#checkoutModal">
+            Finalizar Compra
+        </button>
     </div>
 </div>
 
@@ -97,13 +91,8 @@
         </div>
     </div>
 </div>
-
 <script>
     const trashIconUrl = "{% static 'images/basura.png' %}";
-
-    function redirectToLogin() {
-        window.location.href = "{% url 'login' %}?next={{ request.path }}";
-    }
 </script>
 
 <script src="{% static 'js/carrito.js' %}"></script>

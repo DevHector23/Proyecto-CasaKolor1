@@ -563,10 +563,11 @@ body {
     .footer-section p a img {
         margin-right: 8px; /* Añadir margen entre el ícono y el texto */
     }
-    .map-container iframe{
+    .map-container {
         width: 350px;
-        margin-right: 20px;
+        height: 200px; /* Ajusta la altura según sea necesario */
     }
+    
 }
 
 @media (max-width: 480px) {
@@ -595,8 +596,8 @@ body {
     .wrapper .tooltip {
         font-size: 10px; /* Reducir el tamaño del tooltip en móviles pequeños */
     }
-    .map-container iframe{
-        width: 350px;
-        margin-right: 20px;
+    .map-container {
+        width: 400px;
+        height: 200px; /* Ajusta la altura según sea necesario */
     }
 }

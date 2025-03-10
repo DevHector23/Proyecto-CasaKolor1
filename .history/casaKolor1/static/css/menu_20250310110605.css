@@ -565,7 +565,6 @@ body {
     }
     .map-container iframe{
         width: 350px;
-        margin-right: 20px;
     }
 }
 
@@ -594,9 +593,5 @@ body {
 
     .wrapper .tooltip {
         font-size: 10px; /* Reducir el tamaño del tooltip en móviles pequeños */
-    }
-    .map-container iframe{
-        width: 350px;
-        margin-right: 20px;
     }
 }

@@ -563,14 +563,6 @@ body {
     .footer-section p a img {
         margin-right: 8px; /* Añadir margen entre el ícono y el texto */
     }
-    .map-container {
-        width: 350px;
-        height: 200px; /* Ajusta la altura según sea necesario */
-        overflow: hidden; /* Evita que el contenido se desborde */
-        border-radius: 8px; /* Bordes redondeados */
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    }
-    
 }
 
 @media (max-width: 480px) {
@@ -600,7 +592,7 @@ body {
         font-size: 10px; /* Reducir el tamaño del tooltip en móviles pequeños */
     }
     .map-container {
-        width: 350px;
+        width: 400px;
         height: 200px; /* Ajusta la altura según sea necesario */
         overflow: hidden; /* Evita que el contenido se desborde */
         border-radius: 8px; /* Bordes redondeados */

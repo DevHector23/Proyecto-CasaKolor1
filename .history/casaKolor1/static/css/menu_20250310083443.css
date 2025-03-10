@@ -25,6 +25,7 @@ body {
     background-color: #ffffff;  /* Navbar con fondo blanco */
     height: 100px;
     padding: 0;
+    border-bottom: 3px solid #4299e1;  /* Borde azul claro */
     animation: slideDown 0.8s ease-out;
     position: fixed;
     top: 0;

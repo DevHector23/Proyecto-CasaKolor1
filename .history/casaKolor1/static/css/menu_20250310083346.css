@@ -25,6 +25,7 @@ body {
     background-color: #ffffff;  /* Navbar con fondo blanco */
     height: 100px;
     padding: 0;
+    border-bottom: 3px solid #4299e1;  /* Borde azul claro */
     animation: slideDown 0.8s ease-out;
     position: fixed;
     top: 0;
@@ -311,8 +312,8 @@ body {
     }
     
     .navbar-brand img {
-        max-height: 50px; /* Imagen más pequeña */
-        margin-left: -45px; /* Ajustar margen */
+        max-height: 40px; /* Imagen más pequeña */
+        margin-left: -30px; /* Ajustar margen */
     }
 }
 

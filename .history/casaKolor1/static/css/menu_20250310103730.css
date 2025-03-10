@@ -258,14 +258,13 @@ body {
 }
 
 .dropdown-menu {
+    display: block;
     background-color: white;
     color: #1a365d;  /* Azul oscuro */
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(26, 54, 93, 0.2);  /* Sombra azul oscuro */
 }
-.dropdown-item{
-    margin-left: 30px;
-}
+
 .dropdown-item:hover {
     background-color: #ebf8ff;  /* Azul muy claro */
 }

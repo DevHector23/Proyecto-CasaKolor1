@@ -174,6 +174,7 @@ import logging
 from django.db import transaction
 from django.core.cache import cache
 from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.http import JsonResponse
 from .models import DetallePedido, productos

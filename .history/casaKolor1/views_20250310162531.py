@@ -174,11 +174,14 @@ import logging
 from django.db import transaction
 from django.core.cache import cache
 from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.http import JsonResponse
-from .models import DetallePedido, productos
+from .models import Pedido, DetallePedido, productos
 from .forms import PedidoForm
 import json
+from django.utils import timezone
+import uuid
 
 logger = logging.getLogger(__name__)
 
@@ -232,11 +235,11 @@ def finalizar_compra(request):
                         else:
                             detalles_correo.append(f"Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.")
                     
-                    asunto = "Confirmación de Pedido - CasaKolor1"
+                    asunto = "Confirmación de Pedido - Casa Kolor"
                     mensaje = f"""
                     Hola {pedido.nombre},
                     
-                    ¡Gracias por tu compra en CasaKolor1!
+                    ¡Gracias por tu compra en Casa1Kolor!
                     
                     Detalles de tu pedido:
                     {''.join([f'{chr(10)}- {detalle}' for detalle in detalles_correo])}
@@ -246,7 +249,7 @@ def finalizar_compra(request):
                     Tu pedido será procesado a la brevedad.
                     
                     Saludos,
-                    El equipo de CasaKolor1
+                    El equipo de Casa Kolor
                     """
                     
                     destinatario = pedido.correo
@@ -291,7 +294,7 @@ def finalizar_compra(request):
                             </div>
                             <div class="content">
                                 <p>Hola {pedido.nombre},</p>
-                                <p>¡Gracias por tu compra en CasaKolor1!</p>
+                                <p>¡Gracias por tu compra en Casa Kolor!</p>
                                 <h3>Detalles de tu pedido:</h3>
                                 <ul>
                                     {html_items}
@@ -302,7 +305,7 @@ def finalizar_compra(request):
                                 <p>Se ha recibido tu comprobante de pago.</p>
                                 
                                 <p>Tu pedido será procesado a la brevedad.</p>
-                                <p>Saludos,<br>El equipo de CasaKolor1</p>
+                                <p>Saludos,<br>El equipo de Casa Kolor</p>
                                 
                                 <a href="#" class="button">Ver Detalles del Pedido</a>
                             </div>

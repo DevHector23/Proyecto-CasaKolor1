@@ -170,17 +170,9 @@ def enviar_sugerencia(request):
     return render(request, 'sugerencias.html', {'form': form})
 
 
-import logging
-from django.db import transaction
-from django.core.cache import cache
 from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.http import JsonResponse
-from .models import DetallePedido, productos
-from .forms import PedidoForm
-import json
-
-logger = logging.getLogger(__name__)
 
 def finalizar_compra(request):
     if request.method == 'POST':
@@ -194,154 +186,108 @@ def finalizar_compra(request):
         
         form = PedidoForm(request.POST, request.FILES)
         if form.is_valid():
-            try:
-                with transaction.atomic():
-                    pedido = form.save(commit=False)
-                    pedido.total = request.POST.get('total', 0)
-                    
-                    if 'comprobante' in request.FILES:
-                        pedido.comprobante = request.FILES['comprobante']
-                    
-                    pedido.save()
-                    
-                    items = json.loads(request.POST.get('items', '[]'))
-                    detalles_correo = []
-                    
-                    for item in items:
-                        producto_id = item.get('id')
-                        cantidad = item.get('cantidad', 1)
-                        precio = item.get('precio', 0)
-                        subtotal = item.get('subtotal', 0)
-                        
-                        try:
-                            producto = productos.objects.get(id=producto_id)
-                        except productos.DoesNotExist:
-                            logger.error(f"Producto con ID {producto_id} no encontrado")
-                            continue
-                        
-                        DetallePedido.objects.create(
-                            pedido=pedido,
-                            producto=producto,
-                            cantidad=cantidad,
-                            precio_unitario=precio,
-                            subtotal=subtotal
-                        )
-                        
-                        if producto.categoria == 'pinturas':
-                            detalles_correo.append(f"Producto: {producto.nombre}, Presentación: {producto.get_presentacion_display()}, Cantidad: {cantidad}, Precio: ${precio}.")
-                        else:
-                            detalles_correo.append(f"Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.")
-                    
-                    asunto = "Confirmación de Pedido - CasaKolor1"
-                    mensaje = f"""
-                    Hola {pedido.nombre},
-                    
-                    ¡Gracias por tu compra en CasaKolor1!
-                    
-                    Detalles de tu pedido:
-                    {''.join([f'{chr(10)}- {detalle}' for detalle in detalles_correo])}
-                    
-                    Total: ${pedido.total}
-                    
-                    Tu pedido será procesado a la brevedad.
-                    
-                    Saludos,
-                    El equipo de CasaKolor1
-                    """
-                    
-                    destinatario = pedido.correo
-                    
-                    html_items = ""
-                    for item in items:
-                        producto_id = item.get('id')
-                        cantidad = item.get('cantidad', 1)
-                        precio = item.get('precio', 0)
-                        try:
-                            producto = productos.objects.get(id=producto_id)
-                            if producto.categoria == 'pinturas':
-                                html_items += f'<li>Producto: {producto.nombre}, Presentación: {producto.get_presentacion_display()}, Cantidad: {cantidad}, Precio: ${precio}.</li>'
-                            else:
-                                html_items += f'<li>Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.</li>'
-                        except productos.DoesNotExist:
-                            logger.error(f"Producto con ID {producto_id} no encontrado")
-                            continue
-                    
-                    html_content = f"""
-                    <html>
-                    <head>
-                        <style>
-                            body {{ font-family: Arial, sans-serif; line-height: 1.6; background-color: #f4f4f4; margin: 0; padding: 0; }}
-                            .container {{ max-width: 600px; margin: 20px auto; padding: 20px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }}
-                            .header {{ background-color: #4CAF50; color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }}
-                            .header h2 {{ margin: 0; font-size: 24px; }}
-                            .content {{ padding: 20px; }}
-                            .content h3 {{ color: #4CAF50; font-size: 20px; margin-bottom: 10px; }}
-                            .content ul {{ list-style-type: none; padding: 0; }}
-                            .content ul li {{ background-color: #f9f9f9; margin: 5px 0; padding: 10px; border-left: 5px solid #4CAF50; }}
-                            .content p {{ margin: 10px 0; }}
-                            .footer {{ font-size: 12px; color: #777; text-align: center; margin-top: 20px; }}
-                            .footer p {{ margin: 0; }}
-                            .button {{ display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; margin-top: 20px; }}
-                        </style>
-                    </head>
-                    <body>
-                        <div class="container">
-                            <div class="header">
-                                <h2>Confirmación de Pedido - CasaKolor1</h2>
-                            </div>
-                            <div class="content">
-                                <p>Hola {pedido.nombre},</p>
-                                <p>¡Gracias por tu compra en CasaKolor1!</p>
-                                <h3>Detalles de tu pedido:</h3>
-                                <ul>
-                                    {html_items}
-                                </ul>
-                                <p><strong>Total:</strong> ${pedido.total}</p>
-                                
-                                <h3>Comprobante de pago:</h3>
-                                <p>Se ha recibido tu comprobante de pago.</p>
-                                
-                                <p>Tu pedido será procesado a la brevedad.</p>
-                                <p>Saludos,<br>El equipo de CasaKolor1</p>
-                                
-                                <a href="#" class="button">Ver Detalles del Pedido</a>
-                            </div>
-                            <div class="footer">
-                                <p>© 2025 CasaKolor1. Todos los derechos reservados.</p>
-                            </div>
-                        </div>
-                    </body>
-                    </html>
-                    """
-                    
-                    text_content = strip_tags(html_content)
-                    
-                    email = EmailMultiAlternatives(
-                        asunto,
-                        text_content,
-                        settings.EMAIL_HOST_USER,
-                        [destinatario, 'ivanparrahernandez14@gmail.com']
-                    )
-                    
-                    email.attach_alternative(html_content, "text/html")
-                    
-                    if hasattr(pedido, 'comprobante') and pedido.comprobante:
-                        email.attach_file(pedido.comprobante.path)
-                    
-                    email.send()
-                    
-                    cache.set(cache_key, True, 60 * 30)
-                    
-                    return JsonResponse({'success': True, 'message': 'Pedido creado correctamente y confirmación enviada por correo'})
-            except Exception as e:
-                logger.error(f"Error al procesar el pedido: {e}")
-                cache.delete(cache_key)
-                return JsonResponse({'success': False, 'message': 'Error al procesar el pedido'})
+            pedido = form.save(commit=False)
+            pedido.total = request.POST.get('total', 0)
+            
+            if 'comprobante' in request.FILES:
+                pedido.comprobante = request.FILES['comprobante']
+                
+            pedido.save()
+            
+            items = json.loads(request.POST.get('items', '[]'))
+            detalles_correo = []
+            
+            for item in items:
+                producto_id = item.get('id')
+                cantidad = item.get('cantidad', 1)
+                precio = item.get('precio', 0)
+                subtotal = item.get('subtotal', 0)
+                
+                producto = productos.objects.get(id=producto_id)
+                
+                DetallePedido.objects.create(
+                    pedido=pedido,
+                    producto=producto,
+                    cantidad=cantidad,
+                    precio_unitario=precio,
+                    subtotal=subtotal
+                )
+                
+                if producto.categoria == 'pinturas':
+                    detalles_correo.append(f"Producto: {producto.nombre}, Presentación: {producto.get_presentacion_display()}, Cantidad: {cantidad}, Precio: ${precio}.")
+                else:
+                    detalles_correo.append(f"Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.")
+            
+            # Redirigir a la factura en PDF
+            return redirect(reverse('generar_factura_pdf', args=[pedido.id]))
         else:
             cache.delete(cache_key)
             return JsonResponse({'success': False, 'errors': form.errors})
     
     return JsonResponse({'success': False, 'message': 'Método no permitido'})
+
+# Vista para generar la factura en PDF
+def generar_factura_pdf(request, pedido_id):
+    # Obtener el pedido y sus detalles
+    pedido = Pedido.objects.get(id=pedido_id)
+    detalles = DetallePedido.objects.filter(pedido=pedido)
+
+    # Crear un objeto HttpResponse con el tipo de contenido PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename="factura_{pedido.id}.pdf"'
+
+    # Crear el PDF con ReportLab
+    p = canvas.Canvas(response, pagesize=letter)
+
+    # Configurar el estilo del texto
+    styles = getSampleStyleSheet()
+    style_normal = styles['Normal']
+
+    # Agregar contenido al PDF
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(100, 750, f"Factura #{pedido.id}")
+
+    p.setFont("Helvetica", 12)
+    p.drawString(100, 730, f"Cliente: {pedido.nombre}")
+    p.drawString(100, 710, f"Correo: {pedido.correo}")
+    p.drawString(100, 690, f"Fecha: {pedido.fecha_creacion}")
+
+    # Crear una tabla para los detalles del pedido
+    data = [['Producto', 'Cantidad', 'Precio Unitario', 'Subtotal']]
+    for detalle in detalles:
+        data.append([
+            detalle.producto.nombre,
+            detalle.cantidad,
+            f"${detalle.precio_unitario}",
+            f"${detalle.subtotal}",
+        ])
+
+    # Crear la tabla
+    table = Table(data, colWidths=[200, 80, 100, 80])
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+    ]))
+
+    # Dibujar la tabla en el PDF
+    table.wrapOn(p, 400, 600)
+    table.drawOn(p, 100, 550)
+
+    # Agregar el total
+    p.setFont("Helvetica-Bold", 14)
+    p.drawString(100, 500, f"Total: ${pedido.total}")
+
+    # Finalizar el PDF
+    p.showPage()
+    p.save()
+
+    return response
+
 
 from django.contrib import messages
 from django.contrib.auth.models import User

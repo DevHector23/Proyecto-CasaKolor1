@@ -170,15 +170,192 @@ def enviar_sugerencia(request):
     return render(request, 'sugerencias.html', {'form': form})
 
 
+# from django.http import JsonResponse
+# from .models import Pedido, DetallePedido
+# from .forms import PedidoForm
+# import json
+# from django.utils import timezone
+# import uuid
+# from django.db import transaction
+# from django.core.cache import cache
+
+# def finalizar_compra(request):
+#     if request.method == 'POST':
+#         # Extraer el token de la transacción
+#         transaction_token = request.POST.get('transaction_token')
+        
+#         # Clave única para esta transacción
+#         cache_key = f'order_token_{transaction_token}'
+        
+#         # Verificar si esta transacción ya fue procesada
+#         if cache.get(cache_key):
+#             # Si ya fue procesada, no hacer nada más
+#             return JsonResponse({'success': True, 'message': 'Pedido ya procesado'})
+        
+#         # Marcar esta transacción como en proceso por 30 segundos
+#         # (suficiente para que termine el procesamiento)
+#         cache.set(cache_key, True, 30)
+        
+#         form = PedidoForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             # Crear el pedido
+#             pedido = form.save(commit=False)
+#             pedido.total = request.POST.get('total', 0)
+            
+#             # Guardar la imagen de la factura si fue proporcionada
+#             if 'comprobante' in request.FILES:
+#                 pedido.comprobante = request.FILES['comprobante']
+                
+#             pedido.save()
+            
+#             # Procesar los productos del carrito
+#             items = json.loads(request.POST.get('items', '[]'))
+#             detalles_correo = []
+            
+#             for item in items:
+#                 producto_id = item.get('id')
+#                 cantidad = item.get('cantidad', 1)
+#                 precio = item.get('precio', 0)
+#                 subtotal = item.get('subtotal', 0)
+                
+#                 producto = productos.objects.get(id=producto_id)
+                
+#                 # Crear detalle del pedido
+#                 DetallePedido.objects.create(
+#                     pedido=pedido,
+#                     producto=producto,
+#                     cantidad=cantidad,
+#                     precio_unitario=precio,
+#                     subtotal=subtotal
+#                 )
+                
+#                 # Agregar información para el correo con presentación para pinturas
+#                 if producto.categoria == 'pinturas':
+#                     detalles_correo.append(f"Producto: {producto.nombre}, Presentación: {producto.get_presentacion_display()}, Cantidad: {cantidad}, Precio: ${precio}.")
+#                 else:
+#                     detalles_correo.append(f"Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.")
+            
+#             # Preparar el correo
+#             asunto = "Confirmación de Pedido - Casa Kolor"
+#             mensaje = f"""
+#             Hola {pedido.nombre},
+            
+#             ¡Gracias por tu compra en Casa Kolor!
+            
+#             Detalles de tu pedido:
+#             {''.join([f'{chr(10)}- {detalle}' for detalle in detalles_correo])}
+            
+#             Total: ${pedido.total}
+            
+#             Tu pedido será procesado a la brevedad.
+            
+#             Saludos,
+#             El equipo de Casa Kolor
+#             """
+            
+#             destinatario = pedido.correo
+            
+#             # Preparar el email
+#             from django.core.mail import EmailMultiAlternatives
+#             from django.template.loader import render_to_string
+#             from django.utils.html import strip_tags
+            
+#             # Construir HTML items para el correo
+#             html_items = ""
+#             for item in items:
+#                 producto_id = item.get('id')
+#                 cantidad = item.get('cantidad', 1)
+#                 precio = item.get('precio', 0)
+#                 producto = productos.objects.get(id=producto_id)
+                
+#                 if producto.categoria == 'pinturas':
+#                     html_items += f'<li>Producto: {producto.nombre}, Presentación: {producto.get_presentacion_display()}, Cantidad: {cantidad}, Precio: ${precio}.</li>'
+#                 else:
+#                     html_items += f'<li>Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.</li>'
+            
+#             # Crear una versión HTML del correo para poder mostrar la imagen
+#             html_content = f"""
+#             <html>
+#             <head>
+#                 <style>
+#                     body {{ font-family: Arial, sans-serif; line-height: 1.6; }}
+#                     .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+#                     .header {{ background-color: #f8f9fa; padding: 10px; text-align: center; }}
+#                     .content {{ padding: 20px 0; }}
+#                     .footer {{ font-size: 12px; color: #6c757d; text-align: center; }}
+#                 </style>
+#             </head>
+#             <body>
+#                 <div class="container">
+#                     <div class="header">
+#                         <h2>Confirmación de Pedido - Casa Kolor</h2>
+#                     </div>
+#                     <div class="content">
+#                         <p>Hola {pedido.nombre},</p>
+#                         <p>¡Gracias por tu compra en Casa Kolor!</p>
+#                         <h3>Detalles de tu pedido:</h3>
+#                         <ul>
+#                             {html_items}
+#                         </ul>
+#                         <p><strong>Total:</strong> ${pedido.total}</p>
+                        
+#                         <h3>Comprobante de pago:</h3>
+#                         <p>Se ha recibido tu comprobante de pago.</p>
+                        
+#                         <p>Tu pedido será procesado a la brevedad.</p>
+#                         <p>Saludos,<br>El equipo de Casa Kolor</p>
+#                     </div>
+#                     <div class="footer">
+#                         <p>© 2025 Casa Kolor. Todos los derechos reservados.</p>
+#                     </div>
+#                 </div>
+#             </body>
+#             </html>
+#             """
+            
+#             # Quitar HTML para versión texto plano
+#             text_content = strip_tags(html_content)
+            
+#             # Crear el correo electrónico
+#             email = EmailMultiAlternatives(
+#                 asunto,
+#                 text_content,
+#                 settings.EMAIL_HOST_USER,
+#                 [destinatario, 'ivanparrahernandez14@gmail.com']  # Cliente y correo de la empresa
+#             )
+            
+#             # Adjuntar versión HTML
+#             email.attach_alternative(html_content, "text/html")
+            
+#             # Si hay factura, adjuntarla al correo
+#             if hasattr(pedido, 'comprobante') and pedido.comprobante:
+#                 email.attach_file(pedido.comprobante.path)
+            
+#             # Enviar el correo
+#             email.send()
+            
+#             # Guardar la transacción como procesada por 30 minutos
+#             cache.set(cache_key, True, 60 * 30)
+            
+#             return JsonResponse({'success': True, 'message': 'Pedido creado correctamente y confirmación enviada por correo'})
+#         else:
+#             # Liberar la marca en caso de error
+#             cache.delete(cache_key)
+#             return JsonResponse({'success': False, 'errors': form.errors})
+    
+#     return JsonResponse({'success': False, 'message': 'Método no permitido'})
 import logging
 from django.db import transaction
 from django.core.cache import cache
 from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.http import JsonResponse
-from .models import DetallePedido, productos
+from .models import Pedido, DetallePedido, productos
 from .forms import PedidoForm
 import json
+from django.utils import timezone
+import uuid
 
 logger = logging.getLogger(__name__)
 
@@ -232,11 +409,11 @@ def finalizar_compra(request):
                         else:
                             detalles_correo.append(f"Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.")
                     
-                    asunto = "Confirmación de Pedido - CasaKolor1"
+                    asunto = "Confirmación de Pedido - Casa Kolor"
                     mensaje = f"""
                     Hola {pedido.nombre},
                     
-                    ¡Gracias por tu compra en CasaKolor1!
+                    ¡Gracias por tu compra en Casa Kolor!
                     
                     Detalles de tu pedido:
                     {''.join([f'{chr(10)}- {detalle}' for detalle in detalles_correo])}
@@ -246,7 +423,7 @@ def finalizar_compra(request):
                     Tu pedido será procesado a la brevedad.
                     
                     Saludos,
-                    El equipo de CasaKolor1
+                    El equipo de Casa Kolor
                     """
                     
                     destinatario = pedido.correo
@@ -287,11 +464,11 @@ def finalizar_compra(request):
                     <body>
                         <div class="container">
                             <div class="header">
-                                <h2>Confirmación de Pedido - CasaKolor1</h2>
+                                <h2>Confirmación de Pedido - CasaKolor</h2>
                             </div>
                             <div class="content">
                                 <p>Hola {pedido.nombre},</p>
-                                <p>¡Gracias por tu compra en CasaKolor1!</p>
+                                <p>¡Gracias por tu compra en Casa Kolor!</p>
                                 <h3>Detalles de tu pedido:</h3>
                                 <ul>
                                     {html_items}
@@ -302,7 +479,7 @@ def finalizar_compra(request):
                                 <p>Se ha recibido tu comprobante de pago.</p>
                                 
                                 <p>Tu pedido será procesado a la brevedad.</p>
-                                <p>Saludos,<br>El equipo de CasaKolor1</p>
+                                <p>Saludos,<br>El equipo de Casa Kolor</p>
                                 
                                 <a href="#" class="button">Ver Detalles del Pedido</a>
                             </div>

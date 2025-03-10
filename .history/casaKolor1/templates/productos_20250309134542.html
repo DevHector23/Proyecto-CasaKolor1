@@ -20,7 +20,7 @@
                     <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
                 {% endif %}
                 <div class="card-body text-center">
-                    <p class="card-text1">{{ producto.descripcion }}</p>
+                    <p class="card-text">{{ producto.descripcion }}</p>
                     <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
                     <!-- Mostrar presentación solo si el producto es pintura -->
                     {% if producto.categoria == 'pinturas' %}

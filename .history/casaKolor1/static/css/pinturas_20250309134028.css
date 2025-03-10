@@ -57,9 +57,7 @@ body{
   overflow: hidden;
   margin-bottom: 10px;
 }
-.card-text1{
-  text-align: justify;
-}
+
 /* Asegura que el botón esté siempre en la parte inferior */
 .card-body .btn {
   margin-top: auto;

@@ -15,7 +15,7 @@
 .container-fluid1 {
     padding: 0;
     margin: 0;
-    background-color: #4299e11c;
+    border-bottom: 10px solid linear-gradient(right, #4299e11c 80%, white 10%);
 }
 
 .header-container1 {
@@ -150,7 +150,6 @@
         max-width: 100%;
     }
 }
-
 /* Contenedor para los videos de YouTube */
 .youtube-videos-container {
     display: grid;

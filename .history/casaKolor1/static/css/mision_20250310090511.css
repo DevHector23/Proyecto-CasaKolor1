@@ -46,7 +46,7 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    
+    padding: 20px;
 }
 
 .video-container {
@@ -150,7 +150,6 @@
         max-width: 100%;
     }
 }
-
 /* Contenedor para los videos de YouTube */
 .youtube-videos-container {
     display: grid;
@@ -174,9 +173,4 @@
     width: 100%;
     height: 315px; /* Altura fija para los videos */
     border: none; /* Eliminar el borde predeterminado */
-}
-@media (max-width: 768px) {
-    .youtube-videos-container {
-        grid-template-columns: 1fr; /* Una sola columna en móviles */
-    }
 }

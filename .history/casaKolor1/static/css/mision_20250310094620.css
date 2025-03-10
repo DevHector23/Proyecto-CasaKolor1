@@ -16,6 +16,7 @@
     padding: 0;
     margin: 0;
     background-color: #4299e11c;
+    box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.3); /* Sombra en la parte inferior */
 }
 
 .header-container1 {
@@ -150,7 +151,6 @@
         max-width: 100%;
     }
 }
-
 /* Contenedor para los videos de YouTube */
 .youtube-videos-container {
     display: grid;

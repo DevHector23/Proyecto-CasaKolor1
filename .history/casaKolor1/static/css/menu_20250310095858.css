@@ -511,7 +511,7 @@ body {
     }
 
     .footer-section {
-        /* margin: 5px 0; Reducir el margen entre secciones */
+        margin: 5px 0; Reducir el margen entre secciones
         width: 100%; /* Ocupar todo el ancho disponible */
     }
 

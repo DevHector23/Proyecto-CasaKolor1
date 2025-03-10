@@ -8,38 +8,25 @@
 {% block content %}
 <body>
     <!-- Sección Sobre Nosotros -->
-<section class="about-us" id="sobre">
-    <div class="container-fluid1">
-        <!-- Contenedor para el h2 con 100% de ancho -->
-        <div class="header-container1">
-            <h2 class="display-4 text-center mb-4">Sobre Nosotros</h2>
-        </div>
-        <p>Somos una empresa comprometida con ofrecer la mejor calidad y atención a nuestros clientes. Tu satisfacción es nuestra prioridad.</p>
-
-        <!-- Contenedor para los videos de YouTube -->
-        <div class="youtube-videos-container">
+    <section class="about-us" id="sobre">
+        <div class="container-fluid1">
+            <!-- Contenedor para el h2 con 100% de ancho -->
+            <div class="header-container1">
+                <h2 class="display-4 text-center mb-4">Sobre Nosotros</h2>
+            </div>
+            <p>Somos una empresa comprometida con ofrecer la mejor calidad y atención a nuestros clientes. Tu satisfacción es nuestra prioridad.</p>
             <div class="video-container">
-                <video width="560" height="315" controls>
+                <video width="100%" controls>
                     <source src="{{ MEDIA_URL }}video/WhatsApp Video 2024-11-30 at 11.07.21 AM.mp4" type="video/mp4">
                     Tu navegador no soporta el formato de video.
                 </video>
             </div>
-            <div class="video-container">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/tzSGt3wp_XQ?si=Pk6veYgOC_Uh21Kq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-            <div class="video-container">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/Qg6A0V8qJ0I?si=bCj_8Fne4B8FT9gQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-            <div class="video-container">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/lg09P3_xAdo?si=uOZ7kL-udJ-JXGji" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section class="mi">
     <!-- Misión y Visión Header Section -->
-    <div class="text-white text-center py-4" id="mision">
+    <div class="text-white text-center p" id="mision">
         <div class="container-reducido">
             <div class="header-container1">
                 <h2 class="display-4 text-center mb-4">Misión y Visión</h2>

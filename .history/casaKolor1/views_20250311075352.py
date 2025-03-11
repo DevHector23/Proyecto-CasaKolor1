@@ -81,7 +81,6 @@ def login_view(request):
         'register_form': register_form
     })
 
-from django.views.decorators.csrf import csrf_exempt
 # También aplica el decorador a la vista de registro
 @ensure_csrf_cookie
 @csrf_exempt

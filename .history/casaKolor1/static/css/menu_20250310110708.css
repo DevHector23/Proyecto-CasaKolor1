@@ -88,6 +88,11 @@ body {
     text-decoration: none;
     transition: 0.3s background-color;
 }
+
+.login-button:hover {
+    background-color: #1a365d;  /* Al pasar el cursor, azul oscuro */
+}
+
 /* Icono del carrito */
 #cart-icon {
     position: relative;

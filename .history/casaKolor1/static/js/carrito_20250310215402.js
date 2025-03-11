@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Esperar un momento antes de redirigir para que el usuario vea el mensaje
                     setTimeout(() => {
                         // Usar ruta absoluta con barra al final para evitar problemas de redirección
-                        window.location.href = 'productos/';
+                        window.location.href = '/productos/';
                     }, 1500);
                 } else {
                     confirmarCompraBtn.disabled = false;

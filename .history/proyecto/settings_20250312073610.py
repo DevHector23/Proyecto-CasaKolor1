@@ -24,7 +24,7 @@ environ.Env.read_env(os.path.join(BASE_DIR,'.env'))
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -173,7 +173,7 @@ EMAIL_HOST = env("EMAIL_HOST") # Servidor SMTP (Gmail como ejemplo)
 EMAIL_PORT = env("EMAIL_PORT")
 EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 EMAIL_HOST_USER =  env("EMAIL_HOST_USER") # Tu correo
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD") # Contraseña o App Password si usas Gmail
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') # Contraseña o App Password si usas Gmail
 
 # Configuración de cookies
 CSRF_COOKIE_SECURE = False  # Cambiar a True solo si usas HTTPS

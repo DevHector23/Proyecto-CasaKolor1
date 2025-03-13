@@ -22,7 +22,7 @@
                     <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
                     <!-- Mostrar la presentación en pinturas -->
                     <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
-                    <button href="{% url 'comprar' producto.id %}" class="btn btn-primary">Comprar</button>
+                    <button onclick="window.location.href='{% url 'comprar' producto.id %}'" class="btn btn-primary">Comprar</button>
                 </div>
             </div>
         </div>

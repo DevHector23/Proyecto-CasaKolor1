@@ -26,7 +26,7 @@
                     {% if producto.categoria == 'pinturas' %}
                         <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
                     {% endif %}
-                    <button href="{% url 'comprar' producto.id %}" class="btn btn-primary">Comprar</button>
+                    <button class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
                 </div>
             </div>
         </div>

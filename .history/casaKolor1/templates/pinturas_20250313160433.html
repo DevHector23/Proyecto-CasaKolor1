@@ -22,7 +22,8 @@
                     <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
                     <!-- Mostrar la presentación en pinturas -->
                     <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
-                    <button href="{% url 'comprar' producto.id %}" class="btn btn-primary">Comprar</button>
+                    <button href="{% url 'carrito' %}" class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
+                    
                 </div>
             </div>
         </div>

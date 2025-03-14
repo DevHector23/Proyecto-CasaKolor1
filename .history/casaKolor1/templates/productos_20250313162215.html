@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/pinturas.css' %}">
+<style>
+    .options-container {
+        display: none;
+        margin-top: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<body>
+    
+<h2 class="text-center mb-4" style="height: 90px; width: 100%; color: #1a365d; padding: 20px; font-size: 50px;">Nuestros Productos</h2>
+
+<div class="container mt-5">
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+            <div class="card"> 
+                <h5 class="card-title text-center mt-3">{{ producto.nombre }}</h5>
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% endif %}
+                <div class="card-body text-center">
+                    <!-- Eliminamos la descripción -->
+                    <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
+                    
+                    <!-- Mostrar presentación solo si el producto es pintura -->
+                    {% if producto.categoria == 'pinturas' %}
+                        <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
+                    {% endif %}
+                    
+                    <button class="btn btn-primary comprar-btn" data-id="{{ producto.id }}">Comprar</button>
+                    
+                    <!-- Contenedor de opciones que se mostrará al hacer clic en Comprar -->
+                    <div id="options-{{ producto.id }}" class="options-container">
+                        {% if producto.categoria == 'pinturas' %}
+                            <div class="form-group mb-3">
+                                <label for="color-{{ producto.id }}">Colores:</label>
+                                <select class="form-control" id="color-{{ producto.id }}">
+                                    <option value="">Elige una opción</option>
+                                    <option value="blanco">Blanco</option>
+                                    <option value="beige">Beige</option>
+                                    <option value="gris">Gris</option>
+                                    <option value="azul">Azul</option>
+                                    <!-- Agrega más colores según sea necesario -->
+                                </select>
+                            </div>
+                        {% endif %}
+                        <div class="form-group mb-3">
+                            <label for="cantidad-{{ producto.id }}">Cantidad:</label>
+                            <input type="number" class="form-control" id="cantidad-{{ producto.id }}" value="1" min="1">
+                        </div>
+                        <button class="btn btn-success add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Mostrar mensaje de inicio de sesión exitoso
+        if ("{{ request.session.login_success }}") {
+            alert("¡Has iniciado sesión correctamente!");  // Mostrar mensaje
+            fetch("{% url 'clear_login_success' %}", { 
+                method: "POST", 
+                headers: { "X-CSRFToken": "{{ csrf_token }}" } 
+            });
+        }
+        
+        // Mostrar/ocultar opciones al hacer clic en el botón Comprar
+        document.querySelectorAll('.comprar-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                const optionsContainer = document.getElementById(`options-${productId}`);
+                
+                // Ocultar todos los contenedores de opciones primero
+                document.querySelectorAll('.options-container').forEach(container => {
+                    container.style.display = 'none';
+                });
+                
+                // Mostrar el contenedor de opciones para este producto
+                optionsContainer.style.display = 'block';
+            });
+        });
+    });
+</script>
+{% endblock %}

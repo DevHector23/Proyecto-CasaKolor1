@@ -39,7 +39,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('productos/',views.productos_view, name='productos'),
     # path('sugerencias',views.sugerencias, name='sugerencias'),
-    path('carrito', views.carrito, name='carrito'),
     path('herramientas/', views.lista_herramientas, name='herramientas'),
     path('pinturas/', views.lista_pinturas, name='pinturas'),
     path('mision', views.mision, name='mision'),
@@ -55,6 +54,9 @@ urlpatterns = [
     path('restablecer/', views.restablecer, name='restablecer'),
     path('cambiar-contraseña/<str:uidb64>/<str:token>/', views.cambiar_contraseña, name='cambiar_contraseña'),
     path('confirmacion/', views.confirmacion, name='confirmacion'),
+    path('carrito/', views.carrito, name='carrito'),
+    path('pasarela-pago/', views.pasarela_pago, name='pasarela_pago'),
+    path('finalizar-compra/', views.finalizar_compra, name='finalizar_compra'),
 
     #mensaje de alerta
     path('clear-login-success/', clear_login_success, name='clear_login_success'),

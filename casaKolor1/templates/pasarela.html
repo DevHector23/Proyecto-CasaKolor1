@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/pasarela.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="checkout-container">
+    <div class="checkout-header">
+        <h2>Finalizar Compra</h2>
+    </div>
+
+    <div class="checkout-content">
+        <div class="row">
+            <div class="col-md-7 checkout-form-container">
+                <div class="checkout-steps">
+                    <div class="step active" id="step-1">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Información de contacto</div>
+                    </div>
+                    <div class="step" id="step-2">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Confirmar compra</div>
+                    </div>
+                    <div class="step" id="step-3">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Pago completado</div>
+                    </div>
+                </div>
+
+                <form id="checkout-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="checkout-form-section show" id="contact-info-section">
+                        <h4>Datos del cliente</h4>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre completo</label>
+                            <input type="text" class="form-control" id="nombre" 
+                                value="{{ user.get_full_name }}" required>
+                            <div class="invalid-feedback">Por favor ingrese su nombre completo</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="correo" 
+                                required>
+                            <div class="invalid-feedback">Por favor ingrese un correo válido</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="telefono" 
+                                value="{{ user.profile.phone }}" required>
+                            <div class="invalid-feedback">Por favor ingrese su número de teléfono</div>
+                        </div>
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="button" class="btn btn-primary btn-continue" id="continue-to-payment">
+                                Continuar al pago
+                            </button>
+                            <a href="{% url 'carrito' %}" class="btn btn-outline-secondary">Volver al carrito</a>
+                        </div>
+                    </div>
+
+                    <div class="checkout-form-section" id="payment-section">
+                        <h4>Método de pago</h4>
+                        <div class="payment-method">
+                            <div class="payment-method-header">
+                                <img src="{% static 'images/nequi.jpg' %}" alt="Nequi" class="payment-logo">
+                                <h5>Pagar con Nequi</h5>
+                            </div>
+                            <div class="payment-instructions">
+                                <p>Sigue estos pasos para completar tu pago:</p>
+                                <ol>
+                                    <li>Escanea el código QR con tu app de Nequi</li>
+                                    <li>Ingresa el monto exacto: <strong>$<span id="payment-amount">0</span></strong></li>
+                                    <li>Completa el pago en tu aplicación</li>
+                                    <li>Toma una captura de pantalla del comprobante</li>
+                                </ol>
+                            </div>
+                            <div class="qr-container">
+                                <img src="{% static 'images/nequi.jpg' %}" alt="Nequi QR" class="qr-image">
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5>Subir comprobante de pago</h5>
+                            <div class="mb-3">
+                                <input type="file" id="factura" class="form-control" required>
+                                <div class="invalid-feedback">Por favor suba una foto del comprobante de pago</div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary" id="back-to-info">Volver</button>
+                            <button type="button" class="btn btn-success" id="confirmarCompra">Confirmar Pago</button>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-form-section" id="success-section">
+                        <div class="success-message">
+                            <div class="success-icon">
+                                <i class="bi bi-check-circle-fill"></i>
+                            </div>
+                            <h3>¡Compra realizada con éxito!</h3>
+                            <p>Se ha enviado un correo de confirmación a tu dirección de correo electrónico.</p>
+                            <p>Número de pedido: <strong id="order-number">#-</strong></p>
+                            <div class="d-grid gap-2 mt-4">
+                                <a href="{% url 'productos' %}" class="btn btn-primary">Volver a la tienda</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="col-md-5">
+                <div class="order-summary">
+                    <h4>Resumen del pedido</h4>
+                    <div class="order-items" id="order-items">
+                        <div class="empty-cart-message">El carrito está vacío</div>
+                    </div>
+                    <div class="order-totals">
+                        <div class="order-total-row">
+                            <span>Subtotal</span>
+                            <span id="order-subtotal">$0</span>
+                        </div>
+                        <div class="order-total-row order-grand-total">
+                            <span>Total</span>
+                            <span id="order-total">$0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="loading-overlay" id="loading-overlay">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p>Procesando tu pago...</p>
+</div>
+
+<script src="{% static 'js/pasarela.js' %}"></script>
+{% endblock %}

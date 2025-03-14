@@ -29,9 +29,7 @@ def sugerencias(request):
     return render(request, 'sugerencias.html')
 
 from django.contrib.auth.decorators import login_required
-@login_required
-def carrito(request):
-    return render(request, 'carrito.html')
+
 
 
 
@@ -174,177 +172,259 @@ def enviar_sugerencia(request):
     return render(request, 'sugerencias.html', {'form': form})
 
 
-import logging
+
+# Importaciones necesarias para las vistas
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.db import transaction
 from django.core.cache import cache
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
-from django.http import JsonResponse
-from .models import DetallePedido, productos
-from .forms import PedidoForm
 import json
-from django.conf import settings  # Asegúrate de importar settings
+import logging
+import uuid
+from .models import Pedido, DetallePedido, productos
+from .forms import PedidoForm
 
 logger = logging.getLogger(__name__)
 
+@login_required
+def carrito(request):
+    return render(request, 'carrito.html')
+
+@login_required
+def pasarela_pago(request):
+    return render(request, 'pasarela.html')
+
 def finalizar_compra(request):
     if request.method == 'POST':
-        transaction_token = request.POST.get('transaction_token')
+        transaction_token = request.POST.get('transaction_token', str(uuid.uuid4()))
         cache_key = f'order_token_{transaction_token}'
         
-        # Verificar si esta orden ya fue procesada
         if cache.get(cache_key):
             return JsonResponse({'success': True, 'message': 'Pedido ya procesado'})
         
-        # Establecer un bloqueo temporal para evitar procesamiento duplicado
-        cache.set(cache_key, True, 30)
+        cache.set(cache_key, True, 300) 
         
         form = PedidoForm(request.POST, request.FILES)
         if form.is_valid():
             try:
                 with transaction.atomic():
+                    if Pedido.objects.filter(transaction_id=transaction_token).exists():
+                        return JsonResponse({'success': True, 'message': 'Pedido ya procesado'})
+                    
                     pedido = form.save(commit=False)
                     pedido.total = request.POST.get('total', 0)
+                    pedido.transaction_id = transaction_token
                     
                     if 'comprobante' in request.FILES:
                         pedido.comprobante = request.FILES['comprobante']
                     
                     pedido.save()
                     
-                    # Procesar los items del pedido
                     items = json.loads(request.POST.get('items', '[]'))
-                    detalles_correo = []
                     
                     for item in items:
                         producto_id = item.get('id')
-                        cantidad = item.get('cantidad', 1)
-                        precio = item.get('precio', 0)
-                        subtotal = item.get('subtotal', 0)
+                        cantidad = int(item.get('cantidad', 1))
+                        precio = float(item.get('precio', 0))
+                        subtotal = precio * cantidad
                         
                         try:
                             producto = productos.objects.get(id=producto_id)
-                        except productos.DoesNotExist:
-                            logger.error(f"Producto con ID {producto_id} no encontrado")
-                            continue
-                        
-                        DetallePedido.objects.create(
-                            pedido=pedido,
-                            producto=producto,
-                            cantidad=cantidad,
-                            precio_unitario=precio,
-                            subtotal=subtotal
-                        )
-                        
-                        if producto.categoria == 'pinturas':
-                            detalles_correo.append(f"Producto: {producto.nombre}, Presentación: {producto.get_presentacion_display()}, Cantidad: {cantidad}, Precio: ${precio}.")
-                        else:
-                            detalles_correo.append(f"Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.")
-                    
-                    # Actualizar la caché para evitar procesamiento duplicado antes de enviar el correo
-                    cache.set(cache_key, True, 60 * 30)  # 30 minutos
-                    
-                    # Responder primero al cliente antes de enviar el correo
-                    response = JsonResponse({'success': True, 'message': 'Pedido creado correctamente'})
-                    
-                    # Preparar el correo en segundo plano
-                    asunto = "Confirmación de Pedido - CasaKolor1"
-                    
-                    # Preparar contenido HTML para el correo
-                    html_items = ""
-                    for item in items:
-                        producto_id = item.get('id')
-                        cantidad = item.get('cantidad', 1)
-                        precio = item.get('precio', 0)
-                        try:
-                            producto = productos.objects.get(id=producto_id)
-                            if producto.categoria == 'pinturas':
-                                html_items += f'<li>Producto: {producto.nombre}, Presentación: {producto.get_presentacion_display()}, Cantidad: {cantidad}, Precio: ${precio}.</li>'
-                            else:
-                                html_items += f'<li>Producto: {producto.nombre}, Cantidad: {cantidad}, Precio: ${precio}.</li>'
+                            DetallePedido.objects.create(
+                                pedido=pedido,
+                                producto=producto,
+                                cantidad=cantidad,
+                                precio_unitario=precio,
+                                subtotal=subtotal
+                            )
                         except productos.DoesNotExist:
                             logger.error(f"Producto con ID {producto_id} no encontrado")
                             continue
                     
-                    html_content = f"""
-                    <html>
-                    <head>
-                        <style>
-                            body {{ font-family: Arial, sans-serif; line-height: 1.6; background-color: #f4f4f4; margin: 0; padding: 0; }}
-                            .container {{ max-width: 600px; margin: 20px auto; padding: 20px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }}
-                            .header {{ background-color: #4CAF50; color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }}
-                            .header h2 {{ margin: 0; font-size: 24px; }}
-                            .content {{ padding: 20px; }}
-                            .content h3 {{ color: #4CAF50; font-size: 20px; margin-bottom: 10px; }}
-                            .content ul {{ list-style-type: none; padding: 0; }}
-                            .content ul li {{ background-color: #f9f9f9; margin: 5px 0; padding: 10px; border-left: 5px solid #4CAF50; }}
-                            .content p {{ margin: 10px 0; }}
-                            .footer {{ font-size: 12px; color: #777; text-align: center; margin-top: 20px; }}
-                            .footer p {{ margin: 0; }}
-                            .button {{ display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; margin-top: 20px; }}
-                        </style>
-                    </head>
-                    <body>
-                        <div class="container">
-                            <div class="header">
-                                <h2>Confirmación de Pedido - CasaKolor1</h2>
-                            </div>
-                            <div class="content">
-                                <p>Hola {pedido.nombre},</p>
-                                <p>¡Gracias por tu compra en CasaKolor1!</p>
-                                <h3>Detalles de tu pedido:</h3>
-                                <ul>
-                                    {html_items}
-                                </ul>
-                                <p><strong>Total:</strong> ${pedido.total}</p>
-                                
-                                <h3>Comprobante de pago:</h3>
-                                <p>Se ha recibido tu comprobante de pago.</p>
-                                
-                                <p>Tu pedido será procesado a la brevedad.</p>
-                                <p>Saludos,<br>El equipo de CasaKolor1</p>
-                                
-                                <a href="#" class="button">Ver Detalles del Pedido</a>
-                            </div>
-                            <div class="footer">
-                                <p>© 2025 CasaKolor1. Todos los derechos reservados.</p>
-                            </div>
-                        </div>
-                    </body>
-                    </html>
-                    """
+                    cache.set(cache_key, True, 60 * 30)  
                     
-                    text_content = strip_tags(html_content)
+                    email_result = enviar_confirmacion_email_interno(pedido)
                     
-                    # Enviar el correo
-                    try:
-                        email = EmailMultiAlternatives(
-                            asunto,
-                            text_content,
-                            settings.EMAIL_HOST_USER,
-                            [pedido.correo, 'hector3208609853@gmail.com']  # Aquí se añade el correo de la empresa
-                        )
-                        
-                        email.attach_alternative(html_content, "text/html")
-                        
-                        if hasattr(pedido, 'comprobante') and pedido.comprobante:
-                            email.attach_file(pedido.comprobante.path)
-                        
-                        email.send(fail_silently=True)  # Enviar sin arrojar excepciones
-                    except Exception as e:
-                        logger.error(f"Error al enviar correo: {e}")
-                        # No devolveremos error al cliente porque el pedido ya está creado
+                    if email_result.get('success'):
+                        logger.info(f"Email enviado automáticamente para pedido {pedido.id}")
+                    else:
+                        logger.warning(f"Error al enviar email automático: {email_result.get('message')}")
                     
-                    return response
-                    
+                    return JsonResponse({
+                        'success': True, 
+                        'message': 'Pedido creado correctamente', 
+                        'pedido_id': pedido.id
+                    })
+            
             except Exception as e:
                 logger.error(f"Error al procesar el pedido: {e}")
-                cache.delete(cache_key)
-                return JsonResponse({'success': False, 'message': f'Error al procesar el pedido: {str(e)}'})
+                if not str(e).lower().find("duplicate") >= 0:
+                    cache.delete(cache_key)
+                return JsonResponse({
+                    'success': False, 
+                    'message': f'Error al procesar el pedido: {str(e)}'
+                })
         else:
-            cache.delete(cache_key)
-            return JsonResponse({'success': False, 'errors': form.errors})
+            return JsonResponse({
+                'success': False, 
+                'errors': form.errors
+            })
     
-    return JsonResponse({'success': False, 'message': 'Método no permitido'})
+    return JsonResponse({
+        'success': False, 
+        'message': 'Método no permitido'
+    })
+
+from .models import Pedido
+def enviar_confirmacion_email_interno(pedido):
+    try:
+        email_cache_key = f'email_sent_{pedido.id}'
+        
+        if cache.get(email_cache_key):
+            logger.info(f"Correo ya enviado previamente para el pedido ID {pedido.id}")
+            return {'success': True, 'message': 'Email ya enviado'}
+        
+        if not pedido.correo:
+            logger.error(f"Correo de usuario vacío para pedido ID {pedido.id}")
+            return {'success': False, 'message': 'Correo de usuario no válido'}
+            
+        detalles = DetallePedido.objects.filter(pedido=pedido)
+        
+        html_items = ""
+        for detalle in detalles:
+            producto = detalle.producto
+            if producto and producto.categoria == 'pinturas':
+                html_items += f'<li>Producto: {producto.nombre}, Presentación: {producto.get_presentacion_display()}, Cantidad: {detalle.cantidad}, Precio: ${detalle.precio_unitario}.</li>'
+            elif producto:
+                html_items += f'<li>Producto: {producto.nombre}, Cantidad: {detalle.cantidad}, Precio: ${detalle.precio_unitario}.</li>'
+            else:
+                html_items += f'<li>Producto no disponible, Cantidad: {detalle.cantidad}, Precio: ${detalle.precio_unitario}.</li>'
+        
+        html_content = f"""
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; background-color: #f4f4f4; margin: 0; padding: 0; }}
+                .container {{ max-width: 600px; margin: 20px auto; padding: 20px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }}
+                .header {{ background-color: #4CAF50; color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }}
+                .header h2 {{ margin: 0; font-size: 24px; }}
+                .content {{ padding: 20px; }}
+                .content h3 {{ color: #4CAF50; font-size: 20px; margin-bottom: 10px; }}
+                .content ul {{ list-style-type: none; padding: 0; }}
+                .content ul li {{ background-color: #f9f9f9; margin: 5px 0; padding: 10px; border-left: 5px solid #4CAF50; }}
+                .content p {{ margin: 10px 0; }}
+                .footer {{ font-size: 12px; color: #777; text-align: center; margin-top: 20px; }}
+                .footer p {{ margin: 0; }}
+                .button {{ display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; margin-top: 20px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h2>Confirmación de Pedido - CasaKolor1</h2>
+                </div>
+                <div class="content">
+                    <p>Hola {pedido.nombre},</p>
+                    <p>¡Gracias por tu compra en CasaKolor1!</p>
+                    <h3>Detalles de tu pedido (#{pedido.id}):</h3>
+                    <ul>
+                        {html_items}
+                    </ul>
+                    <p><strong>Total:</strong> ${pedido.total}</p>
+                    
+                    <h3>Comprobante de pago:</h3>
+                    <p>Se ha recibido tu comprobante de pago correctamente.</p>
+                    
+                    <p>Tu pedido será procesado a la brevedad. Te contactaremos cuando esté listo para entrega o recogida.</p>
+                    <p>Si tienes alguna pregunta, responde a este correo directamente.</p>
+                    <p>Saludos,<br>El equipo de CasaKolor1</p>
+                </div>
+                <div class="footer">
+                    <p>© 2025 CasaKolor1. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        text_content = strip_tags(html_content)
+        
+        if not all([settings.EMAIL_HOST, settings.EMAIL_PORT, settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD]):
+            logger.error("Configuración de email incompleta en settings.py")
+            return {'success': False, 'message': 'Configuración de email incompleta en el servidor'}
+        
+        admin_email = 'hector3208609853@gmail.com'
+        
+        try:
+            logger.info(f"Intentando enviar correo para pedido ID {pedido.id} a usuario: '{pedido.correo}' y admin: '{admin_email}'")
+
+            user_email = EmailMultiAlternatives(
+                "Confirmación de Pedido - CasaKolor1",
+                text_content,
+                settings.EMAIL_HOST_USER,
+                [pedido.correo]
+            )
+            user_email.attach_alternative(html_content, "text/html")
+            
+            if hasattr(pedido, 'comprobante') and pedido.comprobante:
+                try:
+                    user_email.attach_file(pedido.comprobante.path)
+                except Exception as e:
+                    logger.warning(f"No se pudo adjuntar comprobante al correo del usuario: {e}")
+
+            try:
+                user_email.send(fail_silently=False)
+                logger.info(f"Correo enviado correctamente al usuario {pedido.correo} para pedido ID {pedido.id}")
+                user_email_sent = True
+            except Exception as e:
+                logger.error(f"Error al enviar correo al usuario {pedido.correo}: {e}")
+                user_email_sent = False
+            
+            admin_email_obj = EmailMultiAlternatives(
+                f"[ADMIN] Nueva Orden #{pedido.id} - CasaKolor1",
+                text_content,
+                settings.EMAIL_HOST_USER,
+                [admin_email]
+            )
+            admin_email_obj.attach_alternative(html_content, "text/html")
+            
+            if hasattr(pedido, 'comprobante') and pedido.comprobante:
+                try:
+                    admin_email_obj.attach_file(pedido.comprobante.path)
+                except Exception as e:
+                    logger.warning(f"No se pudo adjuntar comprobante al correo del admin: {e}")
+            
+            try:
+                admin_email_obj.send(fail_silently=False)
+                logger.info(f"Correo enviado correctamente al administrador {admin_email} para pedido ID {pedido.id}")
+                admin_email_sent = True
+            except Exception as e:
+                logger.error(f"Error al enviar correo al administrador {admin_email}: {e}")
+                admin_email_sent = False
+            
+            if user_email_sent or admin_email_sent:
+                cache.set(email_cache_key, True, 60 * 60 * 24)  
+                
+                success_message = []
+                if user_email_sent:
+                    success_message.append("Email enviado al usuario")
+                if admin_email_sent:
+                    success_message.append("Email enviado al administrador")
+                
+                return {'success': True, 'message': '; '.join(success_message)}
+            else:
+                return {'success': False, 'message': 'No se pudo enviar ningún correo'}
+                
+        except Exception as e:
+            logger.error(f"Error general al enviar correos: {e}")
+            return {'success': False, 'message': f'Error al enviar emails: {str(e)}'}
+        
+    except Exception as e:
+        logger.error(f"Error no controlado en enviar_confirmacion_email_interno: {e}")
+        return {'success': False, 'message': f'Error: {str(e)}'}
 
 from django.contrib import messages
 from django.contrib.auth.models import User

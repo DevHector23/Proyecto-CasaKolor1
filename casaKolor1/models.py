@@ -40,29 +40,43 @@ class Sugerencia(models.Model):
 
 
 
-#factura
+from django.db import models
+from django.contrib.auth.models import User
+import uuid
+import os
+
+def comprobante_upload_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = f"{uuid.uuid4()}.{ext}"
+    return os.path.join('comprobantes', filename)
+
 class Pedido(models.Model):
     nombre = models.CharField(max_length=100)
     correo = models.EmailField()
     telefono = models.CharField(max_length=20)
-    total = models.DecimalField(max_digits=10, decimal_places=0)
-    comprobante = models.ImageField(upload_to='comprobantes/', null=True, blank=True)
-    fecha_compra = models.DateTimeField(auto_now_add=True)
-    transaction_id = models.CharField(max_length=100, null=True, blank=True, unique=True)
-    estado = models.CharField(max_length=20, default='pendiente', 
-                             choices=[('pendiente', 'Pendiente'), 
-                                     ('completado', 'Completado'), 
-                                     ('cancelado', 'Cancelado')])
-
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    comprobante = models.FileField(upload_to=comprobante_upload_path, null=True, blank=True)
+    transaction_id = models.CharField(max_length=100, null=True)
+    
+    class Meta:
+        ordering = ['-fecha_creacion']
+        
     def __str__(self):
-        return f"Pedido de {self.nombre} - {self.fecha_compra}"
+        return f"Pedido #{self.id} - {self.nombre}"
+    
 
 class DetallePedido(models.Model):
     pedido = models.ForeignKey(Pedido, related_name='detalles', on_delete=models.CASCADE)
-    producto = models.ForeignKey(productos, on_delete=models.CASCADE)
+    producto = models.ForeignKey('productos', on_delete=models.SET_NULL, null=True)
     cantidad = models.PositiveIntegerField(default=1)
-    precio_unitario = models.DecimalField(max_digits=10, decimal_places=0)
-    subtotal = models.DecimalField(max_digits=10, decimal_places=0)
-
+    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+    
     def __str__(self):
-        return f"{self.cantidad} x {self.producto.nombre}"
+        return f"Detalle de {self.pedido} - {self.producto}"
+    
+    def save(self, *args, **kwargs):
+        if not self.subtotal:
+            self.subtotal = self.precio_unitario * self.cantidad
+        super().save(*args, **kwargs)

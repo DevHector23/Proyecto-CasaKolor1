@@ -82,15 +82,24 @@ class SugerenciaForm(forms.ModelForm):
 
         send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, [destinatario])
 
-from .models import Pedido, DetallePedido
+from django import forms
+from .models import Pedido
 
 class PedidoForm(forms.ModelForm):
     class Meta:
         model = Pedido
         fields = ['nombre', 'correo', 'telefono', 'comprobante']
-        widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'id': 'nombre'}),
-            'correo': forms.EmailInput(attrs={'class': 'form-control', 'id': 'correo'}),
-            'telefono': forms.TextInput(attrs={'class': 'form-control', 'id': 'telefono'}),
-            'comprobante': forms.FileInput(attrs={'class': 'form-control', 'id': 'factura'}),
-        }
+        
+    def clean_comprobante(self):
+        comprobante = self.cleaned_data.get('comprobante')
+        if comprobante:
+            ext = comprobante.name.split('.')[-1].lower()
+            valid_extensions = ['jpg', 'jpeg', 'png', 'pdf']
+            
+            if ext not in valid_extensions:
+                raise forms.ValidationError('El comprobante debe ser una imagen o PDF.')
+                
+            if comprobante.size > 5 * 1024 * 1024:
+                raise forms.ValidationError('El tamaño máximo permitido es 5MB.')
+                
+        return comprobante

@@ -27,12 +27,10 @@ from .models import Pedido, DetallePedido
 class DetallePedidoInline(admin.TabularInline):
     model = DetallePedido
     extra = 0
-    readonly_fields = ('producto', 'cantidad', 'precio_unitario', 'subtotal')
+    readonly_fields = ('pedido', 'producto', 'cantidad', 'precio_unitario','subtotal')
 
 @admin.register(Pedido)
 class PedidoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'correo', 'telefono', 'total', 'fecha_compra', 'estado')
-    list_filter = ('estado', 'fecha_compra')
+    list_display = ('nombre', 'correo', 'telefono', 'fecha_creacion', 'total', 'comprobante')
     search_fields = ('nombre', 'correo')
-    readonly_fields = ('total',)
     inlines = [DetallePedidoInline]

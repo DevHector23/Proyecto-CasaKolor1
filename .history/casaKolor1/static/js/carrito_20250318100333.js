@@ -3,23 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartCountElement = document.getElementById('cart-count');
     const cartItemsContainer = document.getElementById('cart-items');
     const cartTotalElement = document.getElementById('cart-total');
-    const clearCartBtn = document.getElementById('clear-cart-btn');
-
-    // Verificar si el carrito está vacío al cargar la página
-    if (cart.length === 0 && cartCountElement) {
-        cartCountElement.style.display = 'none';
-    }
 
     function restoreCartCount() {
-        const savedCount = parseInt(localStorage.getItem('cartCount') || '0');
-        if (cartCountElement) {
+        const savedCount = localStorage.getItem('cartCount');
+        if (savedCount && cartCountElement) {
             cartCountElement.textContent = savedCount;
-            // Forzar la visibilidad del contador basado en el valor
-            if (savedCount <= 0) {
-                cartCountElement.style.display = 'none';
-            } else {
-                cartCountElement.style.display = 'inline';
-            }
+            cartCountElement.style.display = savedCount > 0 ? 'inline' : 'none';
         }
     }
 
@@ -28,12 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('cartCount', totalItems); 
         if (cartCountElement) {
             cartCountElement.textContent = totalItems;
-            // Forzar la visibilidad del contador basado en el valor
-            if (totalItems <= 0) {
-                cartCountElement.style.display = 'none';
-            } else {
-                cartCountElement.style.display = 'inline';
-            }
+            cartCountElement.style.display = totalItems > 0 ? 'inline' : 'none';
         }
     }
 
@@ -49,12 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 cartItemsContainer.appendChild(emptyRow);
                 cartTotalElement.textContent = '0';
-                
-                // Asegurar que el contador esté oculto cuando el carrito está vacío
-                if (cartCountElement) {
-                    cartCountElement.textContent = '0';
-                    cartCountElement.style.display = 'none';
-                }
                 return;
             }
 
@@ -86,26 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCartCount(); 
     }
 
-    // Restaurar el contador al cargar la página
     restoreCartCount(); 
-
-    // Agregar evento directamente al botón de limpiar carrito
-    if (clearCartBtn) {
-        clearCartBtn.addEventListener('click', function() {
-            // Vaciar el carrito
-            cart.length = 0;
-            localStorage.removeItem('cart');
-            localStorage.setItem('cartCount', '0');
-            
-            // Forzar la ocultación del contador
-            if (cartCountElement) {
-                cartCountElement.textContent = '0';
-                cartCountElement.style.display = 'none';
-            }
-            
-            renderCart();
-        });
-    }
 
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('add-to-cart') || event.target.closest('.add-to-cart')) {
@@ -137,6 +96,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderCart(); 
             }
         }
+
+        if (event.target.id === 'clear-cart-btn') {
+            cart.length = 0;
+            localStorage.removeItem('cart');
+            localStorage.setItem('cartCount', 0); 
+            if (cartCountElement) {
+                cartCountElement.textContent = 0;
+                cartCountElement.style.display = 'none';
+            }
+            renderCart();
+        }
     });
 
     document.addEventListener('change', function (event) {
@@ -152,14 +122,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Iniciar con el contador actualizado según el estado actual del carrito
     renderCart();
-    
-    // Verificación adicional para asegurar que el contador esté correcto
-    setTimeout(() => {
-        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-        if (cartItems.length === 0 && cartCountElement) {
-            cartCountElement.style.display = 'none';
-        }
-    }, 100);
 });

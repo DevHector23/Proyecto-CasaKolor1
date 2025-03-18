@@ -14,6 +14,10 @@ def home(request):
     return render(request, 'home.html')
 
 
+def inicio(request):
+    return render(request, 'inicio.html')
+
+
 def productos_view(request):
     productos_list = productos.objects.all()
     return render(request, 'productos.html', {
@@ -106,11 +110,11 @@ def clear_login_success(request):
     # Elimina cualquier dato de sesión relacionado con el login exitoso
     if 'login_success' in request.session:
         del request.session['login_success']
-    return redirect('home')  # Cambia esto por la URL a donde quieres redirigir
+    return redirect('inicio')  # Cambia esto por la URL a donde quieres redirigir
 
 def logout_view(request):
     logout(request)
-    return redirect('home')  # Redirige a la página principal
+    return redirect('inicio')  # Redirige a la página principal
 
 
 

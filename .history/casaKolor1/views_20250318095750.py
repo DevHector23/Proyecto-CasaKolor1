@@ -14,6 +14,8 @@ def home(request):
     return render(request, 'home.html')
 
 
+
+
 def productos_view(request):
     productos_list = productos.objects.all()
     return render(request, 'productos.html', {

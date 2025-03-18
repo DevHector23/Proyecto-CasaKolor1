@@ -31,6 +31,9 @@ from casaKolor1.views import login_view, clear_login_success,perfil
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('' ,views.home, name='home'),
+    path('inicio',views.inicio, name='inicio'),
+    # path('register/', views.register, name='register'),
+    # path('login/', views.login_view, name='login'),
     path('login/', views.login_view, name='login'),
     path('register/', views.register_view, name='register'),
     path('logout/', views.logout_view, name='logout'),

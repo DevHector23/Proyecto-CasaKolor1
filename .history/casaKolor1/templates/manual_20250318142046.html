@@ -1,0 +1,735 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5f5f5;
+            --text-color: #333;
+            --link-color: #2c6cb0;
+            --border-color: #ddd;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --max-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: white;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: -280px;
+            overflow-y: auto;
+            transition: 0.3s;
+            z-index: 1001;
+            padding-top: 60px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-toggle {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            display: block;
+        }
+
+        .sidebar ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        main {
+            padding: 20px 0;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: var(--link-color);
+            text-decoration: none;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .step {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .step:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .step-number {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 5px;
+        }
+
+        .image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        .caption {
+            margin-top: 5px;
+            font-style: italic;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .tip {
+            background-color: #e6f7ff;
+            border-left: 4px solid #1890ff;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--secondary-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            h3 {
+                font-size: 18px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .sidebar {
+                left: 0;
+                width: 250px;
+            }
+
+            .sidebar-toggle {
+                display: none;
+            }
+
+            main {
+                margin-left: 250px;
+            }
+
+            .close-sidebar {
+                display: none;
+            }
+        }
+
+        @media print {
+            .sidebar, .sidebar-toggle, .back-to-top, footer {
+                display: none;
+            }
+
+            main {
+                margin-left: 0;
+            }
+
+            .section {
+                break-inside: avoid;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<body>
+    <header>
+        <div class="container">
+            <button class="sidebar-toggle" id="sidebarToggle">☰ Menú</button>
+            <div class="logo">Manual de Usuario - Tienda Online</div>
+        </div>
+    </header>
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="#introduccion">Introducción</a></li>
+            <li><a href="#navegacion">Navegación Principal</a></li>
+            <li><a href="#registro">Registro y Acceso</a></li>
+            <li><a href="#busqueda">Búsqueda de Productos</a></li>
+            <li><a href="#catalogo">Catálogo de Productos</a></li>
+            <li><a href="#detalles">Detalles del Producto</a></li>
+            <li><a href="#carrito">Carrito de Compras</a></li>
+            <li><a href="#compra">Proceso de Compra</a></li>
+            <li><a href="#perfil">Perfil de Usuario</a></li>
+            <li><a href="#contrasena">Cambio de Contraseña</a></li>
+            <li><a href="#herramientas">Herramientas Adicionales</a></li>
+            <li><a href="#problemas">Solución de Problemas</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <div class="container">
+            <section class="section" id="introduccion">
+                <h1>Manual de Usuario - Tienda Online</h1>
+                <p>Bienvenido al manual de usuario de nuestra tienda online. Este documento le guiará a través de todas las funcionalidades disponibles en nuestra plataforma para asegurar una experiencia de compra satisfactoria. Nuestra tienda online está diseñada para ser intuitiva y fácil de usar, ofreciendo una amplia variedad de productos que puede explorar desde la comodidad de su hogar.</p>
+            </section>
+
+            <section class="section" id="navegacion">
+                <h2>Navegación Principal</h2>
+                <p>La página principal del sitio cuenta con los siguientes elementos de navegación:</p>
+                <ul>
+                    <li><strong>Menú superior</strong>: Contiene enlaces a las secciones principales del sitio.</li>
+                    <li><strong>Página de inicio (Home)</strong>: Muestra productos destacados y promociones.</li>
+                    <li><strong>Búsqueda</strong>: Permite encontrar productos específicos.</li>
+                    <li><strong>Carrito</strong>: Acceso rápido a los productos seleccionados para compra.</li>
+                    <li><strong>Login/Perfil</strong>: Acceso a su cuenta o registro para nuevos usuarios.</li>
+                </ul>
+                <div class="image-container">
+                    <img src="/api/placeholder/800/400" alt="Navegación principal del sitio">
+                    <p class="caption">Imagen 1: Elementos principales de navegación en la página de inicio</p>
+                </div>
+            </section>
+
+            <section class="section" id="registro">
+                <h2>Registro y Acceso</h2>
+                
+                <h3>Registro de Nuevo Usuario</h3>
+                <ol>
+                    <li>Haga clic en "Login" en el menú superior.</li>
+                    <li>Seleccione la opción "Crear cuenta".</li>
+                    <li>Complete el formulario con sus datos personales.</li>
+                    <li>Acepte los términos y condiciones.</li>
+                    <li>Haga clic en "Registrarse".</li>
+                    <li>Recibirá un correo de confirmación para activar su cuenta.</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/500" alt="Formulario de registro">
+                    <p class="caption">Imagen 2: Formulario de registro de nuevo usuario</p>
+                </div>
+                
+                <h3>Inicio de Sesión</h3>
+                <ol>
+                    <li>Haga clic en "Login" en el menú superior.</li>
+                    <li>Ingrese su correo electrónico y contraseña.</li>
+                    <li>Haga clic en "Iniciar sesión".</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/400" alt="Pantalla de inicio de sesión">
+                    <p class="caption">Imagen 3: Pantalla de inicio de sesión</p>
+                </div>
+                
+                <h3>Recuperación de Contraseña</h3>
+                <ol>
+                    <li>En la pantalla de login, haga clic en "¿Olvidó su contraseña?".</li>
+                    <li>Ingrese su correo electrónico.</li>
+                    <li>Siga las instrucciones enviadas a su correo para restablecer su contraseña.</li>
+                </ol>
+                
+                <div class="tip">
+                    <p><strong>Consejo:</strong> Utilice una contraseña segura que combine letras mayúsculas, minúsculas, números y símbolos para proteger su cuenta.</p>
+                </div>
+            </section>
+
+            <section class="section" id="busqueda">
+                <h2>Búsqueda de Productos</h2>
+                <ol>
+                    <li>Ubique la barra de búsqueda en la parte superior de la página.</li>
+                    <li>Ingrese palabras clave relacionadas con el producto deseado.</li>
+                    <li>Presione Enter o haga clic en el ícono de lupa.</li>
+                    <li>Explore los resultados y utilice los filtros disponibles para refinar su búsqueda.</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/300" alt="Resultados de búsqueda">
+                    <p class="caption">Imagen 4: Resultados de búsqueda con filtros aplicados</p>
+                </div>
+                
+                <div class="tip">
+                    <p><strong>Consejo:</strong> Para una búsqueda más efectiva, utilice palabras clave específicas y aproveche los filtros disponibles para ajustar los resultados según sus preferencias.</p>
+                </div>
+            </section>
+
+            <section class="section" id="catalogo">
+                <h2>Catálogo de Productos</h2>
+                
+                <h3>Navegación por Categorías</h3>
+                <ol>
+                    <li>Desde la página principal, acceda a "Productos" en el menú superior.</li>
+                    <li>Seleccione la categoría de interés.</li>
+                    <li>Explore los productos disponibles en esa categoría.</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/400" alt="Navegación por categorías">
+                    <p class="caption">Imagen 5: Navegación por categorías de productos</p>
+                </div>
+                
+                <h3>Filtros y Ordenamiento</h3>
+                <p>Utilice las opciones de filtro en el lateral izquierdo para refinar resultados por:</p>
+                <ul>
+                    <li>Precio</li>
+                    <li>Marca</li>
+                    <li>Características específicas</li>
+                </ul>
+                
+                <p>Use las opciones de ordenamiento para organizar los productos por:</p>
+                <ul>
+                    <li>Precio (menor a mayor o mayor a menor)</li>
+                    <li>Popularidad</li>
+                    <li>Novedades</li>
+                </ul>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/400" alt="Filtros y ordenamiento">
+                    <p class="caption">Imagen 6: Opciones de filtro y ordenamiento</p>
+                </div>
+            </section>
+
+            <section class="section" id="detalles">
+                <h2>Detalles del Producto</h2>
+                <p>Al seleccionar un producto específico, podrá:</p>
+                <ol>
+                    <li>Ver imágenes detalladas del producto.</li>
+                    <li>Leer la descripción completa y especificaciones.</li>
+                    <li>Conocer el precio y disponibilidad.</li>
+                    <li>Seleccionar variantes (color, tamaño, etc.) si están disponibles.</li>
+                    <li>Ajustar la cantidad deseada.</li>
+                    <li>Agregar el producto al carrito de compras.</li>
+                    <li>Ver productos relacionados o sugerencias.</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/500" alt="Página de detalles del producto">
+                    <p class="caption">Imagen 7: Página de detalles del producto</p>
+                </div>
+            </section>
+
+            <section class="section" id="carrito">
+                <h2>Carrito de Compras</h2>
+                
+                <h3>Agregar Productos</h3>
+                <ol>
+                    <li>Desde la página de detalles del producto, seleccione la cantidad deseada.</li>
+                    <li>Haga clic en "Agregar al carrito".</li>
+                    <li>Se mostrará una confirmación de que el producto ha sido agregado.</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/300" alt="Agregar productos al carrito">
+                    <p class="caption">Imagen 8: Agregar productos al carrito</p>
+                </div>
+                
+                <h3>Gestionar el Carrito</h3>
+                <ol>
+                    <li>Haga clic en el ícono del carrito en el menú superior.</li>
+                    <li>Revise los productos agregados.</li>
+                    <li>Puede:
+                        <ul>
+                            <li>Modificar cantidades</li>
+                            <li>Eliminar productos</li>
+                            <li>Ver el subtotal</li>
+                            <li>Continuar comprando</li>
+                            <li>Proceder al pago</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/400" alt="Gestión del carrito">
+                    <p class="caption">Imagen 9: Gestión del carrito de compras</p>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>Importante:</strong> Los productos en el carrito se mantienen por un tiempo limitado. Si no completa la compra, es posible que los productos se eliminen automáticamente.</p>
+                </div>
+            </section>
+
+            <section class="section" id="compra">
+                <h2>Proceso de Compra</h2>
+                
+                <h3>Pasarela de Pago</h3>
+                <ol>
+                    <li>Desde el carrito, haga clic en "Proceder al pago".</li>
+                    <li>Si no ha iniciado sesión, se le solicitará hacerlo o continuar como invitado.</li>
+                    <li>Complete o confirme su información de envío.</li>
+                    <li>Seleccione el método de envío preferido.</li>
+                    <li>Elija el método de pago:
+                        <ul>
+                            <li>Tarjeta de crédito/débito</li>
+                            <li>Transferencia bancaria</li>
+                            <li>Otros métodos disponibles</li>
+                        </ul>
+                    </li>
+                    <li>Revise el resumen de su pedido.</li>
+                    <li>Haga clic en "Confirmar compra".</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/500" alt="Proceso de pago">
+                    <p class="caption">Imagen 10: Proceso de pago</p>
+                </div>
+                
+                <h3>Confirmación de Compra</h3>
+                <ol>
+                    <li>Después de confirmar su compra, verá una página de confirmación con los detalles del pedido.</li>
+                    <li>Recibirá un correo electrónico con la confirmación y el número de seguimiento.</li>
+                    <li>Puede hacer seguimiento de su pedido desde la sección "Mis pedidos" en su perfil.</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/300" alt="Confirmación de compra">
+                    <p class="caption">Imagen 11: Confirmación de compra</p>
+                </div>
+                
+                <div class="tip">
+                    <p><strong>Consejo:</strong> Guarde el número de pedido y el correo de confirmación para futuras referencias.</p>
+                </div>
+            </section>
+
+            <section class="section" id="perfil">
+                <h2>Perfil de Usuario</h2>
+                <p>En su perfil de usuario puede:</p>
+                <ol>
+                    <li>Ver y editar su información personal.</li>
+                    <li>Cambiar su contraseña.</li>
+                    <li>Consultar el historial de pedidos.</li>
+                    <li>Gestionar direcciones de envío.</li>
+                    <li>Configurar preferencias de notificaciones.</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/400" alt="Perfil de usuario">
+                    <p class="caption">Imagen 12: Perfil de usuario</p>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sección</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Información personal</td>
+                                <td>Datos básicos de contacto y preferencias</td>
+                            </tr>
+                            <tr>
+                                <td>Mis pedidos</td>
+                                <td>Historial de compras y estado de los pedidos actuales</td>
+                            </tr>
+                            <tr>
+                                <td>Direcciones</td>
+                                <td>Administración de direcciones de envío y facturación</td>
+                            </tr>
+                            <tr>
+                                <td>Métodos de pago</td>
+                                <td>Gestión de tarjetas y otros métodos de pago guardados</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="section" id="contrasena">
+                <h2>Cambio de Contraseña</h2>
+                <ol>
+                    <li>Acceda a su perfil de usuario.</li>
+                    <li>Seleccione la opción "Cambiar contraseña".</li>
+                    <li>Ingrese su contraseña actual.</li>
+                    <li>Ingrese y confirme su nueva contraseña.</li>
+                    <li>Haga clic en "Guardar cambios".</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/300" alt="Cambio de contraseña">
+                    <p class="caption">Imagen 13: Formulario de cambio de contraseña</p>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>Importante:</strong> Por motivos de seguridad, es recomendable cambiar su contraseña periódicamente y no utilizar la misma contraseña en múltiples sitios.</p>
+                </div>
+            </section>
+
+            <section class="section" id="herramientas">
+                <h2>Herramientas y Funciones Adicionales</h2>
+                
+                <h3>Lista de Deseos</h3>
+                <ol>
+                    <li>En la página de detalles del producto, haga clic en el ícono de corazón.</li>
+                    <li>Acceda a su lista de deseos desde su perfil de usuario.</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/300" alt="Lista de deseos">
+                    <p class="caption">Imagen 14: Lista de deseos</p>
+                </div>
+                
+                <h3>Sugerencias Personalizadas</h3>
+                <ol>
+                    <li>En la página principal o en su perfil, encontrará sugerencias basadas en sus intereses y compras anteriores.</li>
+                    <li>Explore estas recomendaciones para descubrir productos que podrían interesarle.</li>
+                </ol>
+                
+                <div class="image-container">
+                    <img src="/api/placeholder/800/300" alt="Sugerencias personalizadas">
+                    <p class="caption">Imagen 15: Sugerencias personalizadas de productos</p>
+                </div>
+            </section>
+
+            <section class="section" id="problemas">
+                <h2>Solución de Problemas</h2>
+                
+                <h3>Problemas de Acceso</h3>
+                <ul>
+                    <li>Asegúrese de ingresar correctamente su correo electrónico y contraseña.</li>
+                    <li>Verifique que su cuenta haya sido activada mediante el correo de confirmación.</li>
+                    <li>Utilice la opción "¿Olvidó su contraseña?" si no recuerda sus credenciales.</li>
+                </ul>
+                
+                <h3>Problemas con el Carrito</h3>
+                <ul>
+                    <li>Asegúrese de tener una conexión estable a internet.</li>
+                    <li>Intente actualizar la página si los productos no se agregan correctamente.</li>
+                    <li>Verifique que los productos estén disponibles en stock.</li>
+                </ul>
+                
+                <h3>Asistencia Adicional</h3>
+                <p>Para cualquier consulta o problema que no pueda resolver mediante este manual, contáctenos a través de:</p>
+                <ul>
+                    <li>Formulario de contacto en nuestra web</li>
+                    <li>Correo electrónico: soporte@tiendaonline.com</li>
+                    <li>Chat en vivo disponible en horario comercial</li>
+                </ul>
+                
+                <div class="alert alert-warning">
+                    <p>Si experimenta problemas técnicos persistentes, intente borrar la caché del navegador o utilizar un navegador diferente.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tienda Online. Todos los derechos reservados.</p>
+            <p>Última actualización: 18 de marzo de 2025</p>
+        </div>
+    </footer> 
+{% endblock %}

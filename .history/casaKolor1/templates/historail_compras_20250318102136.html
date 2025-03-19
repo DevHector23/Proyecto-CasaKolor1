@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+    .historial-container {
+        max-width: 1200px;
+        margin: 120px auto 40px;
+        padding: 20px;
+    }
+    
+    .historial-header {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+    }
+    
+    .pedido-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+    
+    .pedido-header {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .pedido-id {
+        font-weight: bold;
+        color: #007bff;
+    }
+    
+    .pedido-fecha {
+        color: #6c757d;
+        font-size: 0.9em;
+    }
+    
+    .pedido-estado {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8em;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    
+    .estado-procesando {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    
+    .estado-enviado {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .estado-entregado {
+        background-color: #d1e7dd;
+        color: #0f5132;
+    }
+    
+    .estado-cancelado {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+    
+    .pedido-content {
+        padding: 15px;
+    }
+    
+    .pedido-items {
+        margin-bottom: 15px;
+    }
+    
+    .pedido-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .pedido-item:last-child {
+        border-bottom: none;
+    }
+    
+    .item-info {
+        flex-grow: 1;
+    }
+    
+    .item-nombre {
+        font-weight: bold;
+    }
+    
+    .item-presentacion {
+        color: #6c757d;
+        font-size: 0.9em;
+    }
+    
+    .item-cantidad {
+        width: 80px;
+        text-align: center;
+    }
+    
+    .item-precio {
+        width: 100px;
+        text-align: right;
+    }
+    
+    .pedido-total {
+        text-align: right;
+        font-weight: bold;
+        font-size: 1.1em;
+        padding-top: 10px;
+        border-top: 2px solid #eee;
+    }
+    
+    .no-pedidos {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+    }
+    
+    .btn-volver {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    
+    .btn-volver:hover {
+        background-color: #0056b3;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .pedido-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .pedido-estado {
+            margin-top: 10px;
+        }
+        
+        .pedido-item {
+            flex-direction: column;
+        }
+        
+        .item-cantidad, .item-precio {
+            width: 100%;
+            text-align: left;
+            margin-top: 5px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="historial-container">
+    <div class="historial-header">Historial de Compras</div>
+    
+    {% if historial %}
+        {% for pedido in historial %}
+            <div class="pedido-card">
+                <div class="pedido-header">
+                    <div>
+                        <span class="pedido-id">Pedido #{{ pedido.id }}</span>
+                        <span class="pedido-fecha">{{ pedido.fecha|date:"d/m/Y H:i" }}</span>
+                    </div>
+                    <div class="pedido-estado estado-{{ pedido.estado|lower }}">
+                        {{ pedido.estado }}
+                    </div>
+                </div>
+                <div class="pedido-content">
+                    <div class="pedido-items">
+                        {% for detalle in pedido.detalles %}
+                            <div class="pedido-item">
+                                <div class="item-info">
+                                    <div class="item-nombre">{{ detalle.producto.nombre }}</div>
+                                    {% if detalle.producto.categoria == 'pinturas' %}
+                                        <div class="item-presentacion">{{ detalle.producto.get_presentacion_display }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="item-cantidad">{{ detalle.cantidad }} x</div>
+                                <div class="item-precio">${{ detalle.precio_unitario }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="pedido-total">
+                        Total: ${{ pedido.total }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-pedidos">
+            <p>No tienes pedidos realizados aún.</p>
+            <p>¡Explora nuestra tienda y realiza tu primera compra!</p>
+            <a href="{% url 'productos' %}" class="btn-volver">Ver productos</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

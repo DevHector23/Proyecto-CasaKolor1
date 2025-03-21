@@ -492,24 +492,24 @@ body {
 .footer-bottom {
     text-align: center;
     padding: 10px 0;
-    border-top: 1px solid #4299e1; 
+    border-top: 1px solid #4299e1;  /* Borde superior azul claro */
     font-size: 14px;
     margin-top: 20px;
-    color: #ffffff; 
+    color: #ffffff;  /* Texto blanco */
 }
 
 /* Responsividad para Footer */
 @media (max-width: 768px) {
     .footer .container {
-        flex-direction: column; 
-        align-items: center; 
-        text-align: center; 
-        padding: 0 10px;
+        flex-direction: column; /* Cambiar a una columna en dispositivos móviles */
+        align-items: center; /* Centrar las secciones */
+        text-align: center; /* Centrar el texto */
+        padding: 0 10px; /* Reducir el padding lateral */
     }
 
     .footer-section {
         /* margin: 5px 0; Reducir el margen entre secciones */
-        width: 100%; 
+        width: 100%; /* Ocupar todo el ancho disponible */
     }
 
     .footer-section h4 {
@@ -580,10 +580,6 @@ body {
     .footer-bottom {
         font-size: 10px; /* Reducir aún más el tamaño de la fuente en móviles pequeños */
     }
-
-        .wrapper {
-            height: 40px;
-        }
 
     .wrapper .icon {
         width: 35px; /* Reducir el tamaño de los íconos en móviles pequeños */

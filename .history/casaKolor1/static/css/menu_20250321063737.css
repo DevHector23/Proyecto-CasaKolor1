@@ -581,9 +581,10 @@ body {
         font-size: 10px; /* Reducir aún más el tamaño de la fuente en móviles pequeños */
     }
 
-        .wrapper {
-            height: 40px;
-        }
+    .wrapper {
+        background-color: red;
+        height: ;
+    }
 
     .wrapper .icon {
         width: 35px; /* Reducir el tamaño de los íconos en móviles pequeños */

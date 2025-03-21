@@ -432,19 +432,19 @@ body {
 .wrapper .instagram:hover,
 .wrapper .instagram:hover .tooltip,
 .wrapper .instagram:hover .tooltip::before {
-    background: #4299e1; 
+    background: #4299e1;  /* Azul claro en lugar de Instagram rosa */
     color: #fff;
 }
 
 /* Footer */
 .footer {
     position: absolute;
-    background-color: #1a365d;  
-    color: #ffffff;  
+    background-color: #1a365d;  /* Fondo azul oscuro para el footer */
+    color: #ffffff;  /* Texto blanco */
     padding: 20px 0;
     width: 100%;
-    border-top: 3px solid #4299e1; 
-    border-bottom: 3px solid #4299e1;  
+    border-top: 3px solid #4299e1;  /* Borde superior azul claro */
+    border-bottom: 3px solid #4299e1;  /* Borde inferior azul claro */
 }
 
 .footer .container {
@@ -465,7 +465,7 @@ body {
     font-size: 18px;
     margin-bottom: 10px;
     text-align: center;
-    color: #ffffff;  
+    color: #ffffff;  /* Títulos en blanco */
 }
 
 .footer-section h4 a {
@@ -473,7 +473,7 @@ body {
     font-size: 18px;
     margin-bottom: 10px;
     text-align: center;
-    color: #ffffff;  
+    color: #ffffff;  /* Enlaces de títulos en blanco */
 }
 
 .footer-section p {
@@ -482,34 +482,34 @@ body {
 
 .footer-link {
     text-decoration: none;
-    color: #ebf8ff; 
+    color: #ebf8ff;  /* Enlaces en azul muy claro */
 }
 
 .footer-link:hover {
-    color: #4299e1;  
+    color: #4299e1;  /* Al pasar el cursor, azul claro */
 }
 
 .footer-bottom {
     text-align: center;
     padding: 10px 0;
-    border-top: 1px solid #4299e1; 
+    border-top: 1px solid #4299e1;  /* Borde superior azul claro */
     font-size: 14px;
     margin-top: 20px;
-    color: #ffffff; 
+    color: #ffffff;  /* Texto blanco */
 }
 
 /* Responsividad para Footer */
 @media (max-width: 768px) {
     .footer .container {
-        flex-direction: column; 
-        align-items: center; 
-        text-align: center; 
-        padding: 0 10px;
+        flex-direction: column; /* Cambiar a una columna en dispositivos móviles */
+        align-items: center; /* Centrar las secciones */
+        text-align: center; /* Centrar el texto */
+        padding: 0 10px; /* Reducir el padding lateral */
     }
 
     .footer-section {
         /* margin: 5px 0; Reducir el margen entre secciones */
-        width: 100%; 
+        width: 100%; /* Ocupar todo el ancho disponible */
     }
 
     .footer-section h4 {
@@ -580,10 +580,6 @@ body {
     .footer-bottom {
         font-size: 10px; /* Reducir aún más el tamaño de la fuente en móviles pequeños */
     }
-
-        .wrapper {
-            height: 40px;
-        }
 
     .wrapper .icon {
         width: 35px; /* Reducir el tamaño de los íconos en móviles pequeños */

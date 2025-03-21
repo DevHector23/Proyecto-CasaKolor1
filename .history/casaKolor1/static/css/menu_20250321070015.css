@@ -583,7 +583,7 @@ body {
 
     .wrapper {
         height: 40px;
-    }
+        }
 
     .wrapper .icon {
         width: 35px; /* Reducir el tamaño de los íconos en móviles pequeños */

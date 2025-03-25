@@ -49,7 +49,8 @@ urlpatterns = [
     path('finalizar-compra/', views.finalizar_compra, name='finalizar_compra'),
     #recuperar contraseña
     path('restablecer/', views.restablecer, name='restablecer'),
-    path('cambiar-contrasena/<str:uidb64>/<str:token>/', views.cambiar_contrasena, name='cambiar_contrasena'),
+    path('cambiar-contraseñnn}asaa'
+    'a/<str:uidb64>/<str:token>/', views.cambiar_contraseña, name='cambiar_contraseña'),
     path('confirmacion/', views.confirmacion, name='confirmacion'),
     path('carrito/', views.carrito, name='carrito'),
     path('pasarela-pago/', views.pasarela_pago, name='pasarela_pago'),

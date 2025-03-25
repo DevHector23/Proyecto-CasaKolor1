@@ -475,14 +475,14 @@ def cambiar_contrasena(request, uidb64, token):
             
             if password != password2:
                 messages.error(request, "Las contraseñas no coinciden.")
-                return redirect('cambiar_contrasena', uidb64=uidb64, token=token)
+                return redirect('cambiar_contraseña', uidb64=uidb64, token=token)
             
             user.set_password(password)
             user.save()
             
             return redirect('confirmacion')
         
-        return render(request, 'cambiar_contrasena.html')
+        return render(request, 'cambiar_contraseña.html')
     else:
         return redirect('login')
 

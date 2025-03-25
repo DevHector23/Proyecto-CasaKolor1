@@ -482,7 +482,7 @@ def cambiar_contrasena(request, uidb64, token):
             
             return redirect('confirmacion')
         
-        return render(request, 'cambiar_contrasena.html')
+        return render(request, 'cambiar_contraseña.html')
     else:
         return redirect('login')
 

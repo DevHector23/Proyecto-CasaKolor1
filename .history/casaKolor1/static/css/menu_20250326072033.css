@@ -216,10 +216,9 @@ body {
     background-color: #ebf8ff;  /* Azul muy claro */
     border-radius: 5px;
     text-decoration: none;
-    color: #1a365d;  /* Azul oscuro */
+   
     transition: all 0.3s ease;
 }
-
 
 .profile-logout img {
     margin-right: 10px;

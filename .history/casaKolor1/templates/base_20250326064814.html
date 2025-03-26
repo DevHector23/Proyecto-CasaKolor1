@@ -69,14 +69,14 @@
             
             <div class="carrito-icon-container">
                 <a href="{% url 'carrito' %}" id="cart-icon">
-                    <img src="{% static 'images/carro.png'%}" alt="Carrito" style="width: 32px;">
+                    <img src="{% static 'images/carro.png'%}" alt="Carrito">
                     <span id="cart-count">0</span>
                 </a>
             </div>
             {% if user.is_authenticated %}
         <div class="user-profile-container">    
             <a href="#" class="login-button" id="profile-button">
-                <img src="{% static 'images/usuario.png' %}" alt="Perfil" style="width: 32px;">
+                <img src="{% static 'images/usuario.png' %}" alt="Perfil">
             </a>
         <!-- Dropdown de perfil -->
         <div class="profile-dropdown">

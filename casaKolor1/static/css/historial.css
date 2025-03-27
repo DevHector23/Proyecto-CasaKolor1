@@ -1,0 +1,167 @@
+/* Historial de Compras CSS - Basado en el diseño del menú y footer */
+:root {
+    --color-dark-blue: #1a365d;    /* Azul oscuro principal */
+    --color-light-blue: #4299e1;   /* Azul claro para acentos */
+    --color-very-light-blue: #ebf8ff; /* Azul muy claro para fondos suaves */
+    --color-white: #ffffff;         /* Blanco para fondos claros */
+}
+
+/* Estilos base */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Encabezado */
+h2 {
+    color: var(--color-dark-blue);
+    border-bottom: 2px solid var(--color-light-blue);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Tarjetas de pedidos */
+.card {
+    border: 1px solid var(--color-very-light-blue);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(26, 54, 93, 0.1);
+}
+
+.card-header {
+    background-color: var(--color-very-light-blue);
+    color: var(--color-dark-blue);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+/* Tabla de productos */
+.table {
+    width: 100%;
+    margin-bottom: 15px;
+    border-collapse: collapse;
+}
+
+.table thead {
+    background-color: var(--color-very-light-blue);
+    color: var(--color-dark-blue);
+}
+
+.table th, .table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--color-very-light-blue);
+    text-align: left;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f8fbff;
+}
+
+.table tr:hover {
+    background-color: rgba(66, 153, 225, 0.05);
+}
+
+/* Total del pedido */
+.text-end {
+    text-align: right;
+    font-size: 1.1em;
+    color: var(--color-dark-blue);
+    margin-top: 15px;
+}
+
+/* Mensaje sin compras */
+.container p {
+    color: var(--color-dark-blue);
+    text-align: center;
+    padding: 20px;
+    background-color: var(--color-very-light-blue);
+    border-radius: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        text-align: center;
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
+
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .table {
+        font-size: 0.9em;
+    }
+
+    .table th, .table td {
+        padding: 8px;
+    }
+
+    .text-end {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 5px;
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    .table {
+        font-size: 0.8em;
+    }
+
+    .table th, .table td {
+        padding: 6px;
+    }
+
+    .card-header {
+        padding: 8px 10px;
+    }
+
+    .text-end {
+        font-size: 0.9em;
+    }
+}
+
+/* Animaciones sutiles */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}

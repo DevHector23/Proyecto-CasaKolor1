@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/historial.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <h2>Historial de Compras</h2>
+    
+    {% if pedidos %}
+        {% for pedido in pedidos %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <strong>Pedido #{{ pedido.id }}</strong> 
+                <span class="float-end">{{ pedido.fecha_creacion|date:"d/m/Y H:i" }}</span>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detalle in pedido.detalles.all %}
+                        <tr>
+                            <td>{{ detalle.producto.nombre }}</td>
+                            <td>{{ detalle.cantidad }}</td>
+                            <td>${{ detalle.precio_unitario|floatformat:2 }}</td>
+                            <td>${{ detalle.subtotal|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="text-end">
+                    <strong>Total: ${{ pedido.total|floatformat:2 }}</strong>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No tienes compras anteriores.</p>
+    {% endif %}
+</div>
+{% endblock %}

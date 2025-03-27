@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/pinturas.css' %}">
+{% endblock %}
+
+{% block content %}
+<body>
+    
+<h2 class="text-center mb-4" style="height: 90px; width: 100%; color: #1a365d; padding: 20px; font-size: 50px;">Nuestros Productos
+    .search-box {
+        display: none;
+        width: 100%;
+        max-width: 300px;
+        margin-left: 10px;
+        border: 1px solid #4299e1;
+        border-radius: 20px;
+        padding: 8px 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .search-box.active {
+        display: block;
+        animation: slideIn 0.3s ease;
+    }
+    
+    #toggle-search {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #toggle-search img {
+        width: 30px;
+        mix-blend-mode: multiply;
+        transition: transform 0.2s ease;
+    }
+    
+    #toggle-search:hover img {
+        transform: scale(1.1);
+    }
+    
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .search-container {
+            justify-content: center;
+        }
+    
+        .search-box {
+            max-width: 250px;
+        }
+    }
+</h2>
+
+<div class="container mt-5">
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+            <div class="card"> 
+                <h5 class="card-title text-center mt-3">{{ producto.nombre }}</h5>
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% endif %}
+                <div class="card-body text-center">
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
+                    <!-- Mostrar presentación solo si el producto es pintura -->
+                    {% if producto.categoria == 'pinturas' %}
+                        <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
+                    {% endif %}
+                    <button class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if ("{{ request.session.login_success }}") {
+            alert("¡Has iniciado sesión correctamente!");  // Mostrar mensaje
+            fetch("{% url 'clear_login_success' %}", { 
+                method: "POST", 
+                headers: { "X-CSRFToken": "{{ csrf_token }}" } 
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -33,8 +33,7 @@ body {
     z-index: 1000; /* Asegura que el menú esté por encima del contenido */
 }
 .dos{
-    display: flex;
-    margin-left: -130px;
+    s
 }
 .navbar-nav {
     display: flex;

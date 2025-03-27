@@ -17,7 +17,6 @@ body {
     font-family: 'Arial', sans-serif;
     height: 100vh;
     margin: 0;
-    padding: 0;
     padding-top: 100px; /* Ajusta este valor según la altura del menú */
 }
 
@@ -32,10 +31,7 @@ body {
     width: 100%;
     z-index: 1000; /* Asegura que el menú esté por encima del contenido */
 }
-.dos{
-    display: flex;
-    margin-left: -130px;
-}
+
 .navbar-nav {
     display: flex;
     justify-content: center;
@@ -47,12 +43,12 @@ body {
     color: #1a365d;  /* Texto en azul oscuro */
     font-size: 34px;
     transition: 0.3s color;
-    padding-left: 5px; /* Añadido para espaciado en móviles */
+    padding-left: 15px; /* Añadido para espaciado en móviles */
 }
 
 .navbar-brand img {
-    margin-left: -50px;
-    max-height: 90px; /* Asegura que la imagen del logo no sea demasiado grande */
+    margin-left: -10px;
+    max-height: 80px; /* Asegura que la imagen del logo no sea demasiado grande */
     width: auto; /* Mantiene la proporción */
 }
 

@@ -32,14 +32,11 @@ body {
     width: 100%;
     z-index: 1000; /* Asegura que el menú esté por encima del contenido */
 }
-.dos{
-    display: flex;
-    margin-left: -130px;
-}
+
 .navbar-nav {
     display: flex;
     justify-content: center;
-    width: 65%;
+    
 }
 
 .navbar-brand {

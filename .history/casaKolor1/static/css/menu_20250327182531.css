@@ -34,7 +34,6 @@ body {
 }
 .dos{
     display: flex;
-    margin-left: -130px;
 }
 .navbar-nav {
     display: flex;

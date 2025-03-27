@@ -83,7 +83,7 @@ h2 {
 }
 
 /* Mensaje sin compras */
-.container .pe p {
+.container .pe .p {
     color: var(--color-dark-blue);
     text-align: center;
     padding: 20px;

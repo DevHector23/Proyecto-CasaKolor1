@@ -296,7 +296,6 @@ tr:nth-child(even) {
 
     h1 {
         font-size: 24px;
-        margin-top: 80px;
     }
 
     h2 {
@@ -365,6 +364,11 @@ tr:nth-child(even) {
 }
 
 /* Ensure responsive embeds */
+iframe {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+}
 
 /* Prevent text overflow */
 * {

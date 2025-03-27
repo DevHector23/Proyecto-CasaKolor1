@@ -1,0 +1,202 @@
+:root {
+    --color-azul-principal: #1a365d;
+    --color-azul-claro: #4299e1;
+    --color-gris-azulado: #2c5282;
+    --color-gris-claro: #f2f4f6;
+    --color-blanco: #ffffff;
+    --color-gris-oscuro: #343a40;
+
+    --primary-color: var(--color-azul-principal);
+    --secondary-color: var(--color-gris-claro);
+    --text-color: var(--color-gris-oscuro);
+    --link-color: var(--color-azul-claro);
+    --border-color: #e5e7eb;
+    --accent-color: var(--color-azul-claro);
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --max-width: 100%;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Global Mobile-First Adjustments */
+body {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+/* Responsive Typography */
+h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 18px;
+    margin: 15px 0 10px;
+}
+
+/* Table of Contents Responsive */
+.toc-container {
+    height: auto;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.toc-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.toc-item {
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+/* Section Responsive */
+.section {
+    padding: 15px;
+    margin-bottom: 15px;
+    scroll-margin-top: 60px;
+    margin-top: -40px;
+}
+
+/* Responsive Embeds and Images */
+.image-container {
+    margin: 15px 0;
+    width: 100%;
+}
+
+.image-container iframe,
+.image-container img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
+
+/* Table Responsive */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 300px;
+}
+
+/* Responsive List Adjustments */
+ul, ol {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* Scroll Top Button Responsive */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: var(--color-blanco);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+
+.scroll-top:hover {
+    opacity: 1;
+    transform: translateY(-5px);
+}
+
+@media print {
+    .scroll-top {
+        display: none;
+    }
+}
+
+
+/* Responsive Alerts and Tips */
+.tip, .warning, .alert {
+    padding: 10px 15px;
+    margin: 15px 0;
+}
+
+/* Viewport Meta Tag (Add this in your HTML head) */
+/* <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> */
+
+/* Additional Mobile-Specific Adjustments */
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+
+    .toc-container {
+        padding: 10px;
+    }
+
+    .image-container {
+        margin: 10px 0;
+    }
+
+    .section {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .scroll-top {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+}
+
+/* Prevent text overflow */
+* {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Ensure full width for embedded content */
+iframe {
+    max-width: 100%;
+}

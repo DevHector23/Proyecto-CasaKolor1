@@ -263,111 +263,42 @@ tr:nth-child(even) {
     transform: translateY(-5px);
 }
 
-/* Mobile Responsive Styles */
-@media screen and (max-width: 768px) {
-    body {
-        margin: 0;
-        padding: 0;
-        font-size: 16px;
-    }
-
-    .container {
-        width: 100%;
-        padding: 0 10px;
-        box-sizing: border-box;
-    }
-
-    .toc-container {
-        height: auto;
-        padding: 15px;
-    }
-
+@media (max-width: 768px) {
     .toc-grid {
         grid-template-columns: 1fr;
-        gap: 10px;
-    }
-
-    .section {
-        padding: 15px;
-        margin-bottom: 15px;
-        scroll-margin-top: 60px;
-        margin-top: -40px;
     }
 
     h1 {
-        font-size: 24px;
-        margin-top: 80px;
+        font-size: 28px;
     }
 
     h2 {
-        font-size: 20px;
-    }
-
-    h3 {
-        font-size: 18px;
-    }
-
-    .image-container iframe,
-    .image-container img {
-        width: 100%;
-        height: auto;
-    }
-
-    .table-container {
-        overflow-x: auto;
-    }
-
-    table {
-        width: 100%;
-        min-width: 300px;
-    }
-
-    .scroll-top {
-        width: 40px;
-        height: 40px;
-        bottom: 20px;
-        right: 20px;
-        font-size: 20px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    body {
-        font-size: 14px;
-    }
-
-    h1 {
         font-size: 22px;
     }
 
-    h2 {
-        font-size: 18px;
-    }
-
     h3 {
-        font-size: 16px;
-    }
-
-    .toc-container {
-        padding: 10px;
+        font-size: 18px;
     }
 
     .section {
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-
-    .scroll-top {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
+        padding: 20px;
     }
 }
 
-/* Ensure responsive embeds */
+@media (min-width: 992px) {
+    .section {
+        padding: 40px;
+    }
+}
 
-/* Prevent text overflow */
-* {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+@media print {
+    .scroll-top {
+        display: none;
+    }
+
+    .section {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid var(--border-color);
+    }
 }

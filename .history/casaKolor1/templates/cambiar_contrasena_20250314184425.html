@@ -1,7 +1,7 @@
 {% load static %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'css/contrasena.css' %}">
+<link rel="stylesheet" href="{% static 'css/contraseña.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -9,11 +9,12 @@
     <div class="auth-form-section">
         <form method="post" class="logi">
             {% csrf_token %}
-            <h1 class="auth-title">Recuperar Contraseña</h1>
-            <span class="auth-divider-text">Ingresa tu correo electrónico registrado</span>
+            <h1 class="auth-title">Cambiar Contraseña</h1>
+            <span class="auth-divider-text">Ingresa tu nueva contraseña</span>
             
             <div class="auth-input-group">
-                <input type="email" name="email" placeholder="Correo electrónico" required>
+                <input type="password" name="password" placeholder="Nueva contraseña" required>
+                <input type="password" name="password2" placeholder="Confirmar contraseña" required>
             </div>
             
             {% if messages %}
@@ -26,8 +27,7 @@
                 </div>
             {% endif %}
             
-            <button type="submit" class="auth-submit-btn">Enviar enlace</button>
-            <a href="{% url 'login' %}" class="auth-forgot-link">Volver al inicio de sesión</a>
+            <button type="submit" class="auth-submit-btn">Cambiar contraseña</button>
         </form>
     </div>
 </div>

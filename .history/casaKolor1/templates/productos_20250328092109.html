@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/pinturas.css' %}">
+<style>
+    .search-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    #productSearch {
+        width: 50%;
+        padding: 10px;
+        border: 1px solid var(--color-azul-claro);
+        border-radius: 5px;
+        font-size: 16px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<body>
+    
+<h2 class="text-center mb-4" style="height: 90px; width: 100%; color: #1a365d; padding: 20px; font-size: 50px;">Nuestros Productos</h2>
+
+<div class="search-container">
+    <input type="text" id="productSearch" placeholder="Buscar productos...">
+</div>
+
+<div class="container mt-5">
+    <div class="row" id="productGrid">
+        {% for producto in productos %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" 
+             data-name="{{ producto.nombre|lower }}" 
+             data-description="{{ producto.descripcion|lower }}">
+            <div class="card"> 
+                <h5 class="card-title text-center mt-3">{{ producto.nombre }}</h5>
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% endif %}
+                <div class="card-body text-center">
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
+                    <!-- Mostrar presentación solo si el producto es pintura -->
+                    {% if producto.categoria == 'pinturas' %}
+                        <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
+                    {% endif %}
+                    <button class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+
+<script>
+    
+</script>
+{% endblock %}

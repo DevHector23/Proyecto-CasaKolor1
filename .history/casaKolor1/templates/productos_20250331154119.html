@@ -6,7 +6,9 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="text-center mb-4">Pinturas</h2>
+<body>
+    
+<h2 class="text-center mb-4";">Nuestros Productos</h2>
 
 <!-- Barra de búsqueda -->
 <div class="container mb-4">
@@ -34,7 +36,7 @@
     <div class="row" id="product-container">
         {% for producto in productos %}
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-card">
-            <div class="card">
+            <div class="card"> 
                 <h5 class="card-title text-center mt-3">{{ producto.nombre }}</h5>
                 {% if producto.imagen %}
                     <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
@@ -42,8 +44,11 @@
                 <div class="card-body text-center">
                     <p class="card-text">{{ producto.descripcion }}</p>
                     <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
-                    <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
-                    <button href="{% url 'carrito' %}" class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
+                    <!-- Mostrar presentación solo si el producto es pintura -->
+                    {% if producto.categoria == 'pinturas' %}
+                        <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
+                    {% endif %}
+                    <button class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
                 </div>
             </div>
         </div>
@@ -55,48 +60,41 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
-    const productContainer = document.getElementById('product-container');
     const productCards = document.querySelectorAll('.product-card');
-    const noResults = document.getElementById('no-results'); // Elemento para el mensaje
-    const searchTermSpan = document.getElementById('search-term'); // Elemento para mostrar el término
+    const noResults = document.getElementById('no-results');
+    const searchTermSpan = document.getElementById('search-term');
     
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
-        let hasResults = false;
+        let visibleCount = 0;
         
-        // Actualiza el término mostrado en el mensaje
-        if (searchTermSpan) {
-            searchTermSpan.textContent = searchTerm;
-        }
+        searchTermSpan.textContent = searchTerm; // Actualiza el término mostrado
         
         productCards.forEach(card => {
             const title = card.querySelector('.card-title').textContent.toLowerCase();
             const description = card.querySelector('.card-text').textContent.toLowerCase();
-            const presentation = card.querySelectorAll('.card-text')[2].textContent.toLowerCase();
             
-            if (title.includes(searchTerm) || description.includes(searchTerm) || presentation.includes(searchTerm)) {
+            if (title.includes(searchTerm) || description.includes(searchTerm)) {
                 card.style.display = 'block';
-                hasResults = true;
+                visibleCount++;
             } else {
                 card.style.display = 'none';
             }
         });
         
-        // Muestra u oculta el mensaje de no resultados
-        if (noResults) {
-            if (!hasResults && searchTerm.length > 0) {
-                noResults.style.display = 'block';
-            } else {
-                noResults.style.display = 'none';
-            }
+        // Mostrar u ocultar mensaje
+        if (visibleCount === 0 && searchTerm.length > 0) {
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
         }
     });
     
-    // Opcional: botón de búsqueda
+    // Botón de búsqueda
     document.getElementById('search-button').addEventListener('click', function() {
         searchInput.dispatchEvent(new Event('input'));
     });
 });
 </script>
-
+</body>
 {% endblock %}

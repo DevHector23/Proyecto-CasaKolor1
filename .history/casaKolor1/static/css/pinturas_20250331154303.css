@@ -137,7 +137,7 @@ h2 {
       width: 160px;
   }
   h2{
-    font-size: 30px;
+    font-size: px;
   }
 }
 
@@ -177,7 +177,7 @@ h2 {
       padding: 5px 10px;
   }
   h2{
-    font-size: 30px;
+    font-size: 15px;
   }
 }
 /* Estilos para la barra de búsqueda */

@@ -109,21 +109,14 @@ body{
 .btn-primary:active {
   transform: translateY(0);
 }
-h2 {
-  height: 90px;
-  width: 100%;
-  color: #1a365d;
-  padding: 20px; 
-  font-size: 50px;
-}
 
 /* Responsivo para pantallas pequeñas */
 @media (max-width: 768px) {
   .card {
       height: 450px;        /* Ligeramente más pequeña en pantallas medianas */
   }
-  h2{
-    font-size: 45px;
+  .text-center h2{
+    font-size: ;
   }
 }
 
@@ -135,9 +128,6 @@ h2 {
   .card-img-top {
       height: 160px;
       width: 160px;
-  }
-  h2{
-    font-size: 30px;
   }
 }
 
@@ -175,9 +165,6 @@ h2 {
   .btn-primary {
       font-size: 0.75rem;
       padding: 5px 10px;
-  }
-  h2{
-    font-size: 30px;
   }
 }
 /* Estilos para la barra de búsqueda */

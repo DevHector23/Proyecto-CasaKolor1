@@ -10,27 +10,23 @@
   --color-blanco: #ffffff;            /* Blanco para fondos principales */
   --color-gris-oscuro: #343a40;       /* Gris oscuro para textos */
 }
-
-body {
+body{
   background-color: var(--color-gris-claro);
 }
-
 .container {
   margin: auto;
   padding: 10px;
 }
 
 .container img {
-  width: auto;
-  height: auto;
-  max-width: 100%;
+  width: 200px;
+  height: 200px;
 }
 
 .card {
   height: 465px;          /* Altura fija para todas las tarjetas */
   display: flex;
   flex-direction: column;
-  align-items: center;    /* Centrar contenido horizontalmente */
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -38,17 +34,13 @@ body {
   transition: transform 0.3s ease;
   background-color: var(--color-blanco); /* Fondo blanco */
   overflow: hidden;       /* Evita desbordamiento de contenido */
-  text-align: center;
 }
 
 .card-img-top {
-  width: auto;             /* Permitir que el ancho se ajuste naturalmente */
-  max-width: 90%;          /* Limitar el ancho máximo al 90% del contenedor */
-  height: auto;            /* Mantener proporción de aspecto */
-  max-height: 200px;       /* Altura máxima para desktop */
-  object-fit: contain;     /* Asegurar que la imagen completa sea visible */
-  display: block;
-  margin: 10px auto;       /* Centrar la imagen y añadir margen arriba y abajo */
+  height: 200px;          /* Altura fija para todas las imágenes */
+  width: 200px;           /* Ancho fijo para todas las imágenes */
+  object-fit: cover;      /* Mantiene la proporción de la imagen */
+  margin: 0 auto;         /* Centra la imagen */
   border-radius: 8px;
 }
 
@@ -57,7 +49,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;            /* Asegurar que ocupe todo el ancho disponible */
 }
 
 .card-text {
@@ -65,15 +56,10 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 10px;
-  line-height: 1.4;       /* Mejor espaciado entre líneas */
-  height: auto;           /* Altura automática */
-
 }
-
-.card-text1 {
+.card-text1{
   text-align: justify;
 }
-
 /* Asegura que el botón esté siempre en la parte inferior */
 .card-body .btn {
   margin-top: auto;
@@ -88,11 +74,12 @@ body {
   font-size: 1.1rem;
   color: var(--color-azul-principal); /* Texto azul oscuro */
   margin-bottom: 10px;
-  height: auto;           /* Altura automática */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  width: 100%;            /* Asegurar que ocupe todo el ancho disponible */
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: var(--color-gris-oscuro); /* Texto gris oscuro */
+  margin: 5px 0;
 }
 
 .btn-primary {
@@ -100,10 +87,10 @@ body {
   background: linear-gradient(135deg, var(--color-azul-principal), var(--color-azul-claro)); /* Degradado azul */
   border: none;
   font-weight: 600;
-  padding: 12px 15px;     /* Padding ajustado */
-  margin-top: 15px;
+  padding: 15px 30px;
+  margin-top: 25px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;  /* Reducido para mejor visualización en móviles */
+  letter-spacing: 1px;
   transition: all 0.3s ease;
   border-radius: 12px;
   width: 100%;
@@ -111,7 +98,6 @@ body {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  white-space: normal;    /* Permite que el texto se salte a la siguiente línea */
 }
 
 .btn-primary:hover {
@@ -123,7 +109,6 @@ body {
 .btn-primary:active {
   transform: translateY(0);
 }
-
 h2 {
   height: 90px;
   width: 100%;
@@ -132,147 +117,69 @@ h2 {
   font-size: 50px;
 }
 
-/* Responsivo para pantallas medianas (tablets) - 2 columnas */
-@media (max-width: 991px) {
-  .col-md-4 {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-  
+/* Responsivo para pantallas pequeñas */
+@media (max-width: 768px) {
   .card {
-    height: 420px;
+      height: 450px;        /* Ligeramente más pequeña en pantallas medianas */
   }
-  
-  .card-img-top {
-    max-width: 85%;
-    max-height: 150px;
-  }
-  
-  .card-body {
-    padding: 10px 5px;
-  }
-  
-  .btn-primary {
-    padding: 10px 12px;
-    font-size: 0.85rem;
-  }
-  
-  h2 {
-    font-size: 40px;
-    height: 80px;
+  h2{
+    font-size: 45px;
   }
 }
 
-/* Responsivo para pantallas pequeñas (móviles grandes) - 2 columnas */
-@media (max-width: 767px) {
-  .col-sm-6 {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-  
+@media (max-width: 576px) {
   .card {
-    height: 400px;
-    padding: 8px;
+      height: 420px;        /* Aún más pequeña en pantallas pequeñas */
   }
-  
+
   .card-img-top {
-    max-width: 80%;
-    max-height: 130px;
+      height: 160px;
+      width: 160px;
   }
-  
+  h2{
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 700px) {
+  .container {
+      max-width: 100%;
+      padding: 5px;
+  }
+
+  .card-img-top {
+      height: 150px;
+      width: 85%;
+  }
+
   .card-title {
-    font-size: 1rem;
-    margin-bottom: 5px;
+      font-size: 1rem;
   }
-  
-  .card-text {
-    font-size: 0.85rem;
-  }
-  
+
   .btn-primary {
-    padding: 8px 10px;
-    font-size: 0.8rem;
-    margin-top: 10px;
-  }
-  
-  h2 {
-    font-size: 35px;
-    height: 70px;
-    padding: 15px;
+      font-size: 0.8rem;
+      padding: 6px 12px;
   }
 }
 
-/* Responsivo para móviles pequeños - 2 columnas */
-@media (max-width: 575px) {
-  .col-12 {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-  
-  .card {
-    height: 350px;
-    padding: 5px;
-  }
-  
-  .card-img-top {
-    max-width: 75%;
-    max-height: 110px;
-  }
-  
-  .card-title {
-    font-size: 0.9rem;
-    margin: 5px 0;
-  }
-  
-  .card-text {
-    font-size: 0.8rem;
-    margin: 3px 0;
-  }
-  
-  .btn-primary {
-    padding: 6px 8px;
-    font-size: 0.75rem;
-    letter-spacing: 0;
-    margin-top: 5px;
-  }
-  
-  h2 {
-    font-size: 28px;
-    height: 60px;
-    padding: 10px;
-  }
-}
-
-/* Dispositivos muy pequeños */
 @media (max-width: 400px) {
-  .card {
-    height: 320px;
-  }
-  
   .card-img-top {
-    max-width: 70%;
-    max-height: 100px;
+      height: 120px;
+      width: 80%;
   }
-  
+
   .card-title {
-    font-size: 0.85rem;
+      font-size: 0.9rem;
   }
-  
-  .card-text {
-    font-size: 0.75rem;
-  }
-  
+
   .btn-primary {
-    padding: 5px;
-    font-size: 0.7rem;
+      font-size: 0.75rem;
+      padding: 5px 10px;
   }
-  
-  h2 {
-    font-size: 24px;
-    height: 50px;
+  h2{
+    font-size: 30px;
   }
 }
-
 /* Estilos para la barra de búsqueda */
 .search-bar {
   position: relative;
@@ -313,31 +220,30 @@ h2 {
 /* Responsivo para la barra de búsqueda */
 @media (max-width: 768px) {
   .search-bar {
-    max-width: 100%;
+      max-width: 100%;
   }
   
   .search-bar input {
-    padding: 10px 15px;
+      padding: 10px 15px;
   }
 }
 
 @media (max-width: 576px) {
   .search-bar {
-    flex-direction: column;
+      flex-direction: column;
   }
   
   .search-bar input {
-    border-radius: 30px;
-    margin-bottom: 10px;
+      border-radius: 30px;
+      margin-bottom: 10px;
   }
   
   .btn-search {
-    border-radius: 30px;
-    padding: 10px;
-    width: 100%;
+      border-radius: 30px;
+      padding: 10px;
+      width: 100%;
   }
 }
-
 /* Estilos para el mensaje de no resultados */
 #no-results {
   animation: fadeIn 0.3s ease-out;

@@ -21,16 +21,14 @@ body {
 }
 
 .container img {
-  width: auto;
-  height: auto;
-  max-width: 100%;
+  width: 200px;
+  height: 200px;
 }
 
 .card {
   height: 465px;          /* Altura fija para todas las tarjetas */
   display: flex;
   flex-direction: column;
-  align-items: center;    /* Centrar contenido horizontalmente */
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -38,17 +36,13 @@ body {
   transition: transform 0.3s ease;
   background-color: var(--color-blanco); /* Fondo blanco */
   overflow: hidden;       /* Evita desbordamiento de contenido */
-  text-align: center;
 }
 
 .card-img-top {
-  width: auto;             /* Permitir que el ancho se ajuste naturalmente */
-  max-width: 90%;          /* Limitar el ancho máximo al 90% del contenedor */
-  height: auto;            /* Mantener proporción de aspecto */
-  max-height: 200px;       /* Altura máxima para desktop */
-  object-fit: contain;     /* Asegurar que la imagen completa sea visible */
-  display: block;
-  margin: 10px auto;       /* Centrar la imagen y añadir margen arriba y abajo */
+  height: 200px;          /* Altura fija para todas las imágenes */
+  width: 200px;           /* Ancho fijo para todas las imágenes */
+  object-fit: cover;      /* Mantiene la proporción de la imagen */
+  margin: 0 auto;         /* Centra la imagen */
   border-radius: 8px;
 }
 
@@ -57,7 +51,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;            /* Asegurar que ocupe todo el ancho disponible */
 }
 
 .card-text {
@@ -67,7 +60,7 @@ body {
   margin-bottom: 10px;
   line-height: 1.4;       /* Mejor espaciado entre líneas */
   height: auto;           /* Altura automática */
-
+  -webkit-line-clamp: 3;  /* Limita a 3 líneas */
 }
 
 .card-text1 {
@@ -91,8 +84,8 @@ body {
   height: auto;           /* Altura automática */
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;  /* Limita a 2 líneas */
   overflow: hidden;
-  width: 100%;            /* Asegurar que ocupe todo el ancho disponible */
 }
 
 .btn-primary {
@@ -144,8 +137,8 @@ h2 {
   }
   
   .card-img-top {
-    max-width: 85%;
-    max-height: 150px;
+    height: 180px;
+    width: 180px;
   }
   
   .card-body {
@@ -176,8 +169,8 @@ h2 {
   }
   
   .card-img-top {
-    max-width: 80%;
-    max-height: 130px;
+    height: 150px;
+    width: 150px;
   }
   
   .card-title {
@@ -187,6 +180,7 @@ h2 {
   
   .card-text {
     font-size: 0.85rem;
+    -webkit-line-clamp: 2;
   }
   
   .btn-primary {
@@ -215,8 +209,8 @@ h2 {
   }
   
   .card-img-top {
-    max-width: 75%;
-    max-height: 110px;
+    height: 120px;
+    width: 120px;
   }
   
   .card-title {
@@ -227,6 +221,7 @@ h2 {
   .card-text {
     font-size: 0.8rem;
     margin: 3px 0;
+    -webkit-line-clamp: 2;
   }
   
   .btn-primary {
@@ -250,8 +245,8 @@ h2 {
   }
   
   .card-img-top {
-    max-width: 70%;
-    max-height: 100px;
+    height: 100px;
+    width: 100px;
   }
   
   .card-title {

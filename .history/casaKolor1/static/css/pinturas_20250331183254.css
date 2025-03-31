@@ -67,7 +67,7 @@ body {
   margin-bottom: 10px;
   line-height: 1.4;       /* Mejor espaciado entre líneas */
   height: auto;           /* Altura automática */
-
+  -webkit-line-clamp: 3;  /* Limita a 3 líneas */
 }
 
 .card-text1 {
@@ -91,6 +91,7 @@ body {
   height: auto;           /* Altura automática */
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;  /* Limita a 2 líneas */
   overflow: hidden;
   width: 100%;            /* Asegurar que ocupe todo el ancho disponible */
 }

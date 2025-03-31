@@ -8,9 +8,9 @@
 {% block content %}
 <body>
     
-<h2 class="text-center mb-4">Herramientas</h2>
+<h2 class="text-center mb-4" style="height: 90px; width: 100%; color: #1a365d; padding: 20px; font-size: 50px;">Herramientas</h2>
 
-<!-- Barra de b���squeda -->
+<!-- Barra de búsqueda -->
 <div class="container mb-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -26,7 +26,7 @@
                     <i class="fas fa-exclamation-circle me-2"></i>
                     No se encontraron productos que coincidan con "<span id="search-term"></span>"
                 </div>
-                <p class="text-muted small">Intenta con otros terminos revisa nuestro catalogo commpleto</p>
+                <p class="text-muted small">Intenta con otros términos o revisa nuestro catálogo completo</p>
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
                     <div class="card-body text-center"> 
                         <p class="card-text">{{ producto.descripcion }}</p>
                         <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
-                        <button href="{% url 'carrito' %}" class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito/button>
+                        <button href="{% url 'carrito' %}" class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
                     </div>
                 </div>
             </div>
@@ -52,20 +52,20 @@
     </div>
 </div>
 
-<!-- Script para la b���squeda -->
+<!-- Script para la búsqueda -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const productContainer = document.getElementById('product-container');
     const productCards = document.querySelectorAll('.product-card');
-    const noResults = document.getElementById('no-results'); // Aseg���rate de tener este elemento en tu HTML
-    const searchTermSpan = document.getElementById('search-term'); // Elemento para mostrar el t���rmino buscado
+    const noResults = document.getElementById('no-results'); // Asegúrate de tener este elemento en tu HTML
+    const searchTermSpan = document.getElementById('search-term'); // Elemento para mostrar el término buscado
     
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
         let hasResults = false;
         
-        // Actualiza el t���rmino mostrado en el mensaje
+        // Actualiza el término mostrado en el mensaje
         if (searchTermSpan) {
             searchTermSpan.textContent = searchTerm;
         }
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Opcional: bot���n de b���squeda
+    // Opcional: botón de búsqueda
     document.getElementById('search-button').addEventListener('click', function() {
         searchInput.dispatchEvent(new Event('input'));
     });

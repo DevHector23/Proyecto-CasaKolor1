@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/pinturas.css' %}">
+{% endblock %}
+
+{% block content %}
+<body>
+    
+<h2 class="text-center mb-4" style="height: 90px; width: 100%; color: #1a365d; padding: 20px; font-size: 50px;">Herramientas</h2>
+<!-- Barra de búsqueda -->
+<div class="search-container">
+    <form class="search-form" method="GET" action="{% url 'herramientas' %}">
+        <input type="text" class="search-input" name="q" placeholder="Buscar herramientas..." value="{{ request.GET.q }}">
+        <button type="submit" class="search-button">
+            <i class="fas fa-search search-icon"></i>
+        </button>
+    </form>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        {% for producto in productos %}
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <h5 class="card-title text-center mt-3">{{ producto.nombre }}</h5>
+                    {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                    {% endif %}
+                    <div class="card-body text-center"> 
+                        <p class="card-text">{{ producto.descripcion }}</p>
+                        <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
+                        <button href="{% url 'carrito' %}" class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+<script>
+    // Búsqueda en tiempo real
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.querySelector('.search-input');
+        const productosContainer = document.getElementById('productos-container');
+        
+        if (searchInput && productosContainer) {
+            searchInput.addEventListener('keyup', function() {
+                const searchTerm = this.value.toLowerCase();
+                const cards = productosContainer.querySelectorAll('.card');
+                
+                cards.forEach(function(card) {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const description = card.querySelector('.card-text').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.parentElement.style.display = '';
+                    } else {
+                        card.parentElement.style.display = 'none';
+                    }
+                });
+            });
+        }
+    });
+    </script>
+{% endblock %}

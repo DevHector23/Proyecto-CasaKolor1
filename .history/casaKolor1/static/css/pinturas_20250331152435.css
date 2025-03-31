@@ -228,31 +228,3 @@ body{
       width: 100%;
   }
 }
-/* Estilos para el mensaje de no resultados */
-#no-results {
-  animation: fadeIn 0.3s ease-out;
-}
-
-#no-results .alert {
-  border-radius: 8px;
-  background-color: #fff3cd;
-  color: #856404;
-  border: 1px solid #ffeeba;
-  padding: 10px 15px;
-  display: inline-flex;
-  align-items: center;
-}
-
-#no-results .text-muted {
-  margin-top: 8px;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Para el icono de búsqueda */
-.fa-search {
-  font-size: 16px;
-}

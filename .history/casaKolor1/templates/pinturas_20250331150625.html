@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/pinturas.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4" style=" height: 90px; width: 100%; color: #1a365d; padding: 20px; font-size: 50px;">Pinturas</h2>
+<!-- Barra de búsqueda -->
+<div class="search-container">
+    <form class="search-form" method="GET" action="{% url 'pinturas' %}">
+        <input type="text" class="search-input" name="q" placeholder="Buscar pinturas..." value="{{ request.GET.q }}">
+        <button type="submit" class="search-button">
+            <i class="fas fa-search search-icon"></i>
+        </button>
+    </form>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+            <div class="card">
+                <h5 class="card-title text-center mt-3">{{ producto.nombre }}</h5>
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% endif %}
+                <div class="card-body text-center">
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
+                    <!-- Mostrar la presentación en pinturas -->
+                    <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
+                    <button href="{% url 'carrito' %}" class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

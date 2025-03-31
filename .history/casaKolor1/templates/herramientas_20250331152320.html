@@ -15,18 +15,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="search-bar">
-                <input type="text" id="search-input" class="form-control" placeholder="Buscar productos...">
+                <input type="text" id="search-input" class="form-control" placeholder="Buscar herramientas...">
                 <button id="search-button" class="btn btn-search">
                     <i class="fas fa-search"></i>
                 </button>
-            </div>
-            <!-- Mensaje de no resultados -->
-            <div id="no-results" class="text-center mt-3" style="display: none;">
-                <div class="alert alert-warning">
-                    <i class="fas fa-exclamation-circle me-2"></i>
-                    No se encontraron productos que coincidan con "<span id="search-term"></span>"
-                </div>
-                <p class="text-muted small">Intenta con otros términos o revisa nuestro catálogo completo</p>
             </div>
         </div>
     </div>
@@ -58,17 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const productContainer = document.getElementById('product-container');
     const productCards = document.querySelectorAll('.product-card');
-    const noResults = document.getElementById('no-results'); // Asegúrate de tener este elemento en tu HTML
-    const searchTermSpan = document.getElementById('search-term'); // Elemento para mostrar el término buscado
     
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
-        let hasResults = false;
-        
-        // Actualiza el término mostrado en el mensaje
-        if (searchTermSpan) {
-            searchTermSpan.textContent = searchTerm;
-        }
         
         productCards.forEach(card => {
             const title = card.querySelector('.card-title').textContent.toLowerCase();
@@ -76,20 +60,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (title.includes(searchTerm) || description.includes(searchTerm)) {
                 card.style.display = 'block';
-                hasResults = true;
             } else {
                 card.style.display = 'none';
             }
         });
-        
-        // Muestra u oculta el mensaje de no resultados
-        if (noResults) {
-            if (!hasResults && searchTerm.length > 0) {
-                noResults.style.display = 'block';
-            } else {
-                noResults.style.display = 'none';
-            }
-        }
     });
     
     // Opcional: botón de búsqueda

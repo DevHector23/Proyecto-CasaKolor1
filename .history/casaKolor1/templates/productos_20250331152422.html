@@ -20,14 +20,6 @@
                     <i class="fas fa-search"></i>
                 </button>
             </div>
-            <!-- Mensaje de no resultados -->
-            <div id="no-results" class="text-center mt-3" style="display: none;">
-                <div class="alert alert-warning">
-                    <i class="fas fa-exclamation-circle me-2"></i>
-                    No se encontraron productos que coincidan con "<span id="search-term"></span>"
-                </div>
-                <p class="text-muted small">Intenta con otros términos o revisa nuestro catálogo completo</p>
-            </div>
         </div>
     </div>
 </div>
@@ -60,41 +52,43 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
+    const productContainer = document.getElementById('product-container');
     const productCards = document.querySelectorAll('.product-card');
-    const noResults = document.getElementById('no-results');
-    const searchTermSpan = document.getElementById('search-term');
     
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
-        let visibleCount = 0;
-        
-        searchTermSpan.textContent = searchTerm; // Actualiza el término mostrado
         
         productCards.forEach(card => {
             const title = card.querySelector('.card-title').textContent.toLowerCase();
             const description = card.querySelector('.card-text').textContent.toLowerCase();
+            const presentationElement = card.querySelectorAll('.card-text')[2];
+            const presentation = presentationElement ? presentationElement.textContent.toLowerCase() : '';
             
-            if (title.includes(searchTerm) || description.includes(searchTerm)) {
+            if (title.includes(searchTerm) || description.includes(searchTerm) || presentation.includes(searchTerm)) {
                 card.style.display = 'block';
-                visibleCount++;
             } else {
                 card.style.display = 'none';
             }
         });
-        
-        // Mostrar u ocultar mensaje
-        if (visibleCount === 0 && searchTerm.length > 0) {
-            noResults.style.display = 'block';
-        } else {
-            noResults.style.display = 'none';
-        }
     });
     
-    // Botón de búsqueda
+    // Opcional: botón de búsqueda
     document.getElementById('search-button').addEventListener('click', function() {
         searchInput.dispatchEvent(new Event('input'));
     });
 });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if ("{{ request.session.login_success }}") {
+            alert("¡Has iniciado sesión correctamente!");  // Mostrar mensaje
+            fetch("{% url 'clear_login_success' %}", { 
+                method: "POST", 
+                headers: { "X-CSRFToken": "{{ csrf_token }}" } 
+            });
+        }
+    });
 </script>
 </body>
 {% endblock %}

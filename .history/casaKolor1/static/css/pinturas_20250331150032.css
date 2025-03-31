@@ -23,6 +23,36 @@ body{
   height: 200px;
 }
 
+/* Estilos para la barra de búsqueda */
+.search-form {
+  margin-bottom: 20px;
+}
+
+.search-form .input-group {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.search-form .form-control {
+  border: 1px solid #e2e8f0;
+  padding: 12px 20px;
+  height: auto;
+  font-size: 1rem;
+}
+
+.search-form .btn {
+  padding: 12px 20px;
+  background: var(--color-azul-principal);
+  border: none;
+  color: var(--color-blanco);
+  transition: all 0.3s ease;
+}
+
+.search-form .btn:hover {
+  background: var(--color-azul-claro);
+}
+
 .card {
   height: 465px;          /* Altura fija para todas las tarjetas */
   display: flex;
@@ -115,6 +145,20 @@ body{
   .card {
       height: 450px;        /* Ligeramente más pequeña en pantallas medianas */
   }
+  
+  .search-form .input-group {
+      display: flex;
+      flex-direction: column;
+  }
+  
+  .search-form .input-group-append {
+      margin-top: 10px;
+  }
+  
+  .search-form .btn {
+      border-radius: 8px;
+      width: 100%;
+  }
 }
 
 @media (max-width: 576px) {
@@ -163,96 +207,4 @@ body{
       font-size: 0.75rem;
       padding: 5px 10px;
   }
-}
-/* Estilos para la barra de búsqueda */
-.search-bar {
-  position: relative;
-  display: flex;
-  margin: 0 auto;
-  max-width: 600px;
-}
-
-.search-bar input {
-  flex: 1;
-  padding: 12px 20px;
-  border: 2px solid var(--color-azul-principal);
-  border-radius: 30px 0 0 30px;
-  font-size: 16px;
-  outline: none;
-  transition: all 0.3s;
-}
-
-.search-bar input:focus {
-  border-color: var(--color-azul-claro);
-  box-shadow: 0 0 8px rgba(66, 153, 225, 0.5);
-}
-
-.btn-search {
-  background-color: var(--color-azul-principal);
-  color: white;
-  border: none;
-  padding: 0 20px;
-  border-radius: 0 30px 30px 0;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.btn-search:hover {
-  background-color: var(--color-azul-claro);
-}
-
-/* Responsivo para la barra de búsqueda */
-@media (max-width: 768px) {
-  .search-bar {
-      max-width: 100%;
-  }
-  
-  .search-bar input {
-      padding: 10px 15px;
-  }
-}
-
-@media (max-width: 576px) {
-  .search-bar {
-      flex-direction: column;
-  }
-  
-  .search-bar input {
-      border-radius: 30px;
-      margin-bottom: 10px;
-  }
-  
-  .btn-search {
-      border-radius: 30px;
-      padding: 10px;
-      width: 100%;
-  }
-}
-/* Estilos para el mensaje de no resultados */
-#no-results {
-  animation: fadeIn 0.3s ease-out;
-}
-
-#no-results .alert {
-  border-radius: 8px;
-  background-color: #fff3cd;
-  color: #856404;
-  border: 1px solid #ffeeba;
-  padding: 10px 15px;
-  display: inline-flex;
-  align-items: center;
-}
-
-#no-results .text-muted {
-  margin-top: 8px;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Para el icono de búsqueda */
-.fa-search {
-  font-size: 16px;
 }

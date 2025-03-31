@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/pinturas.css' %}">
+{% endblock %}
+
+{% block content %}
+<body>
+    
+<h2 class="text-center mb-4" style="height: 90px; width: 100%; color: #1a365d; padding: 20px; font-size: 50px;">Herramientas</h2>
+<!-- Barra de búsqueda para herramientas -->
+<div class="container">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <form method="GET" action="{% url 'herramientas' %}" class="search-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Buscar herramientas..." value="{{ request.GET.q }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-search"></i> Buscar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        {% for producto in productos %}
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <h5 class="card-title text-center mt-3">{{ producto.nombre }}</h5>
+                    {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                    {% endif %}
+                    <div class="card-body text-center"> 
+                        <p class="card-text">{{ producto.descripcion }}</p>
+                        <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
+                        <button href="{% url 'carrito' %}" class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+<script>
+    /**
+ * Funciones para la barra de búsqueda de productos
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    // Referencia al formulario de búsqueda
+    const searchForms = document.querySelectorAll('.search-form');
+    
+    // Manejador para cada formulario de búsqueda
+    searchForms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            const searchInput = form.querySelector('input[name="q"]');
+            
+            // Validar que el campo de búsqueda no esté vacío
+            if (searchInput.value.trim() === '') {
+                event.preventDefault();
+                // Opcional: Mostrar un mensaje al usuario
+                searchInput.classList.add('is-invalid');
+                // Si tienes un elemento para mostrar errores, puedes usarlo aquí
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'invalid-feedback';
+                errorMsg.textContent = 'Por favor ingresa un término de búsqueda';
+                
+                // Remover cualquier mensaje anterior
+                const existingMsg = form.querySelector('.invalid-feedback');
+                if (existingMsg) existingMsg.remove();
+                
+                searchInput.parentNode.appendChild(errorMsg);
+            } else {
+                // Si el campo no está vacío, quitar cualquier clase de error
+                searchInput.classList.remove('is-invalid');
+                const existingMsg = form.querySelector('.invalid-feedback');
+                if (existingMsg) existingMsg.remove();
+            }
+        });
+        
+        // Quitar mensaje de error cuando el usuario comienza a escribir
+        const searchInput = form.querySelector('input[name="q"]');
+        searchInput.addEventListener('input', function() {
+            this.classList.remove('is-invalid');
+            const existingMsg = form.querySelector('.invalid-feedback');
+            if (existingMsg) existingMsg.remove();
+        });
+    });
+    
+    // Función para realizar búsqueda en tiempo real (opcional)
+    function setupLiveSearch() {
+        const searchInputs = document.querySelectorAll('.search-form input[name="q"]');
+        
+        searchInputs.forEach(input => {
+            let typingTimer;
+            const doneTypingInterval = 500; // milisegundos
+            
+            input.addEventListener('keyup', function() {
+                clearTimeout(typingTimer);
+                if (input.value.trim().length > 2) {
+                    typingTimer = setTimeout(performSearch, doneTypingInterval, input);
+                }
+            });
+            
+            // Cuando el usuario hace focus en otro elemento
+            input.addEventListener('blur', function() {
+                clearTimeout(typingTimer);
+            });
+        });
+    }
+    
+    // Opcional: Descomenta la siguiente línea si quieres búsqueda en tiempo real
+    // setupLiveSearch();
+    
+    // Función para realizar la búsqueda (para búsqueda en tiempo real)
+    function performSearch(input) {
+        // Obtener el formulario padre
+        const form = input.closest('form');
+        form.submit();
+    }
+    
+    // Implementar resaltado de términos de búsqueda en los resultados
+    function highlightSearchTerms() {
+        // Obtener el parámetro de búsqueda de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchTerm = urlParams.get('q');
+        
+        if (searchTerm && searchTerm.length > 0) {
+            // Seleccionar elementos donde se mostrarán los nombres de los productos
+            const productTitles = document.querySelectorAll('.card-title');
+            const productDescriptions = document.querySelectorAll('.card-text');
+            
+            // Función para resaltar el texto
+            function highlightText(elements, term) {
+                elements.forEach(element => {
+                    if (!element.innerHTML.includes('<mark>')) {
+                        const regex = new RegExp(term, 'gi');
+                        element.innerHTML = element.innerHTML.replace(
+                            regex, 
+                            match => `<mark class="bg-warning">${match}</mark>`
+                        );
+                    }
+                });
+            }
+            
+            // Aplicar resaltado
+            highlightText(productTitles, searchTerm);
+            highlightText(productDescriptions, searchTerm);
+        }
+    }
+    
+    // Ejecutar resaltado si hay un término de búsqueda
+    highlightSearchTerms();
+    
+    // Mostrar mensaje cuando no hay resultados
+    function showNoResultsMessage() {
+        const productRows = document.querySelector('.container .row');
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchTerm = urlParams.get('q');
+        
+        if (searchTerm && productRows && productRows.children.length === 0) {
+            const noResultsDiv = document.createElement('div');
+            noResultsDiv.className = 'col-12 text-center my-5';
+            noResultsDiv.innerHTML = `
+                <div class="alert alert-info">
+                    <h4>No se encontraron resultados para "${searchTerm}"</h4>
+                    <p>Intenta con otro término de búsqueda o revisa la ortografía.</p>
+                    <a href="${window.location.pathname}" class="btn btn-outline-primary mt-3">
+                        Ver todos los productos
+                    </a>
+                </div>
+            `;
+            productRows.appendChild(noResultsDiv);
+        }
+    }
+    
+    // Ejecutar verificación de resultados vacíos
+    showNoResultsMessage();
+});
+</script>
+{% endblock %}

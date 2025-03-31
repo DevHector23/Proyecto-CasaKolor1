@@ -6,9 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<body>
-    
-<h2 class="text-center mb-4" style="height: 90px; width: 100%; color: #1a365d; padding: 20px; font-size: 50px;">Herramientas</h2>
+<h2 class="text-center mb-4" style=" height: 90px; width: 100%; color: #1a365d; padding: 20px; font-size: 50px;">Pinturas</h2>
 
 <!-- Barra de búsqueda -->
 <div class="container mb-4">
@@ -35,19 +33,20 @@
 <div class="container mt-3">
     <div class="row" id="product-container">
         {% for producto in productos %}
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-card">
-                <div class="card">
-                    <h5 class="card-title text-center mt-3">{{ producto.nombre }}</h5>
-                    {% if producto.imagen %}
-                        <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
-                    {% endif %}
-                    <div class="card-body text-center"> 
-                        <p class="card-text">{{ producto.descripcion }}</p>
-                        <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
-                        <button href="{% url 'carrito' %}" class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
-                    </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-card">
+            <div class="card">
+                <h5 class="card-title text-center mt-3">{{ producto.nombre }}</h5>
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% endif %}
+                <div class="card-body text-center">
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
+                    <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
+                    <button href="{% url 'carrito' %}" class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
                 </div>
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>
@@ -58,38 +57,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const productContainer = document.getElementById('product-container');
     const productCards = document.querySelectorAll('.product-card');
-    const noResults = document.getElementById('no-results'); // Asegúrate de tener este elemento en tu HTML
-    const searchTermSpan = document.getElementById('search-term'); // Elemento para mostrar el término buscado
     
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
-        let hasResults = false;
-        
-        // Actualiza el término mostrado en el mensaje
-        if (searchTermSpan) {
-            searchTermSpan.textContent = searchTerm;
-        }
         
         productCards.forEach(card => {
             const title = card.querySelector('.card-title').textContent.toLowerCase();
             const description = card.querySelector('.card-text').textContent.toLowerCase();
+            const presentation = card.querySelectorAll('.card-text')[2].textContent.toLowerCase();
             
-            if (title.includes(searchTerm) || description.includes(searchTerm)) {
+            if (title.includes(searchTerm) || description.includes(searchTerm) || presentation.includes(searchTerm)) {
                 card.style.display = 'block';
-                hasResults = true;
             } else {
                 card.style.display = 'none';
             }
         });
-        
-        // Muestra u oculta el mensaje de no resultados
-        if (noResults) {
-            if (!hasResults && searchTerm.length > 0) {
-                noResults.style.display = 'block';
-            } else {
-                noResults.style.display = 'none';
-            }
-        }
     });
     
     // Opcional: botón de búsqueda
@@ -99,5 +81,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-</body>
 {% endblock %}

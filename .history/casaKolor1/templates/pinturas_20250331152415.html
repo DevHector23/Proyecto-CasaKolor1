@@ -6,27 +6,17 @@
 {% endblock %}
 
 {% block content %}
-<body>
-    
-<h2 class="text-center mb-4" style="height: 90px; width: 100%; color: #1a365d; padding: 20px; font-size: 50px;">Nuestros Productos</h2>
+<h2 class="text-center mb-4" style=" height: 90px; width: 100%; color: #1a365d; padding: 20px; font-size: 50px;">Pinturas</h2>
 
 <!-- Barra de búsqueda -->
 <div class="container mb-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="search-bar">
-                <input type="text" id="search-input" class="form-control" placeholder="Buscar productos...">
+                <input type="text" id="search-input" class="form-control" placeholder="Buscar pinturas...">
                 <button id="search-button" class="btn btn-search">
                     <i class="fas fa-search"></i>
                 </button>
-            </div>
-            <!-- Mensaje de no resultados -->
-            <div id="no-results" class="text-center mt-3" style="display: none;">
-                <div class="alert alert-warning">
-                    <i class="fas fa-exclamation-circle me-2"></i>
-                    No se encontraron productos que coincidan con "<span id="search-term"></span>"
-                </div>
-                <p class="text-muted small">Intenta con otros términos o revisa nuestro catálogo completo</p>
             </div>
         </div>
     </div>
@@ -36,7 +26,7 @@
     <div class="row" id="product-container">
         {% for producto in productos %}
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-card">
-            <div class="card"> 
+            <div class="card">
                 <h5 class="card-title text-center mt-3">{{ producto.nombre }}</h5>
                 {% if producto.imagen %}
                     <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
@@ -44,11 +34,8 @@
                 <div class="card-body text-center">
                     <p class="card-text">{{ producto.descripcion }}</p>
                     <p class="card-text"><strong>Precio: ${{ producto.precio }}</strong></p>
-                    <!-- Mostrar presentación solo si el producto es pintura -->
-                    {% if producto.categoria == 'pinturas' %}
-                        <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
-                    {% endif %}
-                    <button class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
+                    <p class="card-text"><strong>Presentación: {{ producto.get_presentacion_display }}</strong></p>
+                    <button href="{% url 'carrito' %}" class="btn btn-primary add-to-cart" data-id="{{ producto.id }}">Añadir al carrito</button>
                 </div>
             </div>
         </div>
@@ -60,41 +47,30 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
+    const productContainer = document.getElementById('product-container');
     const productCards = document.querySelectorAll('.product-card');
-    const noResults = document.getElementById('no-results');
-    const searchTermSpan = document.getElementById('search-term');
     
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
-        let visibleCount = 0;
-        
-        searchTermSpan.textContent = searchTerm; // Actualiza el término mostrado
         
         productCards.forEach(card => {
             const title = card.querySelector('.card-title').textContent.toLowerCase();
             const description = card.querySelector('.card-text').textContent.toLowerCase();
+            const presentation = card.querySelectorAll('.card-text')[2].textContent.toLowerCase();
             
-            if (title.includes(searchTerm) || description.includes(searchTerm)) {
+            if (title.includes(searchTerm) || description.includes(searchTerm) || presentation.includes(searchTerm)) {
                 card.style.display = 'block';
-                visibleCount++;
             } else {
                 card.style.display = 'none';
             }
         });
-        
-        // Mostrar u ocultar mensaje
-        if (visibleCount === 0 && searchTerm.length > 0) {
-            noResults.style.display = 'block';
-        } else {
-            noResults.style.display = 'none';
-        }
     });
     
-    // Botón de búsqueda
+    // Opcional: botón de búsqueda
     document.getElementById('search-button').addEventListener('click', function() {
         searchInput.dispatchEvent(new Event('input'));
     });
 });
 </script>
-</body>
+
 {% endblock %}

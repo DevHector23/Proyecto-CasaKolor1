@@ -312,6 +312,11 @@ body {
         text-align: center;
     }
     
+    .dropdown-item {
+        margin-left: 0 !important;
+        text-align: center;
+    }
+    
 }
 
 /* Media query específico para dispositivos móviles */

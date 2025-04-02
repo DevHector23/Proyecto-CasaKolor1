@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-master-wrapper" id="container">
+    <!-- Sección de Login -->
+    <div class="auth-form-section auth-signin-section" id="login-section">
+        <form class="logi" method="post" action="{% url 'login' %}" novalidate>
+            {% csrf_token %}
+            <h1 class="auth-title">Iniciar Sesión</h1>
+            <span class="auth-divider-text">o usa tu cuenta</span>
+            <div class="auth-input-group">
+                <input type="text" name="username" placeholder="Nombre de usuario" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+            </div>
+            {% if form.errors %}
+                <div class="auth-error-container">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <p class="auth-error-text">{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <a href="{% url 'restablecer' %}" class="auth-forgot-link">¿Olvidaste tu contraseña?</a>
+            <button type="submit" class="auth-submit-btn">Iniciar Sesión</button>
+        </form>
+        <!-- Botón para cambiar a Registro (solo en móvil) -->
+        <button class="auth-switch-btn mobile-switch-btn" id="switchToRegister">¿No tienes una cuenta? Regístrate</button>
+    </div>
+
+    <!-- Sección de Registro -->
+    <div class="auth-form-section auth-signup-section" id="register-section">
+        <form class="logi" method="post" action="{% url 'register' %}" novalidate>
+            {% csrf_token %}
+            <h1 class="auth-title">Crear Cuenta</h1>
+            <span class="auth-divider-text">o usa tu email para registrarte</span>
+            <div class="auth-input-group">
+                {% if register_form %}
+                    {{ register_form.username }}
+                    {{ register_form.email }}
+                    {{ register_form.password1 }}
+                    {{ register_form.password2 }}
+                {% endif %}
+            </div>
+            {% if register_form.errors %}
+                <div class="auth-error-container">
+                    {% for field, errors in register_form.errors.items %}
+                        {% for error in errors %}
+                            <p class="auth-error-text">{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <button type="submit" class="auth-submit-btn">Registrarse</button>
+        </form>
+        <!-- Botón para cambiar a Login (solo en móvil) -->
+        <button class="auth-switch-btn mobile-switch-btn" id="switchToLogin">¿Ya tienes una cuenta? Inicia Sesión</button>
+    </div>
+
+    <!-- Overlay y Botones de Cambio (solo en desktop) -->
+    <div class="auth-overlay-section">
+        <div class="auth-overlay-content">
+            <div class="auth-panel auth-panel-left">
+                <h1 class="auth-title">¡Bienvenido!</h1>
+                <p class="auth-description">Para mantenerte conectado con nosotros, inicia sesión con tu información personal</p>
+                <button class="auth-switch-btn" id="signIn">Iniciar Sesión</button>
+            </div>
+            <div class="auth-panel auth-panel-right">
+                <h1 class="auth-title">¡Hola, Amigo!</h1>
+                <p class="auth-description">Ingresa tus datos personales y comienza tu viaje con nosotros</p>
+                <button class="auth-switch-btn" id="signUp">Registrarse</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Solución para el problema de CSRF - Asegurarse que las cookies funcionen -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Comprobar si las cookies están habilitadas
+    function areCookiesEnabled() {
+        try {
+            document.cookie = "testcookie=1";
+            var cookieEnabled = document.cookie.indexOf("testcookie") !== -1;
+            document.cookie = "testcookie=1; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+            return cookieEnabled;
+        } catch (e) {
+            return false;
+        }
+    }
+    
+    // Mostrar advertencia si las cookies están deshabilitadas
+    if (!areCookiesEnabled()) {
+        const warningDiv = document.createElement('div');
+        warningDiv.style.backgroundColor = '#ffdddd';
+        warningDiv.style.padding = '10px';
+        warningDiv.style.margin = '10px 0';
+        warningDiv.style.borderRadius = '5px';
+        warningDiv.textContent = 'Las cookies parecen estar deshabilitadas. Por favor, habilítalas para poder iniciar sesión correctamente.';
+        document.body.insertBefore(warningDiv, document.body.firstChild);
+    }
+    
+    // Refrescar el token CSRF antes de enviar el formulario
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            // Si hay problemas con CSRF, puedes probar a recargar la página
+            // antes de enviar el formulario
+            const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]');
+            if (!csrfToken || csrfToken.value.length < 10) {
+                e.preventDefault();
+                location.reload();
+                return false;
+            }
+        });
+    });
+});
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const loginSection = document.getElementById('login-section');
+    const registerSection = document.getElementById('register-section');
+    const switchToRegister = document.getElementById('switchToRegister');
+    const switchToLogin = document.getElementById('switchToLogin');
+
+    // Mostrar registro y ocultar login
+    switchToRegister.addEventListener('click', function() {
+        loginSection.style.display = 'none';
+        registerSection.style.display = 'block';
+    });
+
+    // Mostrar login y ocultar registro
+    switchToLogin.addEventListener('click', function() {
+        registerSection.style.display = 'none';
+        loginSection.style.display = 'block';
+    });
+});
+</script>
+
+<!-- Script para verificar si debe mostrar el panel de registro -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Verifica si hay errores en el formulario de registro o si el modo es 'register'
+    const registerErrors = document.querySelector('.auth-signup-section .auth-error-container');
+    const mode = "{{ mode }}";
+    
+    if (registerErrors || mode === 'register') {
+        document.getElementById('container').classList.add("right-panel-active");
+    }
+});
+</script>
+
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

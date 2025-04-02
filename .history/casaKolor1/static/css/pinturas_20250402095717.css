@@ -1,0 +1,368 @@
+/* Estandarización de contenedores de productos, herramientas y pinturas */
+/* Estilos para los productos y tarjetas */
+:root {
+  /* Paleta de colores para ferretería/pinturas */
+  --color-azul-principal: #1a365d;    /* Azul oscuro */
+  --color-azul-claro: #4299e1;        /* Azul claro */
+  --color-gris-azulado: #2c5282;      /* Azul medio */
+  --color-naranja-acento: #ff8a30;    /* Naranja para CTAs */
+  --color-gris-claro: #f2f4f6;        /* Gris claro para fondos */
+  --color-blanco: #ffffff;            /* Blanco para fondos principales */
+  --color-gris-oscuro: #343a40;       /* Gris oscuro para textos */
+}
+
+body {
+  background-color: var(--color-gris-claro);
+}
+
+.container {
+  margin: auto;
+  padding: 10px;
+}
+
+.container img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}
+
+.card {
+  height: 465px;          /* Altura fija para todas las tarjetas */
+  display: flex;
+  flex-direction: column;
+  align-items: center;    /* Centrar contenido horizontalmente */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  transition: transform 0.3s ease;
+  background-color: var(--color-blanco); /* Fondo blanco */
+  overflow: hidden;       /* Evita desbordamiento de contenido */
+  text-align: center;
+}
+
+.card-img-top {
+  width: auto;             /* Permitir que el ancho se ajuste naturalmente */
+  max-width: 90%;          /* Limitar el ancho máximo al 90% del contenedor */
+  height: auto;            /* Mantener proporción de aspecto */
+  max-height: 200px;       /* Altura máxima para desktop */
+  object-fit: contain;     /* Asegurar que la imagen completa sea visible */
+  display: block;
+  margin: 10px auto;       /* Centrar la imagen y añadir margen arriba y abajo */
+  border-radius: 8px;
+}
+
+.card-body {
+  flex: 1;                /* Hace que el cuerpo de la tarjeta ocupe el espacio restante */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;            /* Asegurar que ocupe todo el ancho disponible */
+}
+
+.card-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 10px;
+  line-height: 1.4;       /* Mejor espaciado entre líneas */
+  height: auto;           /* Altura automática */
+
+}
+
+.card-text1 {
+  text-align: justify;
+}
+
+/* Asegura que el botón esté siempre en la parte inferior */
+.card-body .btn {
+  margin-top: auto;
+}
+
+/* Efecto hover en las tarjetas */
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card-title {
+  font-size: 1.1rem;
+  color: var(--color-azul-principal); /* Texto azul oscuro */
+  margin-bottom: 10px;
+  height: auto;           /* Altura automática */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  width: 100%;            /* Asegurar que ocupe todo el ancho disponible */
+}
+
+.btn-primary {
+  font-size: 0.9rem;
+  background: linear-gradient(135deg, var(--color-azul-principal), var(--color-azul-claro)); /* Degradado azul */
+  border: none;
+  font-weight: 600;
+  padding: 12px 15px;     /* Padding ajustado */
+  margin-top: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;  /* Reducido para mejor visualización en móviles */
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  width: 100%;
+  color: var(--color-blanco); /* Texto blanco */
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  white-space: normal;    /* Permite que el texto se salte a la siguiente línea */
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--color-azul-claro), var(--color-azul-principal)); /* Degradado inverso */
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(27, 91, 149, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+h2 {
+  height: 90px;
+  width: 100%;
+  color: #1a365d;
+  padding: 20px; 
+  font-size: 50px;
+}
+
+/* Responsivo para pantallas medianas (tablets) - 2 columnas */
+@media (max-width: 991px) {
+  .col-md-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  
+  .card {
+    height: 420px;
+  }
+  
+  /* .card-img-top {
+    max-width: 85%;
+    max-height: 150px;
+  } */
+  
+  .card-body {
+    padding: 10px 5px;
+  }
+  
+  .btn-primary {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+  
+  h2 {
+    font-size: 40px;
+    height: 80px;
+  }
+}
+
+/* Responsivo para pantallas pequeñas (móviles grandes) - 2 columnas */
+@media (max-width: 767px) {
+  .col-sm-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  
+  .card {
+    height: 400px;
+    padding: 8px;
+  }
+  
+  .card-img-top {
+    max-width: 80%;
+    max-height: 130px;
+  }
+  
+  .card-title {
+    font-size: 1rem;
+    margin-bottom: 5px;
+  }
+  
+  .card-text {
+    font-size: 0.85rem;
+  }
+  
+  .btn-primary {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    margin-top: 10px;
+  }
+  
+  h2 {
+    font-size: 35px;
+    height: 70px;
+    padding: 15px;
+  }
+}
+
+/* Responsivo para móviles pequeños - 2 columnas */
+@media (max-width: 575px) {
+  .col-12 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  
+  .card {
+    height: 350px;
+    padding: 5px;
+  }
+  
+  .card-img-top {
+    max-width: 75%;
+    max-height: 110px;
+  }
+  
+  .card-title {
+    font-size: 0.9rem;
+    margin: 5px 0;
+  }
+  
+  .card-text {
+    font-size: 0.8rem;
+    margin: 3px 0;
+  }
+  
+  .btn-primary {
+    padding: 6px 8px;
+    font-size: 0.75rem;
+    letter-spacing: 0;
+    margin-top: 5px;
+  }
+  
+  h2 {
+    font-size: 28px;
+    height: 60px;
+    padding: 10px;
+  }
+}
+
+/* Dispositivos muy pequeños */
+@media (max-width: 400px) {
+  .card {
+    height: 320px;
+  }
+  
+  .card-img-top {
+    max-width: 70%;
+    max-height: 100px;
+  }
+  
+  .card-title {
+    font-size: 0.85rem;
+  }
+  
+  .card-text {
+    font-size: 0.75rem;
+  }
+  
+  .btn-primary {
+    padding: 5px;
+    font-size: 0.7rem;
+  }
+  
+  h2 {
+    font-size: 24px;
+    height: 50px;
+  }
+}
+
+/* Estilos para la barra de búsqueda */
+.search-bar {
+  position: relative;
+  display: flex;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 12px 20px;
+  border: 2px solid var(--color-azul-principal);
+  border-radius: 30px 0 0 30px;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.search-bar input:focus {
+  border-color: var(--color-azul-claro);
+  box-shadow: 0 0 8px rgba(66, 153, 225, 0.5);
+}
+
+.btn-search {
+  background-color: var(--color-azul-principal);
+  color: white;
+  border: none;
+  padding: 0 20px;
+  border-radius: 0 30px 30px 0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-search:hover {
+  background-color: var(--color-azul-claro);
+}
+
+/* Responsivo para la barra de búsqueda */
+@media (max-width: 768px) {
+  .search-bar {
+    max-width: 100%;
+  }
+  
+  .search-bar input {
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .search-bar {
+    flex-direction: column;
+  }
+  
+  .search-bar input {
+    border-radius: 30px;
+    margin-bottom: 10px;
+  }
+  
+  .btn-search {
+    border-radius: 30px;
+    padding: 10px;
+    width: 100%;
+  }
+}
+
+/* Estilos para el mensaje de no resultados */
+#no-results {
+  animation: fadeIn 0.3s ease-out;
+}
+
+#no-results .alert {
+  border-radius: 8px;
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+  padding: 10px 15px;
+  display: inline-flex;
+  align-items: center;
+}
+
+#no-results .text-muted {
+  margin-top: 8px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Para el icono de búsqueda */
+.fa-search {
+  font-size: 16px;
+}

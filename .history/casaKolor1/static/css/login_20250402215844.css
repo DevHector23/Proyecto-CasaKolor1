@@ -131,11 +131,7 @@
     margin: 0;
     color: var(--color-azul-principal); /* Texto azul oscuro */
 }
-.auth-title1{
-    font-weight: bold;
-    margin: 0;
-    color: var(--color-blanco); /* Texto azul oscuro */
-}
+.auth-title
 
 .auth-description {
     font-size: 14px;
@@ -144,14 +140,6 @@
     letter-spacing: 0.5px;
     margin: 20px 0 30px;
     color: var(--color-gris-oscuro); /* Texto gris oscuro */
-}
-.auth-description1 {
-    font-size: 14px;
-    font-weight: 100;
-    line-height: 20px;
-    letter-spacing: 0.5px;
-    margin: 20px 0 30px;
-    color: var(--color-blanco); /* Texto gris oscuro */
 }
 
 .auth-divider-text {
